@@ -4,6 +4,9 @@ import "../../../../public/css/style.css";
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
+import { createSelector } from "@reduxjs/toolkit";
+import { MonitorState } from "@/redux/slices/monitoring/reducer";
+import { useSelector } from "react-redux";
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -30,13 +33,14 @@ export function useInterval(callback: () => void, delay: number | null) {
   }, [delay])
 }
 
-interface StatusLineProps {
+interface ChartProps{
   // countValue: number;
-  widthVal: number;
-  heightVal: number;
+  // widthVal: number;
+  // heightVal: number;
+  queueIndex: number;
 }
 
-const RealtimeStatus = (statusLineProps: StatusLineProps) => {
+const RTLineChart = (chartProps: ChartProps) => {
 
   const endTimeValue = new Date();
   const startTimeValue = new Date(endTimeValue.getTime() - 2 * 60 * 60 * 1000);
@@ -44,6 +48,12 @@ const RealtimeStatus = (statusLineProps: StatusLineProps) => {
   const [zoomCount, setZoomCount] = useState(0);
   const [count, setCount] = useState<number>(2);
   const [legendCount, setLegendCount] = useState<number>(50);
+
+  const selectMonitoringData = createSelector(
+    (state: any) => state.MonitoringReducer,
+    (monitoringData: MonitorState) => ({labels:  monitoringData.chartLabels, datas: monitoringData.chartDatas[chartProps.queueIndex] }) 
+  )
+  const monitoringData = useSelector(selectMonitoringData);
 
   // const [chartWidth, setChartWidth] = useState<number>(isZoomed ? 1000 : 800);
   // const [chartHeight, setChartHeight] = useState<number>(isZoomed ? 400 : 300);
@@ -168,6 +178,7 @@ const RealtimeStatus = (statusLineProps: StatusLineProps) => {
             ),
         },
         options: {
+          animation:false,
           // animations: {
           //   radius: {
           //     duration: 400,
@@ -237,46 +248,39 @@ const RealtimeStatus = (statusLineProps: StatusLineProps) => {
       const lineChartCanvas = lineChartCanvasRef.current;
       if (lineChartCanvas) {
         lineChartCanvas.style.position = "static";
-        lineChartCanvas.style.width = `${statusLineProps.widthVal}px`;
-        lineChartCanvas.style.height = `${statusLineProps.heightVal}px`;
+        // lineChartCanvas.style.width = `${statusLineProps.widthVal}px`;
+        // lineChartCanvas.style.height = `${statusLineProps.heightVal}px`;
+        lineChartCanvas.style.width = "100%";
+        lineChartCanvas.style.height = "100%";
       }
     }
-  }, [isZoomed, statusLineProps.heightVal, statusLineProps.widthVal]);
+  }, [isZoomed]);
 
-
-  const updateData = (dateTime : Date, maxCount: number) => {
+  const updateChart= (index: number) => {
     const lineChartCanvas = lineChartCanvasRef.current;
 
     if (lineChartCanvas) {
       const chartInstance = Chart.getChart(lineChartCanvas);
 
-      if (chartInstance) {
-        const isShift = ((chartInstance.data.labels?.length || 0) >= maxCount)? true : false;
-        console.log(isShift)
-        if(isShift) {
-            chartInstance.data.labels?.shift();
-            chartInstance.data.datasets[0].data.shift();
-            chartInstance.data.datasets[1].data.shift();
+      if (chartInstance && monitoringData.datas !== undefined) {
+        chartInstance.data.labels = monitoringData.labels;
+        chartInstance.data.datasets[0].data = monitoringData.datas;
+        if(chartInstance.data.datasets[1].data !== undefined && chartInstance.data.datasets[1].data.length >= 20) {
+          chartInstance.data.datasets[1].data.shift();
         }
-
-        const hours = dateTime.getHours().toString().padStart(2, "0");
-        const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-        const seconds = dateTime.getSeconds().toString().padStart(2, "0");
-
-        chartInstance.data.labels?.push(`${hours}:${minutes}:${seconds}`)
-        chartInstance.data.datasets[0].data.push(Math.random() * 100);
         chartInstance.data.datasets[1].data.push(Math.random() * 100);
         chartInstance.update();
-
       }
     }
   };
-
-  useInterval( () => { updateData(new Date(), 20 ) },1000);
+  useEffect(()=>{
+    console.log("monitoringData update called");
+    updateChart(chartProps.queueIndex);
+  }, [monitoringData]);
 
   return (
     <React.Fragment>
-    <div className={`bg-red-100 ${isZoomed ? "box-wrapper" : ""}`}>
+    <div className={`bg-white-100 ${isZoomed ? "box-wrapper" : ""}`}>
       <div className={`${isZoomed ? "box-container" : ""}`}>
         <div
           style={{
@@ -375,8 +379,8 @@ const RealtimeStatus = (statusLineProps: StatusLineProps) => {
         <canvas
           id="lineChart"
           ref={lineChartCanvasRef}
-          width={statusLineProps.widthVal}
-          height={statusLineProps.heightVal}
+          width="100%"
+          height="100%"
         ></canvas>
       </div>
     </div>
@@ -384,4 +388,4 @@ const RealtimeStatus = (statusLineProps: StatusLineProps) => {
   );
 };
 
-export default RealtimeStatus;
+export default RTLineChart;

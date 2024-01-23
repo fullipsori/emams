@@ -27,7 +27,7 @@ const NavBar = () => {
             <Link href={"/dashboard/test"}>Test</Link>
           </li>
           <li className="ml-3">
-            <Link href={"/dashboard/chart/realtimeChart"}>RealTime</Link>
+            <Link href={"/monitoring/system"}>Monitoring</Link>
           </li>
         </ul>
       </nav>

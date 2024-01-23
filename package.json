@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
     "@types/d3-selection": "^3.0.10",
     "@types/d3-zoom": "^3.0.8",
     "@types/lodash": "^4.14.202",
@@ -31,6 +32,7 @@
     "hierarchy": "^1.0.0",
     "lodash": "^4.17.21",
     "next": "14.0.4",
+    "next-redux-wrapper": "^8.1.0",
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-chartjs-2": "^5.2.0",
@@ -39,6 +41,7 @@
     "react-tabulator": "^0.19.0",
     "reactstrap": "^9.2.1",
     "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
     "sass": "^1.70.0",
     "scss": "^0.2.4",
     "tabulator-tables": "^5.5.2"
