@@ -268,7 +268,7 @@ const RTLineChart = (chartProps: ChartProps) => {
         if(chartInstance.data.datasets[1].data !== undefined && chartInstance.data.datasets[1].data.length >= 20) {
           chartInstance.data.datasets[1].data.shift();
         }
-        chartInstance.data.datasets[1].data.push(Math.random() * 100);
+        // chartInstance.data.datasets[1].data.push(Math.random() * 100);
         chartInstance.update();
       }
     }
@@ -280,110 +280,16 @@ const RTLineChart = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-    <div className={`bg-white-100 ${isZoomed ? "box-wrapper" : ""}`}>
-      <div className={`${isZoomed ? "box-container" : ""}`}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: isZoomed ? "center" : "flex-end",
-            gap: 20,
-            marginBottom: 20,
-            alignItems: "center",
-          }}
-        >
-          <input
-            type="number"
-            value={legendCount}
-            onChange={handleLegendChange}
-            min={0}
-            max={100}
-            style={{
-              marginBottom: 10,
-              borderColor: "#000",
-              borderWidth: 1,
-              paddingLeft: 5,
-            }}
-          />
-          <input
-            type="number"
-            value={count}
-            onChange={handleInputChange}
-            min={0}
-            max={100}
-            style={{
-              marginBottom: 10,
-              borderColor: "#000",
-              borderWidth: 1,
-              paddingLeft: 5,
-            }}
-          />
-          <img
-            src="/zoomIn.png"
-            alt="ZoomOut"
-            style={{ width: 30, height: 30, cursor: "pointer" }}
-            onClick={handleZoomIn}
-          />
-          <img
-            src="/zoomOut.png"
-            alt="ZoomOut"
-            style={{ width: 30, height: 30, cursor: "pointer" }}
-            onClick={handleZoomOut}
-          />
-          <button
-            style={{
-              backgroundColor: "rgb(177, 197, 141, 0.5)",
-              paddingRight: 6,
-              paddingLeft: 6,
-              borderWidth: 2,
-              borderColor: "#636161",
-              borderRadius: 8,
-              fontSize: 10,
-              color: "#636161",
-              height: 25,
-            }}
-            onClick={handleRefresh}
-          >
-            refresh
-          </button>
-          <button
-            style={{
-              backgroundColor: "rgb(177, 197, 141, 0.5)",
-              paddingRight: 6,
-              paddingLeft: 6,
-              borderWidth: 2,
-              borderColor: "#636161",
-              borderRadius: 8,
-              fontSize: 10,
-              color: "#636161",
-              height: 25,
-            }}
-            onClick={handleReset}
-          >
-            reset
-          </button>
-          <button
-            style={{
-              width: 20,
-              marginRight: 10,
-            }}
-            onClick={handleZoom}
-          >
-            {isZoomed ? (
-              <img src="/zoom_out.png" alt="ZoomOut" />
-            ) : (
-              <img src="/zoom.png" alt="Zoom" />
-            )}
-          </button>
+      <div className={`bg-white-100 ${isZoomed ? "box-wrapper" : ""}`}>
+        <div className={`${isZoomed ? "box-container" : ""}`}>
+          <canvas
+            id="lineChart"
+            ref={lineChartCanvasRef}
+            width="100%"
+            height="100%"
+          ></canvas>
         </div>
-        <canvas
-          id="lineChart"
-          ref={lineChartCanvasRef}
-          width="100%"
-          height="100%"
-        ></canvas>
       </div>
-    </div>
     </React.Fragment>
   );
 };

@@ -3,12 +3,12 @@ import Link from "next/link";
 const NavBar = () => {
   return (
     <>
-      <nav className="flex justify-between flex-wrap p-3">
+      <nav className="flex justify-between flex-wrap p-1">
         <ul className="flex">
           <li>
             <Link href={"/"}>Home</Link>
           </li>
-          <li className="ml-3">
+          {/* <li className="ml-3">
             <Link href={"/dashboard"}>Dashboard</Link>
           </li>
           <li className="ml-3">
@@ -25,9 +25,9 @@ const NavBar = () => {
           </li>
           <li className="ml-3">
             <Link href={"/dashboard/test"}>Test</Link>
-          </li>
+          </li> */}
           <li className="ml-3">
-            <Link href={"/monitoring/system"}>Monitoring</Link>
+            <Link href={"/monitoring"}>Monitoring</Link>
           </li>
         </ul>
       </nav>
