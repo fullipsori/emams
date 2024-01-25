@@ -6,7 +6,7 @@ import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import { createSelector } from "@reduxjs/toolkit";
 import { MonitorState } from "@/redux/slices/monitoring/reducer";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "@/redux/hooks";
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -53,7 +53,7 @@ const RTLineChart = (chartProps: ChartProps) => {
     (state: any) => state.MonitoringReducer,
     (monitoringData: MonitorState) => ({labels:  monitoringData.chartLabels, datas: monitoringData.chartDatas[chartProps.queueIndex] }) 
   )
-  const monitoringData = useSelector(selectMonitoringData);
+  const monitoringData = useAppSelector(selectMonitoringData);
 
   // const [chartWidth, setChartWidth] = useState<number>(isZoomed ? 1000 : 800);
   // const [chartHeight, setChartHeight] = useState<number>(isZoomed ? 400 : 300);

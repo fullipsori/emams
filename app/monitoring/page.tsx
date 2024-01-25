@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch } from "@/redux/hooks";
 import { addChartData } from "@/redux/slices/monitoring/reducer";
 import BreadCrumb from "./common/BreadCrumb";
 import Footer from "./layouts/Footer";
@@ -30,7 +30,7 @@ export function useInterval(callback: () => void, delay: number | null) {
 }
 
 const Monitoring = (props: any) => {
-    const dispatch: any = useDispatch();
+    const dispatch: any = useAppDispatch();
     const [chartData, setChartData] = useState<any>();
 
     useEffect(() => {
