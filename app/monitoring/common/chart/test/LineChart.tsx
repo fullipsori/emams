@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState, useLayoutEffect, useRef } from "react";
-import getChartColorsArray from "./ChartsDynamicColor";
+import getChartColorsArray from "../ChartsDynamicColor";
 
 import 'chart.js/auto'
 import {Chart, CategoryScale, ChartOptions, registerables} from 'chart.js';

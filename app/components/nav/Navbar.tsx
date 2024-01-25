@@ -8,7 +8,7 @@ const NavBar = () => {
           <li>
             <Link href={"/"}>Home</Link>
           </li>
-          {/* <li className="ml-3">
+          <li className="ml-3">
             <Link href={"/dashboard"}>Dashboard</Link>
           </li>
           <li className="ml-3">
@@ -25,7 +25,7 @@ const NavBar = () => {
           </li>
           <li className="ml-3">
             <Link href={"/dashboard/test"}>Test</Link>
-          </li> */}
+          </li>
           <li className="ml-3">
             <Link href={"/monitoring"}>Monitoring</Link>
           </li>

@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState, useRef } from "react";
 // import ReactApexChart from "react-apexcharts";
-import { dataSeries, githubdata, seriesData } from '../data/series';
-import getChartColorsArray from "./ChartsDynamicColor";
+import { dataSeries, githubdata, seriesData } from '../../data/series';
+import getChartColorsArray from "../ChartsDynamicColor";
 // import useInterval from "@/app/components/common/useInterval";
 
 // import Charts from 'react-apexcharts';

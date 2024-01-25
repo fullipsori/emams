@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import '../globals.css'
 import Footer from './layouts/Footer'
 import React from 'react'
-import { Col, Row } from 'reactstrap'
+import { Col, Container, Row } from 'reactstrap'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,8 +21,16 @@ export default function MonitoringLayout(props: {
         <React.Fragment>
             <div id="layout-wrapper">
                 {props.children}
-                {/* {props.mlsn} */}
-                {props.system}
+                <Container fluid>
+                    <Row>
+                        <Col lg={8}>
+                            {props.system}
+                        </Col>
+                        <Col lg={4}>
+                            {props.mlsn}
+                        </Col>
+                    </Row>
+                </Container>
                 <Footer />
             </div>
         </React.Fragment>

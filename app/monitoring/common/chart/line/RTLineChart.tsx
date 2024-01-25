@@ -1,6 +1,6 @@
 "use client";
 
-import "../../../../public/css/style.css";
+import "../../../../../public/css/style.css";
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
@@ -35,9 +35,9 @@ export function useInterval(callback: () => void, delay: number | null) {
 
 interface ChartProps{
   // countValue: number;
-  // widthVal: number;
-  // heightVal: number;
   queueIndex: number;
+  widthVal?: string;
+  heightVal?: string;
 }
 
 const RTLineChart = (chartProps: ChartProps) => {
@@ -178,7 +178,8 @@ const RTLineChart = (chartProps: ChartProps) => {
             ),
         },
         options: {
-          animation:false,
+          maintainAspectRatio: false,
+          animation: false,
           // animations: {
           //   radius: {
           //     duration: 400,
@@ -250,8 +251,8 @@ const RTLineChart = (chartProps: ChartProps) => {
         lineChartCanvas.style.position = "static";
         // lineChartCanvas.style.width = `${statusLineProps.widthVal}px`;
         // lineChartCanvas.style.height = `${statusLineProps.heightVal}px`;
-        lineChartCanvas.style.width = "100%";
-        lineChartCanvas.style.height = "100%";
+        lineChartCanvas.style.width = chartProps?.widthVal ?? "40vw";
+        lineChartCanvas.style.height = chartProps?.heightVal ?? "20vh";
       }
     }
   }, [isZoomed]);
@@ -285,8 +286,8 @@ const RTLineChart = (chartProps: ChartProps) => {
           <canvas
             id="lineChart"
             ref={lineChartCanvasRef}
-            width="100%"
-            height="100%"
+            width={chartProps?.widthVal ?? "40vw"}
+            height={chartProps?.heightVal ?? "20vh"}
           ></canvas>
         </div>
       </div>
