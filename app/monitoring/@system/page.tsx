@@ -12,22 +12,34 @@ const Monitoring = () => {
         <React.Fragment>
             <div className="m-page-content">
                 <Container fluid>
-                    <Row>
-                        <Col lg={3} sm={6}>
-                            <RTGaugeChart gaugeIndex={0} />
-                        </Col>
-                        <Col lg={3} sm={6}>
-                            <RTGaugeChart gaugeIndex={1} />
-                        </Col>
-                        <Col lg={3} sm={6}>
-                            <RTGaugeChart gaugeIndex={2} />
-                        </Col>
-                        <Col lg={3} sm={6}>
-                            <DockerInfo />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg={6}>
+                    <Card>
+                        <CardHeader>
+                            <h4 className="card-title mb-0">Message Broker Resource Usage</h4>
+                        </CardHeader>
+                        <CardBody>
+                            <Row>
+                                <Col lg={3} sm={6}>
+                                    <RTGaugeChart gaugeIndex={0} />
+                                </Col>
+                                <Col lg={3} sm={6}>
+                                    <RTGaugeChart gaugeIndex={1} />
+                                </Col>
+                                <Col lg={3} sm={6}>
+                                    <RTGaugeChart gaugeIndex={2} />
+                                </Col>
+                                <Col lg={3} sm={6}>
+                                    <DockerInfo />
+                                </Col>
+                            </Row>
+                        </CardBody>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <h4 className="card-title mb-0">Message Broker Resource Usages</h4>
+                        </CardHeader>
+                        <CardBody>
+                            <Row>
+                                <Col lg={6}>
                             <Card>
                                 <CardHeader>
                                     <h4 className="card-title mb-0">Chart-1</h4>
@@ -70,6 +82,9 @@ const Monitoring = () => {
                             </Card>
                         </Col>
                     </Row>
+
+                        </CardBody>
+                    </Card>
                 </Container>
             </div>
         </React.Fragment>
