@@ -5,6 +5,7 @@ import { Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap';
 import RTLineChart from "../common/chart/line/RTLineChart";
 import "../monitoring.css";
 import RTGaugeChart from "../common/chart/gauge/RTGaugeChart";
+import DockerInfo from "./DockerInfo";
 
 const Monitoring = () => {
     return (
@@ -12,19 +13,17 @@ const Monitoring = () => {
             <div className="m-page-content">
                 <Container fluid>
                     <Row>
-                        <Col md={3}>
-                            <RTGaugeChart gaugeValue={60} />
+                        <Col lg={3} sm={6}>
+                            <RTGaugeChart gaugeIndex={0} />
                         </Col>
-                        <Col md={3}>
-                            <RTGaugeChart gaugeValue={75} />
+                        <Col lg={3} sm={6}>
+                            <RTGaugeChart gaugeIndex={1} />
                         </Col>
-                        
-                        <Col md={3}>
-                            <RTGaugeChart gaugeValue={90} />
+                        <Col lg={3} sm={6}>
+                            <RTGaugeChart gaugeIndex={2} />
                         </Col>
-                        <Col md={3}>
-                            box
-
+                        <Col lg={3} sm={6}>
+                            <DockerInfo />
                         </Col>
                     </Row>
                     <Row>

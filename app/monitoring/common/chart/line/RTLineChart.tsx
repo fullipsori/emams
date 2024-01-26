@@ -55,9 +55,6 @@ const RTLineChart = (chartProps: ChartProps) => {
   )
   const monitoringData = useAppSelector(selectMonitoringData);
 
-  // const [chartWidth, setChartWidth] = useState<number>(isZoomed ? 1000 : 800);
-  // const [chartHeight, setChartHeight] = useState<number>(isZoomed ? 400 : 300);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value, 10) || 0;
     setCount(newValue);
@@ -78,45 +75,6 @@ const RTLineChart = (chartProps: ChartProps) => {
   };
 
   const handleRefresh = () => {
-    /** 
-    const newDataset = generateRandomDataset();
-    const lineChartCanvas = lineChartCanvasRef.current;
-
-    if (lineChartCanvas) {
-      const chartInstance = Chart.getChart(lineChartCanvas);
-
-      if (chartInstance) {
-        const newLabels = Array.from({ length: legendCount }, (_, index) => {
-          const currentTime = new Date();
-          const labelTime = new Date(currentTime.getTime() + index * interval);
-          const hours = labelTime.getHours().toString().padStart(2, "0");
-          const minutes = labelTime.getMinutes().toString().padStart(2, "0");
-          return `${hours}:${minutes}`;
-        });
-
-        // 차트의 데이터를 갱신
-        chartInstance.data.labels = newLabels;
-        chartInstance.data.datasets = [
-          ...chartInstance.data.datasets.slice(0, 3),
-          ...newDataset.map((dataset, index) => ({
-            label: `Line Chart ${index + 1}`,
-            data: dataset,
-            borderColor: `rgb(${Math.random() * 255},${Math.random() * 255},${
-              Math.random() * 255
-            })`,
-            borderWidth: 2,
-            fill: false,
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            tension: 0.5,
-          })),
-        ];
-
-        // 차트 업데이트
-        chartInstance.update();
-      }
-    }
-    */
   };
 
   const handleReset = () => {
@@ -133,9 +91,7 @@ const RTLineChart = (chartProps: ChartProps) => {
     return ({
         label: `Line Chart ${index + 1}`,
         data: [],
-        borderColor: `rgb(${Math.random() * 255},${Math.random() * 255},${
-        Math.random() * 255
-        })`,
+        borderColor: `rgb(${Math.random() * 255},${Math.random() * 255},${ Math.random() * 255 })`,
         borderWidth: 2,
         fill: false,
         pointRadius: 0,
@@ -194,7 +150,7 @@ const RTLineChart = (chartProps: ChartProps) => {
                         family: 'Poppins',
                     },
                     autoSkip: true,
-                    maxTicksLimit: 20
+                    maxTicksLimit: 50 
                 }
             },
             y: {
@@ -249,15 +205,13 @@ const RTLineChart = (chartProps: ChartProps) => {
       const lineChartCanvas = lineChartCanvasRef.current;
       if (lineChartCanvas) {
         lineChartCanvas.style.position = "static";
-        // lineChartCanvas.style.width = `${statusLineProps.widthVal}px`;
-        // lineChartCanvas.style.height = `${statusLineProps.heightVal}px`;
-        lineChartCanvas.style.width = chartProps?.widthVal ?? "40vw";
-        lineChartCanvas.style.height = chartProps?.heightVal ?? "20vh";
+        lineChartCanvas.style.width = chartProps.widthVal ?? "40vw";
+        lineChartCanvas.style.height = chartProps.heightVal ?? "20vh";
       }
     }
   }, [isZoomed]);
 
-  const updateChart= (index: number) => {
+  const updateChart = (index: number) => {
     const lineChartCanvas = lineChartCanvasRef.current;
 
     if (lineChartCanvas) {
@@ -275,7 +229,6 @@ const RTLineChart = (chartProps: ChartProps) => {
     }
   };
   useEffect(()=>{
-    console.log("monitoringData update called");
     updateChart(chartProps.queueIndex);
   }, [monitoringData]);
 
@@ -286,8 +239,8 @@ const RTLineChart = (chartProps: ChartProps) => {
           <canvas
             id="lineChart"
             ref={lineChartCanvasRef}
-            width={chartProps?.widthVal ?? "40vw"}
-            height={chartProps?.heightVal ?? "20vh"}
+            width={chartProps.widthVal ?? "40vw"}
+            height={chartProps.heightVal ?? "20vh"}
           ></canvas>
         </div>
       </div>
