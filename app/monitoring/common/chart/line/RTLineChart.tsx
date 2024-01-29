@@ -10,29 +10,6 @@ import { useAppSelector } from "@/redux/hooks";
 
 Chart.register(...registerables, zoomPlugin);
 
-export function useInterval(callback: () => void, delay: number | null) {
-  const savedCallback = useRef(callback)
-
-  // Remember the latest callback if it changes.
-  //useIsomorphicLayoutEffect
-  React.useEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
-
-  // Set up the interval.
-  useEffect(() => {
-    // Don't schedule if no delay is specified.
-    // Note: 0 is a valid value for delay.
-    if (!delay && delay !== 0) {
-      return
-    }
-
-    const id = setInterval(() => savedCallback.current(), delay)
-
-    return () => clearInterval(id)
-  }, [delay])
-}
-
 interface ChartProps{
   // countValue: number;
   queueIndex: number;
@@ -42,8 +19,6 @@ interface ChartProps{
 
 const RTLineChart = (chartProps: ChartProps) => {
 
-  const endTimeValue = new Date();
-  const startTimeValue = new Date(endTimeValue.getTime() - 2 * 60 * 60 * 1000);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomCount, setZoomCount] = useState(0);
   const [count, setCount] = useState<number>(2);
@@ -66,7 +41,6 @@ const RTLineChart = (chartProps: ChartProps) => {
   };
 
 
-  const labels: any = [];
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const handleZoom = () => {
@@ -93,7 +67,7 @@ const RTLineChart = (chartProps: ChartProps) => {
         data: [],
         borderColor: `rgb(${Math.random() * 255},${Math.random() * 255},${ Math.random() * 255 })`,
         borderWidth: 2,
-        fill: false,
+        fill: true,
         pointRadius: 0,
         pointHoverRadius: 0,
         tension: 0.5,
@@ -125,7 +99,7 @@ const RTLineChart = (chartProps: ChartProps) => {
       lineChartInstance = new Chart(lineChartCanvas, {
         type: "line",
         data: {
-          labels: labels,
+          labels: [],
           datasets: Array.from(
                 { length: count},
                 (_, index) => {
@@ -136,13 +110,6 @@ const RTLineChart = (chartProps: ChartProps) => {
         options: {
           maintainAspectRatio: false,
           animation: false,
-          // animations: {
-          //   radius: {
-          //     duration: 400,
-          //     easing: "linear",
-          //     loop: (context) => context.active,
-          //   },
-          // },
           scales: {
             x: {
                 ticks: {
@@ -217,7 +184,7 @@ const RTLineChart = (chartProps: ChartProps) => {
     if (lineChartCanvas) {
       const chartInstance = Chart.getChart(lineChartCanvas);
 
-      if (chartInstance && monitoringData.datas !== undefined) {
+      if (chartInstance && monitoringData.datas) {
         chartInstance.data.labels = monitoringData.labels;
         chartInstance.data.datasets[0].data = monitoringData.datas;
         if(chartInstance.data.datasets[1].data !== undefined && chartInstance.data.datasets[1].data.length >= 20) {

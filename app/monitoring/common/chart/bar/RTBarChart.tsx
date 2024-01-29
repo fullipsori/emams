@@ -2,62 +2,51 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartConfiguration, elements } from "chart.js";
+import { createSelector } from "@reduxjs/toolkit";
+import { useAppSelector } from "@/redux/hooks";
+import { MonitorConnState } from "@/redux/slices/monitoring-conn/reducer";
 
 interface StackedBarChartProps {
-  maleData: number[];
-  femaleData: number[];
-  labels: string[];
-  widthVal?: string;
-  heightVal?: string;
+  widthVal?: number;
+  heightVal?: number;
 }
 
 const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const handleZoom = () => {
-    setIsZoomed(!isZoomed);
-    console.log(" 줌 했음 ", isZoomed);
-  };
+  const selectMonitoringData = createSelector(
+    (state: any) => state.MonitoringConnReducer,
+    (monitoringData: MonitorConnState) => ({ labels: monitoringData.chartLabels, producerData: monitoringData.producerData, consumerData: monitoringData.consumerData })
+  )
+  const monitoringData = useAppSelector(selectMonitoringData);
 
   useEffect(() => {
-    const ctx = chartRef.current?.getContext("2d");
-    const tooltip = {
-      xAlign: "bottom",
-      titleAlign: "center",
-      callback: {
-        label: function (context: any) {
-          console.log("context:::", context.raw);
-          return `${context.dataset.label} ${Math.abs(context.raw)}`;
-        },
-      },
-    };
+    const barChartCanvas = chartRef.current;
+    //차이점을 확인 : const ctx = chartRef.current?.getContext("2d");
+    let chartInstance: Chart | null = null;
 
-    if (ctx) {
-      const stackedBarChart = new Chart(ctx, {
+    if(barChartCanvas) {
+      Chart.getChart(barChartCanvas)?.destroy();
+
+      /*
+      const tooltip = {
+        xAlign: "bottom",
+        titleAlign: "center",
+        callback: {
+          label: function (context: any) {
+            console.log("context:::", context.raw);
+            return `${context.dataset.label} ${Math.abs(context.raw)}`;
+          },
+        },
+      };
+      */
+
+      chartInstance = new Chart(barChartCanvas, {
         type: "bar",
         data: {
-          labels: stackedBarChartProps.labels,
-          datasets: [
-            {
-              label: "붕어빵",
-              data: stackedBarChartProps.maleData,
-              backgroundColor: "rgba(82, 90, 124, 0.5)",
-              stack: "Stack 1",
-            },
-            {
-              label: "단팥빵",
-              data: stackedBarChartProps.femaleData,
-              backgroundColor: "rgba(129, 132, 184, 0.5)",
-              stack: "Stack 1",
-            },
-            {
-              label: "계란빵",
-              data: stackedBarChartProps.femaleData,
-              backgroundColor: "rgba(125, 151, 185, 0.5)",
-              stack: "Stack 1",
-            },
-          ],
+          labels: [],
+          datasets: defaultBarChartDatas() 
         },
         options: {
           indexAxis: "x",
@@ -88,28 +77,74 @@ const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
           },
           // 클릭한 차트 정보
           onClick: (event, activeElements) => {
-            if (activeElements.length > 0) {
+            if (chartInstance && activeElements.length > 0) {
               const activeElement = activeElements[0];
               const datasetIndex = activeElement.datasetIndex;
               const dataIndex = activeElement.index;
               const datasetLabel =
-                stackedBarChart.data.datasets[datasetIndex].label;
+                chartInstance.data.datasets[datasetIndex].label;
               const dataValue =
-                stackedBarChart.data.datasets[datasetIndex].data[dataIndex];
-              const dataLabel = stackedBarChart.data.labels ?? [];
+                chartInstance.data.datasets[datasetIndex].data[dataIndex];
+              const dataLabel = chartInstance.data.labels ?? [];
               // const dataLabelValue = dataLabel[datasetIndex];
               console.log(`${datasetLabel} :: ${dataValue}`);
             }
           },
         },
       } as ChartConfiguration);
-
-      return () => {
-        stackedBarChart.destroy();
-      };
     }
-  }, [stackedBarChartProps.maleData, stackedBarChartProps.femaleData, stackedBarChartProps.labels, isZoomed]);
 
+    return () => {
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+    };
+  }, []);
+
+
+  const defaultBarChartDatas = () : any => {
+    return ([
+      {
+        label: "Producer",
+        data: [],
+        backgroundColor: "rgba(82, 90, 124, 0.5)",
+        stack: "Stack 1",
+      },
+      {
+        label: "Consumer",
+        data: [],
+        backgroundColor: "rgba(129, 132, 184, 0.5)",
+        stack: "Stack 1",
+      }
+    ]);
+  }
+
+  useEffect(()=>{
+    updateChart();
+  }, [monitoringData]);
+
+
+  const updateChart = async () => {
+    if(!monitoringData || !monitoringData.labels)
+      return;
+    const chartCanvas = chartRef.current;
+    if(!chartCanvas) return;
+
+    const chartInstance = Chart.getChart(chartCanvas);
+    if(!chartInstance) return;
+
+    chartInstance.data.labels = monitoringData.labels;
+    chartInstance.data.datasets[0].data = monitoringData.producerData;
+    chartInstance.data.datasets[1].data = monitoringData.consumerData;
+    chartInstance.update();
+  };
+
+  const handleZoom = () => {
+    setIsZoomed(!isZoomed);
+    console.log(" 줌 했음 ", isZoomed);
+  };
+
+  /*
   useEffect(() => {
     if (!isZoomed) {
       const barChartCanvas = chartRef.current;
@@ -120,6 +155,7 @@ const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
       }
     }
   }, [isZoomed, stackedBarChartProps.widthVal, stackedBarChartProps.heightVal]);
+  */
 
   return (
     <div className={`bg-red-100 ${isZoomed ? "box-wrapper" : ""}`}>

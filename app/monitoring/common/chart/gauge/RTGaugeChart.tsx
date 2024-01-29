@@ -44,20 +44,6 @@ const RTGaugeChart = (gauageChartProps: GaugeChartProps) => {
         const yCoor = chart.getDatasetMeta(0).data[0].y;
         const score = Math.round(data.datasets[1].data[0]);
 
-        /** 
-        let rating;
-
-        if (options.gaugeValue <= 65) {
-          rating = "좋음";
-        }
-        if (options.gaugeValue > 65 && options.gaugeValue <= 85) {
-          rating = "보통";
-        }
-        if (options.gaugeValue > 85 && options.gaugeValue <= 100) {
-          rating = "위험";
-        }
-        */
-
         function textLabel(
           text: any,
           x: any,
@@ -66,7 +52,7 @@ const RTGaugeChart = (gauageChartProps: GaugeChartProps) => {
           textBaseLine: any,
           textAlign: any
         ) {
-          ctx.font = "30px";
+          ctx.font = `${fontSize}px`;
           ctx.fillStyle = "#666";
           ctx.textBaseLine = textBaseLine;
           ctx.textAlign = textAlign;
@@ -105,8 +91,8 @@ const RTGaugeChart = (gauageChartProps: GaugeChartProps) => {
         options: {
             animation:false,
             cutout: "70%",
-            rotation: -90,
-            circumference: 180,
+            rotation: -110,
+            circumference: 220,
             plugins: {
                 legend: {
                     display: false,
@@ -148,11 +134,11 @@ const RTGaugeChart = (gauageChartProps: GaugeChartProps) => {
     const gaugeValue = monitoringData.datas[monitoringData.datas.length-1];
     let colorValue = "green";
     if (gaugeValue) {
-      if (gaugeValue <= 65) {
+      if (gaugeValue <= 70) {
         colorValue = "green";
-      } else if (gaugeValue > 65 && gaugeValue <= 85) {
+      } else if (gaugeValue > 70 && gaugeValue <= 90) {
         colorValue = "yellow";
-      } else if (gaugeValue > 85 && gaugeValue <= 100) {
+      } else if (gaugeValue > 90 && gaugeValue <= 100) {
         colorValue = "red";
       } else {
         // handle other cases if needed

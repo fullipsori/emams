@@ -3,13 +3,9 @@
 import React from "react";
 import { Row, Col, Container, Card, CardHeader, CardBody } from "reactstrap";
 import "../monitoring.css";
-import RTLineChart from "../common/chart/line/RTLineChart";
 import RTBarChart from "../common/chart/bar/RTBarChart";
-import {
-    labels,
-    lineChartData,
-    doughnutChartData,
-} from "@/data/chartData";
+import PendingQueue from "./pendingQueue";
+import ThroughputQueue from "./throughputQueue";
 
 const Monitoring = () => {
     return (
@@ -20,10 +16,10 @@ const Monitoring = () => {
                         <Col lg={12}>
                             <Card>
                                 <CardHeader>
-                                    <h4 className="card-title mb-0">Queue-1</h4>
+                                    <h4 className="card-title mb-0">Pending Status</h4>
                                 </CardHeader>
                                 <CardBody>
-                                    <RTLineChart queueIndex={0}/>
+                                    <PendingQueue countValue={3}/>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -32,10 +28,10 @@ const Monitoring = () => {
                         <Col lg={12}>
                             <Card>
                                 <CardHeader>
-                                    <h4 className="card-title mb-0">Queue-2</h4>
+                                    <h4 className="card-title mb-0">Queue Throughput</h4>
                                 </CardHeader>
                                 <CardBody>
-                                    <RTLineChart queueIndex={1}/>
+                                    <ThroughputQueue countValue={3}/>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -47,7 +43,7 @@ const Monitoring = () => {
                                     <h4 className="card-title mb-0">VPN</h4>
                                 </CardHeader>
                                 <CardBody>
-                                    <RTBarChart maleData={lineChartData} femaleData={doughnutChartData} labels={labels}/>
+                                    <RTBarChart />
                                 </CardBody>
                             </Card>
                         </Col>

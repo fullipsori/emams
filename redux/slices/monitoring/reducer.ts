@@ -5,6 +5,7 @@ export type MonitorState = {
     chartLabels: string[],
     chartDatas: any[][],
     automatic : boolean,
+    updateCount: number,
 };
 
 const initialState : any = {
@@ -12,6 +13,7 @@ const initialState : any = {
   chartLabels: [],
   chartDatas : [],
   automatic: true,
+  updateCount: 0,
 } as MonitorState;
 
 const MonitoringSlice = createSlice({
@@ -19,6 +21,9 @@ const MonitoringSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
+    updateChart: (state: MonitorState) => {
+      if(state.automatic) state.updateCount = (state.updateCount + 1) % 100;
+    },
     addChartData: (state: MonitorState, action: PayloadAction<any>) => {
       // for test
       if(state.chartDatas[0] === undefined) {
@@ -63,6 +68,7 @@ const MonitoringSlice = createSlice({
 
 export const {
   reset,
+  updateChart,
   addChartData,
   updateChartData,
   updateMode
