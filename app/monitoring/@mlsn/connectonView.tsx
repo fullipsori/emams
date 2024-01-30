@@ -7,6 +7,7 @@ import { MonitorClientState } from "@/redux/slices/monitoring-client/reducer";
 import { MonitorState } from "@/redux/slices/monitoring/reducer";
 import { getClientInfoData } from "@/redux/slices/monitoring-client/thunk";
 import RTBarChart from "../common/chart/bar/RTBarChart";
+import { Card, CardBody, CardHeader } from "reactstrap";
 
 interface ChartProps {
     widthVal?: string;
@@ -38,7 +39,8 @@ const ConnectionView = (chartProps: ChartProps) => {
   }, [monitorState]);
 
 
-  const defaultBarChartData = [
+  const defaultBarChartData = () => { 
+    return([
       {
         label: "Producer",
         data: [],
@@ -51,11 +53,19 @@ const ConnectionView = (chartProps: ChartProps) => {
         backgroundColor: "rgba(129, 132, 184, 0.5)",
         stack: "Stack 1",
       }
-  ];
+  ])};
 
   return (
     <React.Fragment>
-        <RTBarChart monitoringDataCallback={getMonitoringData} defaultChartData={defaultBarChartData} stack={true} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+      <Card>
+        <CardHeader>
+          <h3 className="card-title mb-0 fw-bold">Consumers 개수
+          </h3>
+        </CardHeader>
+        <CardBody>
+          <RTBarChart monitoringDataCallback={getMonitoringData} defaultChartData={defaultBarChartData} stack={true} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+        </CardBody>
+      </Card>
     </React.Fragment>
   );
 };

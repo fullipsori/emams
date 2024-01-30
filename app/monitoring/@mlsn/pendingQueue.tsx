@@ -5,8 +5,9 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorState } from "@/redux/slices/monitoring/reducer";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
-import RTLineChartEx from "../common/chart/line/RTLineChartEx";
+import RTLineChart from "../common/chart/line/RTLineChartEx";
 import { getMonitoringQueueData } from "@/redux/slices/monitoring-queue/thunk";
+import { Card, CardBody, CardHeader } from "reactstrap";
 
 interface ChartProps {
     countValue: number;
@@ -18,7 +19,7 @@ const PendingQueue = (chartProps: ChartProps) => {
   const dispatch = useAppDispatch();
 
   const selectMonitoringData = createSelector(
-    (selectorState: any) => selectorState.MonitoringQueueReducer,
+    (state: any) => state.MonitoringQueueReducer,
     (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings})
   )
   // const monitoringData = useAppSelector(selectMonitoringData);
@@ -40,9 +41,26 @@ const PendingQueue = (chartProps: ChartProps) => {
   }, [monitorState]);
 
 
+  const [yAxisType, setYAxisType] = useState("count");
+  const handleYAxisType = (type: string) => {
+    if(yAxisType !== type) {
+      setYAxisType(type);
+    }
+  };
+
   return (
     <React.Fragment>
-        <RTLineChartEx countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+      <Card>
+        <CardHeader>
+            <h3 className="card-title mb-0 fw-bold">Pending Messages   
+              <span style={{textDecoration: (yAxisType === "count")? "underline" : ""}} onClick={() => handleYAxisType("count")}>[건수|</span>
+              <span style={{textDecoration: (yAxisType === "bytes")? "underline" : ""}} onClick={() => handleYAxisType("bytes")}>Bytes]</span>
+            </h3>
+        </CardHeader>
+        <CardBody>
+          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+        </CardBody>
+      </Card>
     </React.Fragment>
   );
 };

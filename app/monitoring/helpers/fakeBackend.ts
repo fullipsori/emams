@@ -52,6 +52,33 @@ const fakeBackend = () => {
     });
   });
 
+    mock.onGet(url.GET_MONITORING_SYSTEM_DATA).reply((config: any) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if(true) {
+            const dateTime: Date = new Date();
+            const hours = dateTime.getHours().toString().padStart(2, "0");
+            const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+            const seconds = dateTime.getSeconds().toString().padStart(2, "0");
+            const resultData = {
+                label: `${hours}:${minutes}:${seconds}`,
+                cpuUsage: Math.random()*100,
+                memoryUsage: Math.random()*100,
+                diskUsage: Math.random()*100,
+                coreCount: 4,
+                memorySize: 256,
+                diskRead: Math.random()*10000,
+                diskWrite: Math.random()*10000,
+                networkRead: Math.random()*10000,
+                networkWrite: Math.random()*10000,
+            }
+            resolve([200, resultData])
+          }else{
+              reject([400, "rejected "]);
+          }
+        });
+    });
+  });
 
 };
 

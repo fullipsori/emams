@@ -3,10 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import { useAppDispatch } from "@/redux/hooks";
-import { addChartData as addQueueChartData , updateChart } from "@/redux/slices/monitoring/reducer";
+import { updateChart } from "@/redux/slices/monitoring/reducer";
 import BreadCrumb from "./common/BreadCrumb";
 import Footer from "./layouts/Footer";
 import "./monitoring.css"
+import MonitorHeader from "./monitorHeader";
 
 export function useInterval(callback: () => void, delay: number | null) {
   const savedCallback = useRef(callback)
@@ -36,7 +37,6 @@ const Monitoring = (props: any) => {
     useEffect(() => {
         if(chartData) {
             dispatch(updateChart());
-            dispatch(addQueueChartData(chartData));
         }
     }, [chartData])
 
@@ -54,7 +54,8 @@ const Monitoring = (props: any) => {
     return (
         <React.Fragment>
             <div className="m-page-content">
-                <BreadCrumb title="EMAMS" pageTitle="Monitoring" />
+                {/* <BreadCrumb title="EMAMS" pageTitle="Monitoring" /> */}
+                <MonitorHeader title="EMAMS" pageTitle="Monitoring" />
                 {/* {props.children} */}
             </div>
         </React.Fragment>

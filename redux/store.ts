@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { MonitoringReducer } from "./slices/monitoring/reducer";
 import { MonitoringClientReducer } from "./slices/monitoring-client/reducer";
 import { MonitoringQueueReducer } from "./slices/monitoring-queue/reducer";
+import { MonitoringSystemReducer } from "./slices/monitoring-system/reducer";
 
 export const makeStore = () => {
     return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
             MonitoringReducer,
             MonitoringClientReducer,
             MonitoringQueueReducer,
+            MonitoringSystemReducer,
         },
         devTools: process.env.NODE_ENV !== 'production',
     });

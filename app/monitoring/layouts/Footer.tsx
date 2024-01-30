@@ -9,7 +9,7 @@ const Footer = () => {
                 <Container fluid>
                     <Row>
                         <Col sm={6}>
-                            {new Date().getFullYear()} © epozen.
+                            핵심 모니터링 지표 |
                         </Col>
                         <Col sm={6}>
                             <div className="text-sm-end d-none d-sm-block">

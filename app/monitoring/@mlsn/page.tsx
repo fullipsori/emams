@@ -10,45 +10,24 @@ import ConnectionView from "./connectonView";
 const Monitoring = () => {
     return (
         <React.Fragment>
-            <div id="m-layout-wrapper">
-                <div className="container-fluid text-center">
+            <div id="m-page-content">
+                <Container fluid>
                     <Row>
                         <Col lg={12}>
-                            <Card>
-                                <CardHeader>
-                                    <h4 className="card-title mb-0">Pending Status</h4>
-                                </CardHeader>
-                                <CardBody>
-                                    <PendingQueue countValue={3}/>
-                                </CardBody>
-                            </Card>
+                            <PendingQueue countValue={3}/>
                         </Col>
                     </Row>
                     <Row>
                         <Col lg={12}>
-                            <Card>
-                                <CardHeader>
-                                    <h4 className="card-title mb-0">Queue Throughput</h4>
-                                </CardHeader>
-                                <CardBody>
-                                    <ThroughputQueue countValue={3}/>
-                                </CardBody>
-                            </Card>
+                            <ThroughputQueue countValue={3}/>
                         </Col>
                     </Row>
                     <Row>
                         <Col lg={12}>
-                            <Card>
-                                <CardHeader>
-                                    <h4 className="card-title mb-0">VPN</h4>
-                                </CardHeader>
-                                <CardBody>
-                                    <ConnectionView/>
-                                </CardBody>
-                            </Card>
+                            <ConnectionView/>
                         </Col>
                     </Row>
-                </div>
+                </Container>
             </div>
         </React.Fragment>
     );

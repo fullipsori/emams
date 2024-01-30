@@ -15,7 +15,7 @@ interface ChartProps{
   heightVal?: string;
 }
 
-const RTLineChartEx = (chartProps: ChartProps) => {
+const RTLineChart = (chartProps: ChartProps) => {
 
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const monitoringData = chartProps.monitoringDataCallback();
@@ -89,20 +89,15 @@ const RTLineChartEx = (chartProps: ChartProps) => {
     })
   };
 
+  /* initial loading */
   useEffect(() => {
     const lineChartCanvas = lineChartCanvasRef.current;
+    let lineChartInstance: Chart | null = null;
     if (lineChartCanvas) {
       lineChartCanvas.style.position = "static";
       lineChartCanvas.style.width = chartProps.widthVal ?? "40vw";
       lineChartCanvas.style.height = chartProps.heightVal ?? "20vh";
-    }
-  }, []);
 
-  useEffect(() => {
-    const lineChartCanvas = lineChartCanvasRef.current;
-    let lineChartInstance: Chart | null = null;
-
-    if (lineChartCanvas) {
       if (Chart.getChart(lineChartCanvas)) {
         Chart.getChart(lineChartCanvas)?.destroy();
       }
@@ -114,7 +109,7 @@ const RTLineChartEx = (chartProps: ChartProps) => {
         lineChartInstance.destroy();
       }
     };
-  }, [chartProps.countValue]);
+  }, []);
 
   const updateChart = async (monitoringData: any) => {
     const lineChartCanvas = lineChartCanvasRef.current;
@@ -151,5 +146,5 @@ const RTLineChartEx = (chartProps: ChartProps) => {
   );
 };
 
-export default RTLineChartEx;
+export default RTLineChart;
 

@@ -19,7 +19,7 @@ const initialState : any = {
 } as MonitorClientState;
 
 const MonitoringClientSlice = createSlice({
-    name: 'monitoring-connections',
+    name: 'monitoring-client',
     initialState,
     reducers: {
         reset: () => initialState,

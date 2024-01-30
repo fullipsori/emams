@@ -11,3 +11,4 @@ fakeBackend();
 // export const getMonitoringQueueData = async (queueCount: number) => api.get(url.GET_MONITORING_QUEUE_DATA, { params: { count: queueCount}});
 export const getMonitoringQueueData = (queueCount: number) => axios.get(url.GET_MONITORING_QUEUE_DATA, { params: { count: queueCount }});
 export const getClientInfo = (mlsn: string) => axios.get(url.GET_MONITORING_CLIENT_INFO, { params: { mlsn: mlsn }});
+export const getMonitoringSystemData = (msn: string) => axios.get(url.GET_MONITORING_SYSTEM_DATA, { params: { msn: msn }});

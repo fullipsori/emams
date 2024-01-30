@@ -5,7 +5,7 @@ import { Chart, ChartConfiguration, elements } from "chart.js";
 
 interface ChartProps{
   monitoringDataCallback : () => any;
-  defaultChartData: any;
+  defaultChartData: () => any;
   stack: boolean;
   widthVal?: string;
   heightVal?: string;
@@ -29,7 +29,7 @@ const RTBarChart = (chartProps: ChartProps) => {
         type: "bar",
         data: {
           labels: [],
-          datasets: chartProps.defaultChartData,
+          datasets: chartProps.defaultChartData(),
         },
         options: {
           indexAxis: "x",
