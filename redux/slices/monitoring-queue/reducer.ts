@@ -25,7 +25,9 @@ export const initialState = {
 const MonitoringQueueSlice = createSlice({
   name: 'monitoring-queue',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(getMonitoringQueueData.fulfilled, (state:any, action:PayloadAction<any>) => {
         if(action.payload && action.payload.label) {
@@ -55,5 +57,9 @@ const MonitoringQueueSlice = createSlice({
     });
   }
 });
+
+export const {
+  reset,
+} = MonitoringQueueSlice.actions;
 
 export const MonitoringQueueReducer = MonitoringQueueSlice.reducer;

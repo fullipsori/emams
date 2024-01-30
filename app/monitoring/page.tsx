@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useAppDispatch } from "@/redux/hooks";
 import { addChartData as addQueueChartData , updateChart } from "@/redux/slices/monitoring/reducer";
-import { addChartData as addConnChartData } from "@/redux/slices/monitoring-conn/reducer";
 import BreadCrumb from "./common/BreadCrumb";
 import Footer from "./layouts/Footer";
 import "./monitoring.css"
@@ -38,7 +37,6 @@ const Monitoring = (props: any) => {
         if(chartData) {
             dispatch(updateChart());
             dispatch(addQueueChartData(chartData));
-            dispatch(addConnChartData(chartData));
         }
     }, [chartData])
 

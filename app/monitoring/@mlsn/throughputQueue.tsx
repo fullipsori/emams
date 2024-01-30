@@ -3,10 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { MonitorState } from "@/redux/slices/monitoring/reducer";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
 import RTLineChartEx from "../common/chart/line/RTLineChartEx";
-import { getMonitoringQueueData } from "@/redux/slices/monitoring-queue/thunk";
 
 interface ChartProps {
     countValue: number;

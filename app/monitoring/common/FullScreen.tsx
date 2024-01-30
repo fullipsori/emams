@@ -1,3 +1,5 @@
+{/* <button onClick={()=> fullscreen(document.getElementById("layout-wrapper"))}>Make FullScreen</button>
+<button onClick={() => exitFullScreen()}>Exit FullScreen</button> */}
 
 export const fullscreen = (element: any) => {
     if (element.requestFullscreen) return element.requestFullscreen()

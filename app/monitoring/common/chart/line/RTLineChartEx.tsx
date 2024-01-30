@@ -116,7 +116,7 @@ const RTLineChartEx = (chartProps: ChartProps) => {
     };
   }, [chartProps.countValue]);
 
-  const updateChart = (monitoringData: any) => {
+  const updateChart = async (monitoringData: any) => {
     const lineChartCanvas = lineChartCanvasRef.current;
 
     if (lineChartCanvas) {

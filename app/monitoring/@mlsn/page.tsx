@@ -3,9 +3,9 @@
 import React from "react";
 import { Row, Col, Container, Card, CardHeader, CardBody } from "reactstrap";
 import "../monitoring.css";
-import RTBarChart from "../common/chart/bar/RTBarChart";
 import PendingQueue from "./pendingQueue";
 import ThroughputQueue from "./throughputQueue";
+import ConnectionView from "./connectonView";
 
 const Monitoring = () => {
     return (
@@ -43,7 +43,7 @@ const Monitoring = () => {
                                     <h4 className="card-title mb-0">VPN</h4>
                                 </CardHeader>
                                 <CardBody>
-                                    <RTBarChart />
+                                    <ConnectionView/>
                                 </CardBody>
                             </Card>
                         </Col>

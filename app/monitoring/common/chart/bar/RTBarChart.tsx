@@ -2,24 +2,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartConfiguration, elements } from "chart.js";
-import { createSelector } from "@reduxjs/toolkit";
-import { useAppSelector } from "@/redux/hooks";
-import { MonitorConnState } from "@/redux/slices/monitoring-conn/reducer";
 
-interface StackedBarChartProps {
-  widthVal?: number;
-  heightVal?: number;
+interface ChartProps{
+  monitoringDataCallback : () => any;
+  defaultChartData: any;
+  stack: boolean;
+  widthVal?: string;
+  heightVal?: string;
 }
 
-const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
+const RTBarChart = (chartProps: ChartProps) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const selectMonitoringData = createSelector(
-    (state: any) => state.MonitoringConnReducer,
-    (monitoringData: MonitorConnState) => ({ labels: monitoringData.chartLabels, producerData: monitoringData.producerData, consumerData: monitoringData.consumerData })
-  )
-  const monitoringData = useAppSelector(selectMonitoringData);
+  const monitoringData = chartProps.monitoringDataCallback();
 
   useEffect(() => {
     const barChartCanvas = chartRef.current;
@@ -29,34 +25,21 @@ const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
     if(barChartCanvas) {
       Chart.getChart(barChartCanvas)?.destroy();
 
-      /*
-      const tooltip = {
-        xAlign: "bottom",
-        titleAlign: "center",
-        callback: {
-          label: function (context: any) {
-            console.log("context:::", context.raw);
-            return `${context.dataset.label} ${Math.abs(context.raw)}`;
-          },
-        },
-      };
-      */
-
       chartInstance = new Chart(barChartCanvas, {
         type: "bar",
         data: {
           labels: [],
-          datasets: defaultBarChartDatas() 
+          datasets: chartProps.defaultChartData,
         },
         options: {
           indexAxis: "x",
           scales: {
             x: {
-              stacked: true,
+              stacked: chartProps.stack,
               beginAtZero: true,
             },
             y: {
-              stacked: true,
+              stacked: chartProps.stack,
               ticks: {
                 callback: function (value: any, index, values) {
                   return Math.abs(value);
@@ -81,10 +64,8 @@ const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
               const activeElement = activeElements[0];
               const datasetIndex = activeElement.datasetIndex;
               const dataIndex = activeElement.index;
-              const datasetLabel =
-                chartInstance.data.datasets[datasetIndex].label;
-              const dataValue =
-                chartInstance.data.datasets[datasetIndex].data[dataIndex];
+              const datasetLabel = chartInstance.data.datasets[datasetIndex].label;
+              const dataValue = chartInstance.data.datasets[datasetIndex].data[dataIndex];
               const dataLabel = chartInstance.data.labels ?? [];
               // const dataLabelValue = dataLabel[datasetIndex];
               console.log(`${datasetLabel} :: ${dataValue}`);
@@ -101,41 +82,24 @@ const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
     };
   }, []);
 
-
-  const defaultBarChartDatas = () : any => {
-    return ([
-      {
-        label: "Producer",
-        data: [],
-        backgroundColor: "rgba(82, 90, 124, 0.5)",
-        stack: "Stack 1",
-      },
-      {
-        label: "Consumer",
-        data: [],
-        backgroundColor: "rgba(129, 132, 184, 0.5)",
-        stack: "Stack 1",
-      }
-    ]);
-  }
-
   useEffect(()=>{
-    updateChart();
+    updateChart(monitoringData);
   }, [monitoringData]);
 
 
-  const updateChart = async () => {
-    if(!monitoringData || !monitoringData.labels)
-      return;
+  const updateChart = async (monitoringData: any) => {
     const chartCanvas = chartRef.current;
     if(!chartCanvas) return;
 
     const chartInstance = Chart.getChart(chartCanvas);
     if(!chartInstance) return;
 
+    if(!monitoringData || !monitoringData.labels)
+      return;
+
     chartInstance.data.labels = monitoringData.labels;
-    chartInstance.data.datasets[0].data = monitoringData.producerData;
-    chartInstance.data.datasets[1].data = monitoringData.consumerData;
+    chartInstance.data.datasets[0].data = monitoringData.datas[0];
+    chartInstance.data.datasets[1].data = monitoringData.datas[1];
     chartInstance.update();
   };
 
@@ -184,7 +148,7 @@ const RTBarChart = (stackedBarChartProps: StackedBarChartProps) => {
             )}
           </button>
         </div>
-        <canvas ref={chartRef} width={(stackedBarChartProps.widthVal || '40vw')} height={(stackedBarChartProps.heightVal || '20vh')}></canvas>
+        <canvas ref={chartRef} width={(chartProps.widthVal || '40vw')} height={(chartProps.heightVal || '20vh')}></canvas>
       </div>
     </div>
   );
