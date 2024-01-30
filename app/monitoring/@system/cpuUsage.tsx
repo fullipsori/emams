@@ -24,10 +24,10 @@ const CpuUsage = (chartProps: ChartProps) => {
   return (
     <React.Fragment>
         <Card>
-          <CardHeader>
+          <CardHeader className="py-1">
             <ChartHeader title="CPU usage" monitoringDataCallback={getMonitoringData} />
           </CardHeader>
-          <CardBody>
+          <CardBody className="p-0">
             <RTLineChart countValue={1} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
           </CardBody>
         </Card>

@@ -59,7 +59,7 @@ const ConnectionView = (chartProps: ChartProps) => {
     <React.Fragment>
       <Card>
         <CardHeader>
-          <h3 className="card-title mb-0 fw-bold">Consumers 개수
+          <h3 className="card-title mb-0 fw-bold"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i>Consumers 개수
           </h3>
         </CardHeader>
         <CardBody>

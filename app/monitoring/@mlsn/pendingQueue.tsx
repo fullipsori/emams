@@ -48,11 +48,12 @@ const PendingQueue = (chartProps: ChartProps) => {
     }
   };
 
+  const title = "Pending Messages "
   return (
     <React.Fragment>
       <Card>
         <CardHeader>
-            <h3 className="card-title mb-0 fw-bold">Pending Messages   
+            <h3 className="card-title mb-0 fw-bold"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i>{title}
               <span style={{textDecoration: (yAxisType === "count")? "underline" : ""}} onClick={() => handleYAxisType("count")}>[건수|</span>
               <span style={{textDecoration: (yAxisType === "bytes")? "underline" : ""}} onClick={() => handleYAxisType("bytes")}>Bytes]</span>
             </h3>

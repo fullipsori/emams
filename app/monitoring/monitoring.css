@@ -16,7 +16,11 @@
 }
 
 .m-page-content {
-    padding: calc(1px + 1.5rem) calc(1.5rem * 0.5) calc(1px + 1.5rem) calc(1.5rem * 0.5);
+    padding: calc(1px + 1.5rem) calc(1.5rem * 0.5) calc(0.2rem) calc(1.5rem * 0.5);
+}
+
+.m-subpage-content {
+    padding: calc(0.2rem) calc(0.2)
 }
 
 .m-page-title-box {

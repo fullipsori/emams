@@ -20,13 +20,17 @@ export default function MonitoringLayout(props: {
     return (
         <React.Fragment>
             <div id="layout-wrapper">
-                {props.children}
                 <Container fluid>
                     <Row>
-                        <Col lg={8}>
+                        <Col lg={12}>
+                            {props.children}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg={8} className='p-0'>
                             {props.system}
                         </Col>
-                        <Col lg={4}>
+                        <Col lg={4} className='p-0'>
                             {props.mlsn}
                         </Col>
                     </Row>

@@ -48,11 +48,12 @@ const ThroughputQueue = (chartProps: ChartProps) => {
     }
   };
 
+  const title = "Messages In/Out Rate "
   return (
     <React.Fragment>
       <Card>
         <CardHeader>
-          <h3 className="card-title mb-0 fw-bold">Messages In/Out Rate 
+          <h3 className="card-title mb-0 fw-bold"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i>{title}
             <span style={{ textDecoration: (yAxisType === "count") ? "underline" : "" }} onClick={() => handleYAxisType("count")}>[건수|</span>
             <span style={{ textDecoration: (yAxisType === "bytes") ? "underline" : "" }} onClick={() => handleYAxisType("bytes")}>Bytes]</span>
           </h3>
