@@ -27,7 +27,7 @@ const PendingQueue = (chartProps: ChartProps) => {
 
   const updateMonitoring = createSelector(
     (state: any) => state.MonitoringReducer,
-    (monitoringData: MonitorState) => ({ updateCount: monitoringData.updateCount })
+    (monitoringData: MonitorState) => ({ lastChartTime: monitoringData.lastChartTime})
   )
 
   const monitorState = useAppSelector(updateMonitoring);

@@ -39,6 +39,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-redux": "^9.1.0",
+    "react-select": "^5.8.0",
     "react-tabulator": "^0.19.0",
     "reactstrap": "^9.2.1",
     "redux": "^5.0.1",

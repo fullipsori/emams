@@ -22,7 +22,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/monitoring/common/chart/line/RTLineChartEx_good.tsx", "app/monitoring/common/chart/line/RTLineChartEx tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/monitoring/common/chart/line/RTLineChartEx_good.tsx", "app/monitoring/common/chart/line/RTLineChartEx tsx", "app/monitoring/layout.bak"],
   "exclude": ["node_modules"],
   "typeRoots" : ["./@types"]
 }
