@@ -5,9 +5,10 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorState } from "@/redux/slices/monitoring/reducer";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
-import RTLineChart from "../common/chart/line/RTLineChartEx";
+import RTLineChart from "../common/chart/line/RTLineChart";
 import { getMonitoringQueueData } from "@/redux/slices/monitoring-queue/thunk";
 import { Card, CardBody, CardHeader } from "reactstrap";
+import RTLineChartEx from "../common/chart/line/RTLineChartEx";
 
 interface ChartProps {
     countValue: number;
@@ -20,7 +21,7 @@ const PendingQueue = (chartProps: ChartProps) => {
 
   const selectMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings})
+    (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings})
   )
   // const monitoringData = useAppSelector(selectMonitoringData);
   const getMonitoringData = () => useAppSelector(selectMonitoringData);
@@ -59,7 +60,7 @@ const PendingQueue = (chartProps: ChartProps) => {
             </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+          <RTLineChartEx countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
         </CardBody>
       </Card>
     </React.Fragment>

@@ -15,15 +15,7 @@ interface ChartProps{
   heightVal?: string;
 }
 
-const dateToString= (dateTime: string|number) => {
-  const time: Date = new Date(dateTime);
-  const hours = time.getHours().toString().padStart(2, "0");
-  const minutes = time.getMinutes().toString().padStart(2, "0");
-  const seconds = time.getSeconds().toString().padStart(2, "0");
-  return `${hours}:${minutes}:${seconds}`;
-}
-
-const RTLineChartEx = (chartProps: ChartProps) => {
+const RTLineChart = (chartProps: ChartProps) => {
 
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const monitoringData = chartProps.monitoringDataCallback();
@@ -61,18 +53,12 @@ const RTLineChartEx = (chartProps: ChartProps) => {
         animation: false,
         scales: {
           x: {
-            suggestedMin: new Date().getTime() - 5*60*1000,
             ticks: {
               font: {
                 family: 'Poppins',
               },
               autoSkip: true,
-              maxTicksLimit: 20,
-              callback(tickValue, index, ticks) {
-                if(tickValue !== undefined) {
-                  return dateToString(this.getLabelForValue(index));
-                }
-              },
+              maxTicksLimit: 50
             }
           },
           y: {
@@ -127,17 +113,16 @@ const RTLineChartEx = (chartProps: ChartProps) => {
 
   const updateChart = async (monitoringData: any) => {
     const lineChartCanvas = lineChartCanvasRef.current;
+
     if (lineChartCanvas) {
       const chartInstance = Chart.getChart(lineChartCanvas);
       if (chartInstance && monitoringData && monitoringData.labels && monitoringData.labels.length > 0) {
         chartInstance.data.labels = monitoringData.labels;
-        if(chartInstance.options.scales && chartInstance.options.scales.x) {
-          // chartInstance.options.scales.x.min = monitoringData.minLabel;
-        }
         for(var step= 0; step < chartProps.countValue; step++) {
           chartInstance.data.datasets[step].label = monitoringData.names[step];
           chartInstance.data.datasets[step].data = monitoringData.datas[step];
         }
+
         chartInstance.update();
       }
     }
@@ -153,13 +138,13 @@ const RTLineChartEx = (chartProps: ChartProps) => {
           <canvas
             id="lineChart"
             ref={lineChartCanvasRef}
-            // width={chartProps.widthVal ?? "40vw"}
-            height={chartProps.heightVal ?? "25vh"}
+            width={chartProps.widthVal ?? "40vw"}
+            height={chartProps.heightVal ?? "20vh"}
           ></canvas>
       </div>
     </React.Fragment>
   );
 };
 
-export default RTLineChartEx;
+export default RTLineChart;
 

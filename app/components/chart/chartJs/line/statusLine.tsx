@@ -57,6 +57,15 @@ const StatusLine: React.FC<StatusLineProps> = ({
     labels.push(label);
   }
 
+  var startTime: any;
+  {
+  const currentTime = new Date(startTimeValue.getTime() - 3*60*1000);
+  const hours = currentTime.getHours().toString().padStart(2, "0");
+  const minutes = currentTime.getMinutes().toString().padStart(2, "0");
+  startTime = `${hours}:${minutes}`;
+  }
+  console.log(startTime);
+
   const generateRandomDataset = () => {
     return Array.from({ length: count }, () => getRandomData(count));
   };
@@ -220,6 +229,11 @@ const StatusLine: React.FC<StatusLineProps> = ({
           //     loop: (context) => context.active,
           //   },
           // },
+          scales: {
+            x: {
+              min: startTime,
+            }
+          },
           interaction: {
             mode: "nearest",
             intersect: false,
