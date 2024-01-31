@@ -21,7 +21,7 @@ const fakeBackend = () => {
             }
             resolve([200, resultData]);
           }else{
-              reject([400, "rejected "]);
+            reject([400, "rejected "]);
           }
         });
     });
@@ -31,18 +31,14 @@ const fakeBackend = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
           if(true) {
-            const dateTime: Date = new Date();
-            const hours = dateTime.getHours().toString().padStart(2, "0");
-            const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-            const seconds = dateTime.getSeconds().toString().padStart(2, "0");
             const resultData = {
-                label: `${hours}:${minutes}:${seconds}`,
-                producer: Math.random()*100,
-                consumer: Math.random()*100,
+                label: [new Date().getTime()],
+                producer: [Math.random()*100],
+                consumer: [Math.random()*100],
             }
             resolve([200, resultData])
           }else{
-              reject([400, "rejected "]);
+            reject([400, "rejected "]);
           }
         });
     });
@@ -52,25 +48,21 @@ const fakeBackend = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
           if(true) {
-            const dateTime: Date = new Date();
-            const hours = dateTime.getHours().toString().padStart(2, "0");
-            const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-            const seconds = dateTime.getSeconds().toString().padStart(2, "0");
             const resultData = {
-                label: `${hours}:${minutes}:${seconds}`,
-                cpuUsage: Math.random()*100,
-                memoryUsage: Math.random()*100,
-                diskUsage: Math.random()*100,
+                label: [new Date().getTime()],
+                cpuUsage: [Math.random()*100],
+                memoryUsage: [Math.random()*100],
+                diskUsage: [Math.random()*100],
                 coreCount: 4,
                 memorySize: 256,
-                diskRead: Math.random()*10000,
-                diskWrite: Math.random()*10000,
-                networkRead: Math.random()*10000,
-                networkWrite: Math.random()*10000,
+                diskRead: [Math.random()*10000],
+                diskWrite: [Math.random()*10000],
+                networkRead: [Math.random()*10000],
+                networkWrite: [Math.random()*10000],
             }
             resolve([200, resultData])
           }else{
-              reject([400, "rejected "]);
+            reject([400, "rejected "]);
           }
         });
     });
@@ -79,9 +71,3 @@ const fakeBackend = () => {
 };
 
 export default fakeBackend;
-/*
-            const dateTime: Date = new Date();
-            const hours = dateTime.getHours().toString().padStart(2, "0");
-            const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-            const seconds = dateTime.getSeconds().toString().padStart(2, "0");
-            */

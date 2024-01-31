@@ -17,7 +17,7 @@ const DiskUsage = (chartProps: ChartProps) => {
 
   const selectMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["read", "write"], labels: monitoringData.labels, datas: monitoringData.diskIO })
+    (monitoringData: MonitorSystemState) => ({ names: ["read", "write"],minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.diskIO })
   )
   const getMonitoringData = () => useAppSelector(selectMonitoringData);
 
@@ -28,7 +28,7 @@ const DiskUsage = (chartProps: ChartProps) => {
           <ChartHeader title="DISK read/write" monitoringDataCallback={getMonitoringData} />
         </CardHeader>
         <CardBody className="p-0">
-          <RTLineChart countValue={2} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+          <RTLineChart countValue={2} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
         </CardBody>
       </Card>
     </React.Fragment>

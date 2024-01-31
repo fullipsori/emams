@@ -3,7 +3,7 @@ import { getMonitoringQueueData } from './thunk';
 
 export type MonitorQueueState = {
     timeRange: number, // seconds
-    maxLabels: number,
+    queueCounts: number,
     queueNames: string[],
     minLabel: number,
     queueLabels: number[],
@@ -13,8 +13,8 @@ export type MonitorQueueState = {
 };
 
 export const initialState = {
-    timeRange: 5*50, // default: 5min
-    maxLabels: 20,
+    timeRange: 5*60, // default: 5min
+    queueCounts: 0,
     queueNames: [],
     minLabel: 0,
     queueLabels: [],
@@ -22,7 +22,6 @@ export const initialState = {
     queueTps:[],
     error: {}
 };
-
 
 const MonitoringQueueSlice = createSlice({
   name: 'monitoring-queue',
@@ -37,9 +36,7 @@ const MonitoringQueueSlice = createSlice({
     builder.addCase(getMonitoringQueueData.fulfilled, (state:any, action:PayloadAction<any>) => {
         if(action.payload && action.payload.label && action.payload.label.length > 0) {
           state.minLabel = action.payload.label[action.payload.label.length-1] - state.timeRange*1000;
-
           let shiftCount = 0;
-          /* ordered 되어 있음으로 while 문으로 구현 */
           let index = 0;
           while(state.queueLabels.length > 0 && state.queueLabels[index++] < state.minLabel)  {
             shiftCount++;
@@ -51,11 +48,9 @@ const MonitoringQueueSlice = createSlice({
               state.queuePendings[j].shift();
               state.queueTps[j].shift();
             }
-            /* 항상 처음 element 를 갖어야 한다. */
             state.minLabel = state.queueLabels[0];
           }
 
-          //add data
           state.queueNames = action.payload.names;
           state.queueLabels.push(...action.payload.label);
           for(let i=0; i< action.payload.pending.length; i++) {

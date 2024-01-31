@@ -17,7 +17,7 @@ const CpuUsage = (chartProps: ChartProps) => {
 
   const selectMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["cpu usage"], labels: monitoringData.labels, datas: [ monitoringData.cpuUsages] })
+    (monitoringData: MonitorSystemState) => ({ names: ["cpu usage"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: [ monitoringData.cpuUsages] })
   )
   const getMonitoringData = () => useAppSelector(selectMonitoringData);
 
@@ -28,7 +28,7 @@ const CpuUsage = (chartProps: ChartProps) => {
             <ChartHeader title="CPU usage" monitoringDataCallback={getMonitoringData} />
           </CardHeader>
           <CardBody className="p-0">
-            <RTLineChart countValue={1} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+            <RTLineChart countValue={1} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
           </CardBody>
         </Card>
     </React.Fragment>

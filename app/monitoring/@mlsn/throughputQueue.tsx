@@ -4,9 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
-import RTLineChart from "../common/chart/line/RTLineChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
-import RTLineChartEx from "../common/chart/line/RTLineChartEx";
+import RTLineChart from "../common/chart/line/RTLineChart";
 
 interface ChartProps {
     countValue: number;
@@ -20,27 +19,7 @@ const ThroughputQueue = (chartProps: ChartProps) => {
     (state: any) => state.MonitoringQueueReducer,
     (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps})
   )
-  // const monitoringData = useAppSelector(selectMonitoringData);
   const getMonitoringData = () => useAppSelector(selectMonitoringData);
-
-  /*
-
-  const dispatch = useAppDispatch();
-  const updateMonitoring = createSelector(
-    (state: any) => state.MonitoringReducer,
-    (monitoringData: MonitorState) => ({ updateCount: monitoringData.updateCount })
-  )
-
-  const monitorState = useAppSelector(updateMonitoring);
-
-  useEffect(() => {
-    const req = {
-      period: "now",
-      queueCount: chartProps.countValue,
-    };
-    dispatch(getMonitoringQueueData(req));
-  }, [monitorState]);
-  */
 
   const [yAxisType, setYAxisType] = useState("count");
   const handleYAxisType = (type: string) => {
@@ -60,7 +39,7 @@ const ThroughputQueue = (chartProps: ChartProps) => {
           </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChartEx countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
         </CardBody>
       </Card>
     </React.Fragment>

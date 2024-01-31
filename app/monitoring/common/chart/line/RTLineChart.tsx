@@ -4,6 +4,7 @@ import "../../../../../public/css/style.css";
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
+import "chartjs-adapter-date-fns";
 
 
 Chart.register(...registerables, zoomPlugin);
@@ -53,12 +54,18 @@ const RTLineChart = (chartProps: ChartProps) => {
         animation: false,
         scales: {
           x: {
+            type: 'time',
+            time:{
+              displayFormats: {
+                second: 'HH:mm:ss'
+              }
+            },
             ticks: {
               font: {
                 family: 'Poppins',
               },
               autoSkip: true,
-              maxTicksLimit: 50
+              maxTicksLimit: 20,
             }
           },
           y: {
@@ -95,8 +102,8 @@ const RTLineChart = (chartProps: ChartProps) => {
     let lineChartInstance: Chart | null = null;
     if (lineChartCanvas) {
       lineChartCanvas.style.position = "static";
-      lineChartCanvas.style.width = chartProps.widthVal ?? "40vw";
-      lineChartCanvas.style.height = chartProps.heightVal ?? "20vh";
+      // lineChartCanvas.style.width = chartProps.widthVal ?? "40vw";
+      lineChartCanvas.style.height = chartProps.heightVal ?? "25vh";
 
       if (Chart.getChart(lineChartCanvas)) {
         Chart.getChart(lineChartCanvas)?.destroy();
@@ -113,16 +120,17 @@ const RTLineChart = (chartProps: ChartProps) => {
 
   const updateChart = async (monitoringData: any) => {
     const lineChartCanvas = lineChartCanvasRef.current;
-
     if (lineChartCanvas) {
       const chartInstance = Chart.getChart(lineChartCanvas);
       if (chartInstance && monitoringData && monitoringData.labels && monitoringData.labels.length > 0) {
         chartInstance.data.labels = monitoringData.labels;
+        if(chartInstance.options.scales && chartInstance.options.scales.x) {
+          chartInstance.options.scales.x.min = monitoringData.minLabel;
+        }
         for(var step= 0; step < chartProps.countValue; step++) {
           chartInstance.data.datasets[step].label = monitoringData.names[step];
           chartInstance.data.datasets[step].data = monitoringData.datas[step];
         }
-
         chartInstance.update();
       }
     }
@@ -138,8 +146,8 @@ const RTLineChart = (chartProps: ChartProps) => {
           <canvas
             id="lineChart"
             ref={lineChartCanvasRef}
-            width={chartProps.widthVal ?? "40vw"}
-            height={chartProps.heightVal ?? "20vh"}
+            // width={chartProps.widthVal ?? "40vw"}
+            height={chartProps.heightVal ?? "25vh"}
           ></canvas>
       </div>
     </React.Fragment>

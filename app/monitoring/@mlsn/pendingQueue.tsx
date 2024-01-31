@@ -5,10 +5,9 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorState } from "@/redux/slices/monitoring/reducer";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
-import RTLineChart from "../common/chart/line/RTLineChart";
 import { getMonitoringQueueData } from "@/redux/slices/monitoring-queue/thunk";
 import { Card, CardBody, CardHeader } from "reactstrap";
-import RTLineChartEx from "../common/chart/line/RTLineChartEx";
+import RTLineChart from "../common/chart/line/RTLineChart";
 
 interface ChartProps {
     countValue: number;
@@ -60,7 +59,7 @@ const PendingQueue = (chartProps: ChartProps) => {
             </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChartEx countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
         </CardBody>
       </Card>
     </React.Fragment>

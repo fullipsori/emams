@@ -32,9 +32,21 @@ const RTBarChart = (chartProps: ChartProps) => {
           datasets: chartProps.defaultChartData(),
         },
         options: {
+          animation: false,
           indexAxis: "x",
           scales: {
             x: {
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 10,
+                callback(tickValue, index, ticks) {
+                    const dateTime: Date = new Date(this.getLabelForValue(index));
+                    const hours = dateTime.getHours().toString().padStart(2, "0");
+                    const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+                    const seconds = dateTime.getSeconds().toString().padStart(2, "0");
+                    return `${hours}:${minutes}:${seconds}`;
+                }
+              },
               stacked: chartProps.stack,
               beginAtZero: true,
             },
@@ -97,9 +109,31 @@ const RTBarChart = (chartProps: ChartProps) => {
     if(!monitoringData || !monitoringData.labels)
       return;
 
-    chartInstance.data.labels = monitoringData.labels;
-    chartInstance.data.datasets[0].data = monitoringData.datas[0];
-    chartInstance.data.datasets[1].data = monitoringData.datas[1];
+      /*
+    if(monitoringData.labels&& monitoringData.labels.length > 20) {
+      const startIndex = monitoringData.labels.length - 20;
+      chartInstance.data.labels = monitoringData.labels.slice(startIndex, monitoringData.labels.length);
+      chartInstance.data.datasets[0].data = monitoringData.datas[0].slice(startIndex, monitoringData.labels.length);
+      chartInstance.data.datasets[1].data = monitoringData.datas[1].slice(startIndex, monitoringData.labels.length);
+    }else{
+      chartInstance.data.labels = monitoringData.labels;
+      chartInstance.data.datasets[0].data = monitoringData.datas[0];
+      chartInstance.data.datasets[1].data = monitoringData.datas[1];
+    }
+
+    if (chartInstance.options.scales && chartInstance.options.scales.x) {
+      // chartInstance.options.scales.x.min = monitoringData.minLabel;
+      // chartInstance.options.scales.x.min = new Date().getTime() - 20*1000;
+    }
+    */
+      chartInstance.data.labels = monitoringData.labels;
+      chartInstance.data.datasets[0].data = monitoringData.datas[0];
+      chartInstance.data.datasets[1].data = monitoringData.datas[1];
+
+    // if (chartInstance.options.scales && chartInstance.options.scales.x) {
+    //    chartInstance.options.scales.x.min = monitoringData.minLabel;
+    // }
+
     chartInstance.update();
   };
 
@@ -148,7 +182,7 @@ const RTBarChart = (chartProps: ChartProps) => {
             )}
           </button>
         </div>
-        <canvas ref={chartRef} width={(chartProps.widthVal || '40vw')} height={(chartProps.heightVal || '20vh')}></canvas>
+        <canvas ref={chartRef} width={(chartProps.widthVal || '40vw')}  height={(chartProps.heightVal || '20vh')}></canvas>
       </div>
     </div>
   );

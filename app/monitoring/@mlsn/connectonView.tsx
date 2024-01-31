@@ -19,7 +19,7 @@ const ConnectionView = (chartProps: ChartProps) => {
 
   const selectMonitoringData = createSelector(
     (state: any) => state.MonitoringClientReducer,
-    (monitoringData: MonitorClientState) => ({ labels: monitoringData.chartLabels, datas: [monitoringData.producerData, monitoringData.consumerData]})
+    (monitoringData: MonitorClientState) => ({ labels: monitoringData.labels, minLabel: monitoringData.minLabel, datas: [monitoringData.producerData, monitoringData.consumerData]})
   )
   const getMonitoringData = () => useAppSelector(selectMonitoringData);
 

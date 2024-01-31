@@ -17,7 +17,7 @@ const NetworkUsage = (chartProps: ChartProps) => {
 
   const selectMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["received", "send"], labels: monitoringData.labels, datas: monitoringData.networkIO})
+    (monitoringData: MonitorSystemState) => ({ names: ["received", "send"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.networkIO})
   )
   const getMonitoringData = () => useAppSelector(selectMonitoringData);
 
@@ -28,7 +28,7 @@ const NetworkUsage = (chartProps: ChartProps) => {
           <ChartHeader title="Network IO" monitoringDataCallback={getMonitoringData} />
         </CardHeader>
         <CardBody className="p-0">
-          <RTLineChart countValue={2} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+          <RTLineChart countValue={2} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
         </CardBody>
       </Card>        
     </React.Fragment>

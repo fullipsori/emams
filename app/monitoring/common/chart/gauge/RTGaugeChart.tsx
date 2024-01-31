@@ -170,7 +170,7 @@ const RTGaugeChart = (chartProps: ChartProps) => {
       <canvas 
         id="gauge-chart"
         ref={chartRef} 
-        width={chartProps.widthVal ?? "25vw"}
+        // width={chartProps.widthVal ?? "25vw"}
         height={chartProps.heightVal ?? "15vh"}
       ></canvas>
     </React.Fragment>
