@@ -7,6 +7,7 @@ import RTLineChart from "../common/chart/line/RTLineChart";
 import { MonitorSystemState } from "@/redux/slices/monitoring-system/reducer";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import ChartHeader from "./chartHeader";
+import getLineChartOpts from "../common/chart/line/LineChartOpts";
 
 interface ChartProps {
     widthVal?: string;
@@ -28,7 +29,7 @@ const CpuUsage = (chartProps: ChartProps) => {
             <ChartHeader title="CPU usage" monitoringDataCallback={getMonitoringData} />
           </CardHeader>
           <CardBody className="p-0">
-            <RTLineChart countValue={1} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+            <RTLineChart monitoringDataCallback={getMonitoringData} chartOptions={getLineChartOpts({ count: 1 })} />
           </CardBody>
         </Card>
     </React.Fragment>

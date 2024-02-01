@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartConfiguration, elements } from "chart.js";
+import "chartjs-adapter-date-fns";
 
 interface ChartProps {
   monitoringDataCallback: () => any;
@@ -34,6 +35,7 @@ const RTBarChart = (chartProps: ChartProps) => {
           indexAxis: "x",
           scales: {
             x: {
+              type: undefined,
               ticks: {
                 autoSkip: true,
                 maxTicksLimit: 10,

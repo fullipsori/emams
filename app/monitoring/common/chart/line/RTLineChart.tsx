@@ -8,10 +8,8 @@ import "chartjs-adapter-date-fns";
 Chart.register(...registerables, zoomPlugin);
 
 interface ChartProps {
-  countValue: number;
   monitoringDataCallback: () => any;
-  widthVal?: string;
-  heightVal?: string;
+  chartOptions: any,
 }
 
 const RTLineChart = (chartProps: ChartProps) => {
@@ -19,78 +17,13 @@ const RTLineChart = (chartProps: ChartProps) => {
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const monitoringData = chartProps.monitoringDataCallback();
 
-  const defaultLineChartData = (name?: string, data?: number[]): any => {
-    return ({
-      label: name ?? "",
-      data: data ?? [],
-      borderColor: `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`,
-      borderWidth: 2,
-      fill: true,
-      pointRadius: 0,
-      pointHoverRadius: 0,
-      tension: 0.5,
-    });
-  }
-
-  const newChart = (name?: string, labels?: string[], data?: number[]): Chart | null => {
+  const newChart = (): Chart | null => {
     const lineChartCanvas = lineChartCanvasRef.current;
     if (!lineChartCanvas) return null;
 
-    return new Chart(lineChartCanvas, {
-      type: "line",
-      data: {
-        labels: labels ?? [],
-        datasets: Array.from(
-          { length: chartProps.countValue },
-          (_, index) => {
-            return defaultLineChartData(name, data);
-          }
-        ),
-      },
-      options: {
-        animation: false,
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-              displayFormats: {
-                second: 'HH:mm:ss'
-              }
-            },
-            ticks: {
-              font: {
-                family: 'Poppins',
-              },
-              autoSkip: true,
-              maxTicksLimit: 20,
-            }
-          },
-          y: {
-            ticks: {
-              font: {
-                family: 'Poppins',
-              },
-            },
-          },
-        },
-        interaction: {
-          mode: "nearest",
-          intersect: false,
-          axis: "x",
-        },
-        plugins: {
-          legend: { position: "bottom" },
-          zoom: {
-            zoom: {
-              drag: {
-                enabled: true,
-              },
-              mode: "x",
-            },
-          },
-        },
-      },
-    })
+    console.log("new Chart " + chartProps.chartOptions.config.type);
+    return new Chart(lineChartCanvas,chartProps.chartOptions.config);
+
   };
 
   /* initial loading */
@@ -99,13 +32,13 @@ const RTLineChart = (chartProps: ChartProps) => {
     let lineChartInstance: Chart | null = null;
     if (lineChartCanvas) {
       lineChartCanvas.style.position = "static";
-      lineChartCanvas.style.width = chartProps.widthVal ?? "40vw";
-      lineChartCanvas.style.height = chartProps.heightVal ?? "20vh";
+      lineChartCanvas.style.width = chartProps.chartOptions.widthVal ?? "40vw";
+      lineChartCanvas.style.height = chartProps.chartOptions.heightVal ?? "20vh";
 
       if (Chart.getChart(lineChartCanvas)) {
         Chart.getChart(lineChartCanvas)?.destroy();
       }
-      lineChartInstance = newChart("", [], []);
+      lineChartInstance = newChart();
     }
 
     return () => {
@@ -124,7 +57,7 @@ const RTLineChart = (chartProps: ChartProps) => {
         if (chartInstance.options.scales && chartInstance.options.scales.x) {
           chartInstance.options.scales.x.min = monitoringData.minLabel;
         }
-        for (var step = 0; step < chartProps.countValue; step++) {
+        for (var step = 0; step < chartProps.chartOptions.count; step++) {
           chartInstance.data.datasets[step].label = monitoringData.names[step];
           chartInstance.data.datasets[step].data = monitoringData.datas[step];
         }
@@ -170,7 +103,7 @@ const RTLineChart = (chartProps: ChartProps) => {
               )}
             </button>
           </div>
-          <canvas id="lineChart" ref={lineChartCanvasRef} width={(chartProps.widthVal || '40vw')} height={(chartProps.heightVal || '20vh')}></canvas>
+          <canvas id="lineChart" ref={lineChartCanvasRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
         </div>
       </div>
     </React.Fragment>
