@@ -1,11 +1,6 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react";
-import { createSelector } from "@reduxjs/toolkit";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { MonitorState } from "@/redux/slices/monitoring/reducer";
-import { MonitorQueueState, reset as resetData } from "@/redux/slices/monitoring-queue/reducer";
-import { getMonitoringQueueData } from "@/redux/slices/monitoring-queue/thunk";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import RTLineChart from "../../common/chart/line/RTLineChart";
 import getLineChartOpts from "../../common/chart/line/LineChartOpts";

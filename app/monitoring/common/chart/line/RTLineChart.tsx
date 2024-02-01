@@ -81,8 +81,8 @@ const RTLineChart = (chartProps: ChartProps) => {
   // const [isDetail, setIsDetail] = useState(false);
   const handleDetail = () => {
     // setIsDetail(!isDetail);
-    router.push('/monitoring/detail');
-    console.log("pushed")
+    router.push(`/monitoring/${chartProps.dataSourceType}`);
+
   };
 
   return (

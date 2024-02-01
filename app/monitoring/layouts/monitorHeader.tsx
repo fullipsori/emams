@@ -8,7 +8,7 @@ import btc from "../../assets/images/svg/crypto-icons/btc.svg";
 import eth from "../../assets/images/svg/crypto-icons/eth.svg";
 import ltc from "../../assets/images/svg/crypto-icons/ltc.svg";
 import { useAppDispatch } from '@/redux/hooks';
-import { reset as resetMonitor, updateChartTime, updateRefreshMode, updateTimeRange } from '@/redux/slices/monitoring/reducer';
+import { reset as resetMonitor, updateRefreshMode, updateTimeRange } from '@/redux/slices/monitoring/reducer';
 import { reset as resetClientData } from '@/redux/slices/monitoring-client/reducer';
 import { reset as resetQueueData } from '@/redux/slices/monitoring-queue/reducer';
 import { reset as resetSystemData  } from '@/redux/slices/monitoring-system/reducer';
@@ -44,7 +44,6 @@ export function useInterval(callback: () => void, delay: number | null) {
     }, [delay])
 }
 
-/** 구조를 바꿔야 한다. */
 const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
     const dispatch: any = useAppDispatch();
     const [chartData, setChartData] = useState<number>();
@@ -52,7 +51,6 @@ const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
     /* 헤더에서 chart update 용 timer 를 구동한다. */
     useEffect(() => {
         if (chartData) {
-            dispatch(updateChartTime(chartData))
             dispatch(getMonitoringQueueData({ period: "now", queueCount: 3}));
             dispatch(getClientInfoData({mlsn: "default", period: "now"}));
             dispatch(getMonitoringSystemData({msn: "default", period: "now"}));

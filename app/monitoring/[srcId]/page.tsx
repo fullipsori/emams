@@ -1,10 +1,14 @@
 "use client"
 
+import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import Select from "react-select";
 import { Container, Row, Col, Button } from "reactstrap";
+import RTLineChart from "../common/chart/line/RTLineChart";
+import getLineChartOpts from "../common/chart/line/LineChartOpts";
 
-const Detail = () => {
+const Detail = (props: any) => {
+
     const handleBack = () => {
         console.log("Back");
     }
@@ -42,7 +46,7 @@ const Detail = () => {
                     </Row>
                     <Row>
                         <div className="border-2 align-items-center text-center bg-white-100" style={{height: "80vh"}} >
-                            Test
+                             <RTLineChart dataSourceType={props.params.srcId}  chartOptions={getLineChartOpts({count:3, widthVal:"100%", heightVal:"100%"}) }/>
                         </div>
                     </Row>
                 </Col>

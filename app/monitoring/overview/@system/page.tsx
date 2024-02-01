@@ -7,8 +7,6 @@ import RTGaugeChart from "../../common/chart/gauge/RTGaugeChart";
 import DockerInfo from "./DockerInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { createSelector } from "@reduxjs/toolkit";
-import { MonitorState } from "@/redux/slices/monitoring/reducer";
-import { getMonitoringSystemData } from "@/redux/slices/monitoring-system/thunk";
 import CpuUsage from "./cpuUsage";
 import MemoryUsage from "./memoryUsage";
 import DiskUsage from "./diskUsage";

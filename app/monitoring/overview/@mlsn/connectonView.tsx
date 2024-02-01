@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorClientState, reset as resetData } from "@/redux/slices/monitoring-client/reducer";
-import { MonitorState } from "@/redux/slices/monitoring/reducer";
-import { getClientInfoData } from "@/redux/slices/monitoring-client/thunk";
 import RTBarChart from "../../common/chart/bar/RTBarChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
 
