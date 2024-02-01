@@ -4,7 +4,7 @@ import '../globals.css'
 import Footer from './layouts/Footer'
 import React from 'react'
 import { Col, Container, Row } from 'reactstrap'
-import MonitorHeader from './monitorHeader'
+import MonitorHeader from './layouts/monitorHeader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,8 +15,6 @@ export const metadata: Metadata = {
 
 export default function MonitoringLayout(props: {
     children: React.ReactNode
-    system: React.ReactNode
-    mlsn: React.ReactNode
 }) {
     return (
         <React.Fragment>
@@ -28,14 +26,6 @@ export default function MonitoringLayout(props: {
                     <Row>
                         <Col lg={12}>
                             {props.children}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg={8} className='p-0'>
-                            {props.system}
-                        </Col>
-                        <Col lg={4} className='p-0'>
-                            {props.mlsn}
                         </Col>
                     </Row>
                 </Container>

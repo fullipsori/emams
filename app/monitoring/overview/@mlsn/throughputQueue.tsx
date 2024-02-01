@@ -5,8 +5,8 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
 import { Card, CardBody, CardHeader } from "reactstrap";
-import RTLineChart from "../common/chart/line/RTLineChart";
-import getLineChartOpts from "../common/chart/line/LineChartOpts";
+import RTLineChart from "../../common/chart/line/RTLineChart";
+import getLineChartOpts from "../../common/chart/line/LineChartOpts";
 
 interface ChartProps {
     countValue: number;
@@ -40,7 +40,7 @@ const ThroughputQueue = (chartProps: ChartProps) => {
           </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChart monitoringDataCallback={getMonitoringData} chartOptions={getLineChartOpts({count:chartProps.countValue})} />
+          <RTLineChart dataSourceType="throughput" chartOptions={getLineChartOpts({count:chartProps.countValue})} />
         </CardBody>
       </Card>
     </React.Fragment>

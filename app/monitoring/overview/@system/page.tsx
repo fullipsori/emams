@@ -2,8 +2,8 @@
 
 import React, { useEffect } from "react";
 import { Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap';
-import "../monitoring.css";
-import RTGaugeChart from "../common/chart/gauge/RTGaugeChart";
+import "../../monitoring.css";
+import RTGaugeChart from "../../common/chart/gauge/RTGaugeChart";
 import DockerInfo from "./DockerInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { createSelector } from "@reduxjs/toolkit";

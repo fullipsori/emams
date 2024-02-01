@@ -3,27 +3,29 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-date-fns";
+import { useRouter } from "next/navigation";
+import getDataSource from "../../data/DataSource";
 
 
 Chart.register(...registerables, zoomPlugin);
 
 interface ChartProps {
-  monitoringDataCallback: () => any;
+  dataSourceType: string,
   chartOptions: any,
 }
 
 const RTLineChart = (chartProps: ChartProps) => {
+  const router = useRouter();
 
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const monitoringData = chartProps.monitoringDataCallback();
+  const dataSourceFunc = getDataSource(chartProps.dataSourceType);
+  const monitoringData = dataSourceFunc();
 
   const newChart = (): Chart | null => {
     const lineChartCanvas = lineChartCanvasRef.current;
     if (!lineChartCanvas) return null;
 
-    console.log("new Chart " + chartProps.chartOptions.config.type);
     return new Chart(lineChartCanvas,chartProps.chartOptions.config);
-
   };
 
   /* initial loading */
@@ -75,6 +77,14 @@ const RTLineChart = (chartProps: ChartProps) => {
     setIsZoomed(!isZoomed);
     console.log(" 줌 했음 ", isZoomed);
   };
+
+  // const [isDetail, setIsDetail] = useState(false);
+  const handleDetail = () => {
+    // setIsDetail(!isDetail);
+    router.push('/monitoring/detail');
+    console.log("pushed")
+  };
+
   return (
     <React.Fragment>
       <div className={`${isZoomed ? "bg-red-100 box-wrapper " : " bg-white-100"}`}>
@@ -89,19 +99,14 @@ const RTLineChart = (chartProps: ChartProps) => {
               alignItems: "center",
             }}
           >
-            <button
-              style={{
-                width: 20,
-                marginRight: 10,
-              }}
-              onClick={handleZoom}
-            >
+            <button style={{ width: 20, marginRight: 10, visibility: chartProps.chartOptions.zoomMode? 'visible':"hidden" }} onClick={handleZoom} >
               {isZoomed ? (
                 <img src="/zoom_out.png" alt="ZoomOut" />
               ) : (
                 <img src="/zoom.png" alt="Zoom" />
               )}
             </button>
+            <button type="button" onClick={handleDetail}>Click Detail</button>
           </div>
           <canvas id="lineChart" ref={lineChartCanvasRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
         </div>

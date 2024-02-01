@@ -7,8 +7,8 @@ import { MonitorState } from "@/redux/slices/monitoring/reducer";
 import { MonitorQueueState, reset as resetData } from "@/redux/slices/monitoring-queue/reducer";
 import { getMonitoringQueueData } from "@/redux/slices/monitoring-queue/thunk";
 import { Card, CardBody, CardHeader } from "reactstrap";
-import RTLineChart from "../common/chart/line/RTLineChart";
-import getLineChartOpts from "../common/chart/line/LineChartOpts";
+import RTLineChart from "../../common/chart/line/RTLineChart";
+import getLineChartOpts from "../../common/chart/line/LineChartOpts";
 
 interface ChartProps {
     countValue: number;
@@ -41,7 +41,6 @@ const PendingQueue = (chartProps: ChartProps) => {
 
   }, [monitorState]);
 
-
   useEffect(() => {
     return () => {
       dispatch(resetData());
@@ -66,7 +65,7 @@ const PendingQueue = (chartProps: ChartProps) => {
             </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChart monitoringDataCallback={getMonitoringData} chartOptions={getLineChartOpts({count:chartProps.countValue})}/>
+          <RTLineChart dataSourceType="pending"  chartOptions={getLineChartOpts({count:chartProps.countValue})}/>
         </CardBody>
       </Card>
     </React.Fragment>
