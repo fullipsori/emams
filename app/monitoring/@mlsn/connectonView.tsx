@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { MonitorClientState } from "@/redux/slices/monitoring-client/reducer";
+import { MonitorClientState, reset as resetData } from "@/redux/slices/monitoring-client/reducer";
 import { MonitorState } from "@/redux/slices/monitoring/reducer";
 import { getClientInfoData } from "@/redux/slices/monitoring-client/thunk";
 import RTBarChart from "../common/chart/bar/RTBarChart";
@@ -38,6 +38,11 @@ const ConnectionView = (chartProps: ChartProps) => {
     dispatch(getClientInfoData(req));
   }, [monitorState]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetData());
+    }
+  }, [dispatch]);
 
   const defaultBarChartData = () => { 
     return([

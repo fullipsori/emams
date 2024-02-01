@@ -28,7 +28,7 @@ const DiskUsage = (chartProps: ChartProps) => {
           <ChartHeader title="DISK read/write" monitoringDataCallback={getMonitoringData} />
         </CardHeader>
         <CardBody className="p-0">
-          <RTLineChart countValue={2} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
+          <RTLineChart countValue={2} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
         </CardBody>
       </Card>
     </React.Fragment>

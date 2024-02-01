@@ -1,10 +1,8 @@
-"use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartConfiguration, elements } from "chart.js";
 
-interface ChartProps{
-  monitoringDataCallback : () => any;
+interface ChartProps {
+  monitoringDataCallback: () => any;
   defaultChartData: () => any;
   stack: boolean;
   widthVal?: string;
@@ -22,7 +20,7 @@ const RTBarChart = (chartProps: ChartProps) => {
     //차이점을 확인 : const ctx = chartRef.current?.getContext("2d");
     let chartInstance: Chart | null = null;
 
-    if(barChartCanvas) {
+    if (barChartCanvas) {
       Chart.getChart(barChartCanvas)?.destroy();
 
       chartInstance = new Chart(barChartCanvas, {
@@ -40,11 +38,11 @@ const RTBarChart = (chartProps: ChartProps) => {
                 autoSkip: true,
                 maxTicksLimit: 10,
                 callback(tickValue, index, ticks) {
-                    const dateTime: Date = new Date(this.getLabelForValue(index));
-                    const hours = dateTime.getHours().toString().padStart(2, "0");
-                    const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-                    const seconds = dateTime.getSeconds().toString().padStart(2, "0");
-                    return `${hours}:${minutes}:${seconds}`;
+                  const dateTime: Date = new Date(this.getLabelForValue(index));
+                  const hours = dateTime.getHours().toString().padStart(2, "0");
+                  const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+                  const seconds = dateTime.getSeconds().toString().padStart(2, "0");
+                  return `${hours}:${minutes}:${seconds}`;
                 }
               },
               stacked: chartProps.stack,
@@ -94,45 +92,25 @@ const RTBarChart = (chartProps: ChartProps) => {
     };
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     updateChart(monitoringData);
   }, [monitoringData]);
 
 
   const updateChart = async (monitoringData: any) => {
     const chartCanvas = chartRef.current;
-    if(!chartCanvas) return;
+    if (!chartCanvas) return;
 
     const chartInstance = Chart.getChart(chartCanvas);
-    if(!chartInstance) return;
+    if (!chartInstance) return;
 
-    if(!monitoringData || !monitoringData.labels)
+    if (!monitoringData || !monitoringData.labels)
       return;
 
-      /*
-    if(monitoringData.labels&& monitoringData.labels.length > 20) {
-      const startIndex = monitoringData.labels.length - 20;
-      chartInstance.data.labels = monitoringData.labels.slice(startIndex, monitoringData.labels.length);
-      chartInstance.data.datasets[0].data = monitoringData.datas[0].slice(startIndex, monitoringData.labels.length);
-      chartInstance.data.datasets[1].data = monitoringData.datas[1].slice(startIndex, monitoringData.labels.length);
-    }else{
-      chartInstance.data.labels = monitoringData.labels;
-      chartInstance.data.datasets[0].data = monitoringData.datas[0];
-      chartInstance.data.datasets[1].data = monitoringData.datas[1];
-    }
 
-    if (chartInstance.options.scales && chartInstance.options.scales.x) {
-      // chartInstance.options.scales.x.min = monitoringData.minLabel;
-      // chartInstance.options.scales.x.min = new Date().getTime() - 20*1000;
-    }
-    */
-      chartInstance.data.labels = monitoringData.labels;
-      chartInstance.data.datasets[0].data = monitoringData.datas[0];
-      chartInstance.data.datasets[1].data = monitoringData.datas[1];
-
-    // if (chartInstance.options.scales && chartInstance.options.scales.x) {
-    //    chartInstance.options.scales.x.min = monitoringData.minLabel;
-    // }
+    chartInstance.data.labels = monitoringData.labels;
+    chartInstance.data.datasets[0].data = monitoringData.datas[0];
+    chartInstance.data.datasets[1].data = monitoringData.datas[1];
 
     chartInstance.update();
   };
@@ -156,35 +134,37 @@ const RTBarChart = (chartProps: ChartProps) => {
   */
 
   return (
-    <div className={`bg-red-100 ${isZoomed ? "box-wrapper" : ""}`}>
-      <div className={`${isZoomed ? "box-container" : ""}`}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            gap: 20,
-            marginBottom: 20,
-            alignItems: "center",
-          }}
-        >
-          <button
+    <React.Fragment>
+      <div className={`${isZoomed ? "bg-red-100 box-wrapper " : " bg-white-100"}`}>
+        <div className={`${isZoomed ? "box-container" : ""}`}>
+          <div
             style={{
-              width: 20,
-              marginRight: 10,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              gap: 20,
+              marginBottom: 20,
+              alignItems: "center",
             }}
-            onClick={handleZoom}
           >
-            {isZoomed ? (
-              <img src="/zoom_out.png" alt="ZoomOut" />
-            ) : (
-              <img src="/zoom.png" alt="Zoom" />
-            )}
-          </button>
+            <button
+              style={{
+                width: 20,
+                marginRight: 10,
+              }}
+              onClick={handleZoom}
+            >
+              {isZoomed ? (
+                <img src="/zoom_out.png" alt="ZoomOut" />
+              ) : (
+                <img src="/zoom.png" alt="Zoom" />
+              )}
+            </button>
+          </div>
+          <canvas ref={chartRef} width={(chartProps.widthVal || '40vw')} height={(chartProps.heightVal || '20vh')}></canvas>
         </div>
-        <canvas ref={chartRef} width={(chartProps.widthVal || '40vw')}  height={(chartProps.heightVal || '20vh')}></canvas>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

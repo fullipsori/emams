@@ -13,7 +13,7 @@ import CpuUsage from "./cpuUsage";
 import MemoryUsage from "./memoryUsage";
 import DiskUsage from "./diskUsage";
 import NetworkUsage from "./networkUsage";
-import { MonitorSystemState } from "@/redux/slices/monitoring-system/reducer";
+import { MonitorSystemState, reset as resetData } from "@/redux/slices/monitoring-system/reducer";
 
 const Monitoring = () => {
     const dispatch = useAppDispatch();
@@ -31,6 +31,12 @@ const Monitoring = () => {
         };
         dispatch(getMonitoringSystemData(req));
     }, [monitorState]);
+
+    useEffect( ()=> {
+        return () => {
+            dispatch(resetData());
+        }
+    }, [dispatch]);
 
     const selectCpuData = createSelector(
         (state: any) => state.MonitoringSystemReducer,
@@ -53,46 +59,43 @@ const Monitoring = () => {
                         <CardHeader>
                             <h4 className="card-title mb-0 fw-bolder"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i>Message Broker Resource Usage</h4>
                         </CardHeader>
-                        <CardBody>
+                        <CardBody className="pt-0 pb-0">
                             <Row>
-                                <Col lg={8}>
-                                    <Card outline={false} className="mb-0">
-                                        <CardHeader>
-                                            <h5 className="fw-bold text-muted mb-1">NODE 정보</h5>
+                                <Col lg={6}>
+                                    <Card className="mb-1">
+                                        <CardHeader >
+                                            <h5 className="fw-bold text-muted m-2">NODE 정보</h5>
                                         </CardHeader>
-                                        <CardBody>
+                                        <CardBody className="">
                                             <Row>
                                                 <Col lg={3} sm={6}>
                                                     <Card>
-                                                        <CardHeader className="align-items-center text-center">
-                                                            <h6 className="fw-bold text-muted mb-1">CPU 사용률</h6>
-                                                        </CardHeader>
+                                                        {/* <CardHeader className="align-items-center text-center">
+                                                            <h6 className="fw-bold text-muted m-0">CPU 사용률</h6>
+                                                        </CardHeader> */}
                                                         <CardBody>
-                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectCpuData)} />
+                                                            <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
+                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectCpuData)}/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
                                                 <Col lg={3} sm={6}>
                                                     <Card>
-                                                        <CardHeader className="align-items-center text-center">
-                                                            <h6 className="fw-bold text-muted mb-1">Memory 사용률</h6>
-                                                        </CardHeader>
                                                         <CardBody>
-                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectMemoryData)} />
+                                                            <h6 className="fw-bold text-muted m-1 text-center">Mem 사용률</h6>
+                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectMemoryData)}/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
                                                 <Col lg={3} sm={6}>
                                                     <Card>
-                                                        <CardHeader className="align-items-center text-center">
-                                                            <h6 className="fw-bold text-muted mb-1">DISK 사용률</h6>
-                                                        </CardHeader>
                                                         <CardBody>
-                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectDiskData)} />
+                                                            <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률%</h6>
+                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectDiskData)}/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
-                                                <Col lg={3} sm={6}>
+                                                <Col lg={3} sm={6} className="m-0">
                                                     <DockerInfo />
                                                 </Col>
                                             </Row>

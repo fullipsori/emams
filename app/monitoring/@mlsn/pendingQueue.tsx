@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorState } from "@/redux/slices/monitoring/reducer";
-import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
+import { MonitorQueueState, reset as resetData } from "@/redux/slices/monitoring-queue/reducer";
 import { getMonitoringQueueData } from "@/redux/slices/monitoring-queue/thunk";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import RTLineChart from "../common/chart/line/RTLineChart";
@@ -29,7 +29,6 @@ const PendingQueue = (chartProps: ChartProps) => {
     (state: any) => state.MonitoringReducer,
     (monitoringData: MonitorState) => ({ lastChartTime: monitoringData.lastChartTime})
   )
-
   const monitorState = useAppSelector(updateMonitoring);
 
   useEffect(() => {
@@ -38,8 +37,15 @@ const PendingQueue = (chartProps: ChartProps) => {
       queueCount: chartProps.countValue,
     };
     dispatch(getMonitoringQueueData(req));
+
   }, [monitorState]);
 
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetData());
+    }
+  }, [dispatch]);
 
   const [yAxisType, setYAxisType] = useState("count");
   const handleYAxisType = (type: string) => {
@@ -59,7 +65,7 @@ const PendingQueue = (chartProps: ChartProps) => {
             </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
+          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
         </CardBody>
       </Card>
     </React.Fragment>

@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, registerables } from "chart.js";
 import "chartjs-plugin-datalabels";
@@ -14,7 +12,6 @@ interface ChartProps {
 
 const RTGaugeChart = (chartProps: ChartProps) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
-  // const [valueColor, setValueColor] = useState<string>("green");
   const monitoringData = chartProps.monitoringDataCallback();
 
   const gaugeChartText = {
@@ -163,15 +160,13 @@ const RTGaugeChart = (chartProps: ChartProps) => {
     updateChart(monitoringData);
   }, [monitoringData]);
 
-        // style={{width:"100%", height:"100%"}}>
   return (
-    // <React.Fragment><canvas ref={chartRef} style={{width:"100%", height:"100%"}}></canvas></React.Fragment>
     <React.Fragment>
       <canvas 
         id="gauge-chart"
         ref={chartRef} 
-        // width={chartProps.widthVal ?? "25vw"}
-        height={chartProps.heightVal ?? "15vh"}
+        width={chartProps.widthVal ?? "200px"}
+        height={chartProps.heightVal ?? "200px"}
       ></canvas>
     </React.Fragment>
   );

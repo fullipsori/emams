@@ -39,7 +39,7 @@ const ThroughputQueue = (chartProps: ChartProps) => {
           </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} heightVal={chartProps.heightVal ?? "25vh"} />
+          <RTLineChart countValue={chartProps.countValue} monitoringDataCallback={getMonitoringData} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
         </CardBody>
       </Card>
     </React.Fragment>
