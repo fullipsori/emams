@@ -4,6 +4,7 @@ import '../globals.css'
 import Footer from './layouts/Footer'
 import React from 'react'
 import { Col, Container, Row } from 'reactstrap'
+import MonitorHeader from './monitorHeader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,9 @@ export default function MonitoringLayout(props: {
         <React.Fragment>
             <div id="layout-wrapper">
                 <Container fluid>
+                    <Row className='mb-1'>
+                        <MonitorHeader title="EMAMS" pageTitle="Monitoring" />
+                    </Row>
                     <Row>
                         <Col lg={12}>
                             {props.children}

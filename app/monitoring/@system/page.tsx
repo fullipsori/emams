@@ -54,7 +54,6 @@ const Monitoring = () => {
     return (
         <React.Fragment>
             <div className="m-subpage-content">
-                <Container fluid>
                     <Card className="mb-1 pb-0">
                         <CardHeader>
                             <h4 className="card-title mb-0 fw-bolder"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i>Message Broker Resource Usage</h4>
@@ -131,7 +130,6 @@ const Monitoring = () => {
 
                         </CardBody>
                     </Card>
-                </Container>
             </div>
         </React.Fragment>
     );
