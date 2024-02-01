@@ -15,7 +15,6 @@ interface ChartProps {
 }
 
 const ConnectionView = (chartProps: ChartProps) => {
-  const dispatch = useAppDispatch();
 
   const selectMonitoringData = createSelector(
     (state: any) => state.MonitoringClientReducer,
@@ -23,26 +22,6 @@ const ConnectionView = (chartProps: ChartProps) => {
   )
   const getMonitoringData = () => useAppSelector(selectMonitoringData);
 
-  const updateMonitoring = createSelector(
-    (state: any) => state.MonitoringReducer,
-    (monitoringData: MonitorState) => ({ lastChartTime: monitoringData.lastChartTime })
-  )
-
-  const monitorState = useAppSelector(updateMonitoring);
-
-  useEffect(() => {
-    const req = {
-        mlsn : "default",
-        period: "now",
-    };
-    dispatch(getClientInfoData(req));
-  }, [monitorState]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetData());
-    }
-  }, [dispatch]);
 
   const defaultBarChartData = () => { 
     return([

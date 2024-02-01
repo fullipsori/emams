@@ -17,35 +17,6 @@ interface ChartProps {
 }
 
 const PendingQueue = (chartProps: ChartProps) => {
-  const dispatch = useAppDispatch();
-
-  const selectMonitoringData = createSelector(
-    (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings})
-  )
-  // const monitoringData = useAppSelector(selectMonitoringData);
-  const getMonitoringData = () => useAppSelector(selectMonitoringData);
-
-  const updateMonitoring = createSelector(
-    (state: any) => state.MonitoringReducer,
-    (monitoringData: MonitorState) => ({ lastChartTime: monitoringData.lastChartTime})
-  )
-  const monitorState = useAppSelector(updateMonitoring);
-
-  useEffect(() => {
-    const req = {
-      period: "now",
-      queueCount: chartProps.countValue,
-    };
-    dispatch(getMonitoringQueueData(req));
-
-  }, [monitorState]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetData());
-    }
-  }, [dispatch]);
 
   const [yAxisType, setYAxisType] = useState("count");
   const handleYAxisType = (type: string) => {

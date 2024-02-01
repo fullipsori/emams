@@ -16,27 +16,6 @@ import NetworkUsage from "./networkUsage";
 import { MonitorSystemState, reset as resetData } from "@/redux/slices/monitoring-system/reducer";
 
 const Monitoring = () => {
-    const dispatch = useAppDispatch();
-
-    const updateMonitoring = createSelector(
-        (state: any) => state.MonitoringReducer,
-        (monitoringData: MonitorState) => ({ lastChartTime: monitoringData.lastChartTime})
-    )
-    const monitorState = useAppSelector(updateMonitoring);
-
-    useEffect(() => {
-        const req = {
-            msn: "default",
-            period: "now",
-        };
-        dispatch(getMonitoringSystemData(req));
-    }, [monitorState]);
-
-    useEffect( ()=> {
-        return () => {
-            dispatch(resetData());
-        }
-    }, [dispatch]);
 
     const selectCpuData = createSelector(
         (state: any) => state.MonitoringSystemReducer,

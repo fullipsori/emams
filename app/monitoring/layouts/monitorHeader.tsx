@@ -9,7 +9,14 @@ import eth from "../../assets/images/svg/crypto-icons/eth.svg";
 import ltc from "../../assets/images/svg/crypto-icons/ltc.svg";
 import { useAppDispatch } from '@/redux/hooks';
 import { reset as resetMonitor, updateChartTime, updateRefreshMode, updateTimeRange } from '@/redux/slices/monitoring/reducer';
+import { reset as resetClientData } from '@/redux/slices/monitoring-client/reducer';
+import { reset as resetQueueData } from '@/redux/slices/monitoring-queue/reducer';
+import { reset as resetSystemData  } from '@/redux/slices/monitoring-system/reducer';
 import Select from 'react-select';
+
+import { getClientInfoData } from '@/redux/slices/monitoring-client/thunk';
+import { getMonitoringSystemData } from '@/redux/slices/monitoring-system/thunk';
+import { getMonitoringQueueData } from '@/redux/slices/monitoring-queue/thunk';
 
 interface BreadCrumbProps {
     title: string;
@@ -45,10 +52,22 @@ const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
     /* 헤더에서 chart update 용 timer 를 구동한다. */
     useEffect(() => {
         if (chartData) {
-            dispatch(updateChartTime(chartData));
+            dispatch(updateChartTime(chartData))
+            dispatch(getMonitoringQueueData({ period: "now", queueCount: 3}));
+            dispatch(getClientInfoData({mlsn: "default", period: "now"}));
+            dispatch(getMonitoringSystemData({msn: "default", period: "now"}));
         }
-        return () => dispatch(resetMonitor());
     }, [chartData])
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetQueueData());
+            dispatch(resetClientData());
+            dispatch(resetSystemData());
+            dispatch(resetMonitor());
+        }
+    }, [dispatch]);
+
     const timerFunction = () => {
         setChartData((new Date()).getTime());
     };
