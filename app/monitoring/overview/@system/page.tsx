@@ -14,7 +14,7 @@ import NetworkUsage from "./networkUsage";
 import { MonitorSystemState, reset as resetData } from "@/redux/slices/monitoring-system/reducer";
 
 const Monitoring = () => {
-
+/*
     const selectCpuData = createSelector(
         (state: any) => state.MonitoringSystemReducer,
         (monitoringData: MonitorSystemState) => ({ names: ["cpu"], datas: monitoringData.cpuUsages })
@@ -27,6 +27,7 @@ const Monitoring = () => {
         (state: any) => state.MonitoringSystemReducer,
         (monitoringData: MonitorSystemState) => ({ names: ["disk"], datas: monitoringData.diskUsages })
     )
+*/
 
     return (
         <React.Fragment>
@@ -51,7 +52,7 @@ const Monitoring = () => {
                                                         </CardHeader> */}
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
-                                                            <RTGaugeChart dataSourceType="cpuStatus"/>
+                                                            <RTGaugeChart dataSourceType="cpuUsage"/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -59,14 +60,14 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">Mem 사용률</h6>
-                                                            <RTGaugeChart dataSourceType="memoryStatus"/>
+                                                            <RTGaugeChart dataSourceType="memoryUsage"/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
                                                 <Col lg={3} sm={6}>
                                                     <Card>
                                                         <CardBody>
-                                                            <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률%</h6>
+                                                            <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률</h6>
                                                             <RTGaugeChart dataSourceType="diskStatus"/>
                                                         </CardBody>
                                                     </Card>

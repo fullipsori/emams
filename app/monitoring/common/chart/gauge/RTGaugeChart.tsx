@@ -120,7 +120,7 @@ const RTGaugeChart = (chartProps: ChartProps) => {
     const chartInstance = Chart.getChart(chartCanvas);
     if(!chartInstance) return;
 
-    const gaugeValue = monitoringData.datas[monitoringData.datas.length-1];
+    const gaugeValue = monitoringData.datas[0][monitoringData.datas[0].length-1] ?? 0;
     let colorValue = "green";
     if (gaugeValue) {
       if (gaugeValue <= 70) {
@@ -148,14 +148,6 @@ const RTGaugeChart = (chartProps: ChartProps) => {
       chartInstance.options.plugins.gaugeChartText.gaugeValue = gaugeValue;
     }
     chartInstance.update();
-
-    /**  fullip: check this.
-    return () => {
-      if (chartInstance) {
-        chartInstance.destroy();
-      }
-    };
-    */
   };
 
   useEffect(()=>{

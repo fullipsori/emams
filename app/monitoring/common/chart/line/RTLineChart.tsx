@@ -78,11 +78,8 @@ const RTLineChart = (chartProps: ChartProps) => {
     console.log(" 줌 했음 ", isZoomed);
   };
 
-  // const [isDetail, setIsDetail] = useState(false);
   const handleDetail = () => {
-    // setIsDetail(!isDetail);
     router.push(`/monitoring/${chartProps.dataSourceType}`);
-
   };
 
   return (
