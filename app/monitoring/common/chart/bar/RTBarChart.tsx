@@ -14,7 +14,6 @@ interface ChartProps {
 const RTBarChart = (chartProps: ChartProps) => {
   const router = useRouter();
   const chartRef = useRef<HTMLCanvasElement | null>(null);
-  const [isZoomed, setIsZoomed] = useState(false);
 
   const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
@@ -58,10 +57,7 @@ const RTBarChart = (chartProps: ChartProps) => {
     chartInstance.update();
   };
 
-  const handleZoom = () => {
-    setIsZoomed(!isZoomed);
-    console.log(" 줌 했음 ", isZoomed);
-  };
+
 
   /*
   useEffect(() => {
@@ -82,8 +78,7 @@ const RTBarChart = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-      <div className={`${isZoomed ? "bg-red-100 box-wrapper " : " bg-white-100"}`}>
-        <div className={`${isZoomed ? "box-container" : ""}`}>
+      <div className={"bg-white-100"}>
           <div
             style={{
               display: "flex",
@@ -94,23 +89,8 @@ const RTBarChart = (chartProps: ChartProps) => {
               alignItems: "center",
             }}
           >
-            <button
-              style={{
-                width: 20,
-                marginRight: 10,
-              }}
-              onClick={handleZoom}
-            >
-              {isZoomed ? (
-                <img src="/zoom_out.png" alt="ZoomOut" />
-              ) : (
-                <img src="/zoom.png" alt="Zoom" />
-              )}
-            </button>
-            <Button onClick={handleDetail} className="primary text-bg-light" style={{ visibility: chartProps.chartOptions.detailMode? 'visible':'hidden'}}>Click Detail</Button>
           </div>
           <canvas ref={chartRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
-        </div>
       </div>
     </React.Fragment>
   );

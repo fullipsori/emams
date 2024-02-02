@@ -78,10 +78,6 @@ const RTLineChart = (chartProps: ChartProps) => {
     console.log(" 줌 했음 ", isZoomed);
   };
 
-  const handleDetail = () => {
-    router.push(`/monitoring/${chartProps.dataSourceType}`);
-  };
-
   return (
     <React.Fragment>
       <div className={`${isZoomed ? "bg-red-100 box-wrapper " : " bg-white-100"}`}>
@@ -103,7 +99,6 @@ const RTLineChart = (chartProps: ChartProps) => {
                 <img src="/zoom.png" alt="Zoom" />
               )}
             </button>
-            <Button onClick={handleDetail} className="primary text-bg-light" style={{ visibility: chartProps.chartOptions.detailMode? 'visible':'hidden'}}>Click Detail</Button>
           </div>
           <canvas id="lineChart" ref={lineChartCanvasRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
         </div>

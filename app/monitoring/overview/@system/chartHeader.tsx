@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import {getDataSourceSelector} from "../../common/data/DataSource";
+import { Button } from "reactstrap";
+import { useRouter } from "next/navigation";
 
 interface ChartProps {
     title: string;
@@ -10,6 +12,7 @@ interface ChartProps {
 }
 
 const ChartHeader = (chartProps: ChartProps) => {
+    const router = useRouter();
     const [headerTitle, setHeaderTitle] = useState(chartProps.title);
 
     const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
@@ -32,10 +35,17 @@ const ChartHeader = (chartProps: ChartProps) => {
         updateTitle(monitoringData);
     }, [monitoringData]);
 
+    const handleDetail = () => {
+        router.push(`/monitoring/${chartProps.dataSourceType}`);
+    };
+
     return (
-        <div>
-            <h4 className="card-title mb-0 fw-bold"> {headerTitle}</h4>
-        </div>
+        <React.Fragment>
+            <div className="d-flex justify-content-between align-items-center">
+                <h4 className="card-title mb-0 fw-bold"> {headerTitle}</h4>
+                <Button onClick={handleDetail} className="primary text-bg-light">Click Detail</Button>
+            </div>
+        </React.Fragment>
     );
 };
 

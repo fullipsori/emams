@@ -56,9 +56,9 @@ const Detail = (props: any) => {
                         <div className="border-2 align-items-center text-center bg-white-100" style={{height: "80vh"}} >
                             {
                                 (props.params.srcId === dataSourceType.CONNECTION)? 
-                                    <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, names:["producer","consumer"], detailMode: false})}/>
+                                    <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, names:["producer","consumer"], legendPos: "right"})}/>
                                     :
-                                    <RTLineChart dataSourceType={selectedMonitorType} chartOptions={getLineChartOpts({count:getDataSourceCount(selectedMonitorType), detailMode: false}) }/>
+                                    <RTLineChart dataSourceType={selectedMonitorType} chartOptions={getLineChartOpts({count:getDataSourceCount(selectedMonitorType), legendPos: "right"}) }/>
                             }
                         </div>
                     </Row>

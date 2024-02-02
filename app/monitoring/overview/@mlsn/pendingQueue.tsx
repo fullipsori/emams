@@ -5,6 +5,7 @@ import { Card, CardBody, CardHeader } from "reactstrap";
 import RTLineChart from "../../common/chart/line/RTLineChart";
 import getLineChartOpts from "../../common/chart/line/LineChartOpts";
 import { dataSourceType, getDataSourceCount } from "../../common/data/DataSource";
+import ChartHeader from "./ChartHeader";
 
 interface ChartProps {
     countValue: number;
@@ -21,17 +22,13 @@ const PendingQueue = (chartProps: ChartProps) => {
     }
   };
 
-  const title = "Pending Messages "
   return (
     <React.Fragment>
-      <Card>
-        <CardHeader>
-            <h3 className="card-title mb-0 fw-bold"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i>{title}
-              <span style={{textDecoration: (yAxisType === "count")? "underline" : ""}} onClick={() => handleYAxisType("count")}>[건수|</span>
-              <span style={{textDecoration: (yAxisType === "bytes")? "underline" : ""}} onClick={() => handleYAxisType("bytes")}>Bytes]</span>
-            </h3>
+      <Card className="mb-1 pb-0">
+        <CardHeader className="py-1">
+          <ChartHeader title="Pending Messages " dataSourceType={dataSourceType.PENDING} handleYAxis={handleYAxisType}/>
         </CardHeader>
-        <CardBody>
+        <CardBody className="p-0">
           <RTLineChart dataSourceType={dataSourceType.PENDING}  chartOptions={getLineChartOpts({count:getDataSourceCount(dataSourceType.PENDING), widthVal: chartProps.widthVal, heightVal: chartProps.heightVal})}/>
         </CardBody>
       </Card>

@@ -7,7 +7,6 @@ interface ChartOption {
     color?: string[],
     zoomDrag?: boolean,
     zoomMode?: boolean,
-    detailMode?: boolean,
     maxTickSize?: number,
     names?: string[],
     labels?: (number | string)[],
@@ -22,7 +21,6 @@ const getLineChartOpts = (chartOption: ChartOption) => {
         widthVal: chartOption.widthVal,
         heightVal: chartOption.heightVal,
         zoomMode: chartOption.zoomMode ?? false,
-        detailMode: chartOption.detailMode ?? true,
         enableDateAdapter: chartOption.enableDateAdapter ?? true,
         config: {
             type: "line",
