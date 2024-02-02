@@ -1,14 +1,17 @@
 "use client"
 
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Select from "react-select";
 import { Container, Row, Col, Button } from "reactstrap";
 import RTLineChart from "../common/chart/line/RTLineChart";
 import getLineChartOpts from "../common/chart/line/LineChartOpts";
 import { dataSourceType, getDataSourceCount } from "../common/data/DataSource";
+import RTBarChart from "../common/chart/bar/RTBarChart";
+import getBarChartOpts from "../common/chart/bar/BarChartOpts";
 
 const Detail = (props: any) => {
+    const router = useRouter();
     const [selectedMonitorType, setSelectedMonitorType] = useState(props.params.srcId);
 
     const monitorOptions= [
@@ -20,19 +23,18 @@ const Detail = (props: any) => {
         { value: dataSourceType.MEMORY_USAGE, label: 'Memory Usage' },
         { value: dataSourceType.NETWORK_USAGE, label: 'Network Usage' },
     ];
-    function handleMonitoryType(selectedValue: any) {
-        console.log("value:" + selectedValue.value);
-        setSelectedMonitorType(selectedValue.value);
+
+    const handleMonitoryType = (selectedValue: any) => {
+        router.replace(`/monitoring/${selectedValue.value}`);
     }
 
     const handleBack = () => {
-        console.log("Back");
+        router.back();
     }
     const handleFileSave = () => {
         console.log("save to file");
     }
 
-    console.log(selectedMonitorType)
     const title = "  모니터링 지표 ";
     return(
         <React.Fragment>
@@ -52,7 +54,12 @@ const Detail = (props: any) => {
                     </Row>
                     <Row>
                         <div className="border-2 align-items-center text-center bg-white-100" style={{height: "80vh"}} >
-                             <RTLineChart dataSourceType={selectedMonitorType}  chartOptions={getLineChartOpts({count:getDataSourceCount(selectedMonitorType)}) }/>
+                            {
+                                (props.params.srcId === dataSourceType.CONNECTION)? 
+                                    <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, names:["producer","consumer"], detailMode: false})}/>
+                                    :
+                                    <RTLineChart dataSourceType={selectedMonitorType} chartOptions={getLineChartOpts({count:getDataSourceCount(selectedMonitorType), detailMode: false}) }/>
+                            }
                         </div>
                     </Row>
                 </Col>

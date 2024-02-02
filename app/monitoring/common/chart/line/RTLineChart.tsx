@@ -4,8 +4,9 @@ import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-date-fns";
 import { useRouter } from "next/navigation";
-import {getDataSourceSelector} from "../../data/DataSource";
+import { getDataSourceSelector } from "../../data/DataSource";
 import { useAppSelector } from "@/redux/hooks";
+import { Button } from "reactstrap";
 
 
 Chart.register(...registerables, zoomPlugin);
@@ -17,7 +18,6 @@ interface ChartProps {
 
 const RTLineChart = (chartProps: ChartProps) => {
   const router = useRouter();
-
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
@@ -43,7 +43,6 @@ const RTLineChart = (chartProps: ChartProps) => {
       lineChartInstance = newChart();
     }
 
-    console.log("hmm")
     return () => {
       if (lineChartInstance) {
         lineChartInstance.destroy();
@@ -104,7 +103,7 @@ const RTLineChart = (chartProps: ChartProps) => {
                 <img src="/zoom.png" alt="Zoom" />
               )}
             </button>
-            <button type="button" onClick={handleDetail}>Click Detail</button>
+            <Button onClick={handleDetail} className="primary text-bg-light" style={{ visibility: chartProps.chartOptions.detailMode? 'visible':'hidden'}}>Click Detail</Button>
           </div>
           <canvas id="lineChart" ref={lineChartCanvasRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
         </div>

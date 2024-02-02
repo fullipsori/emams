@@ -28,8 +28,8 @@ export default function MonitoringLayout(props: {
                             {props.children}
                         </Col>
                     </Row>
+                    <Footer />
                 </Container>
-                <Footer />
             </div>
         </React.Fragment>
     )

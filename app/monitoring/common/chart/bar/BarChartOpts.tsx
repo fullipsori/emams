@@ -8,6 +8,7 @@ interface ChartOption {
     color?: string[],
     zoomDrag?: boolean,
     zoomMode?: boolean,
+    detailMode?: boolean,
     maxTickSize?: number,
     names?: string[],
     labels?: (number | string)[],
@@ -24,6 +25,7 @@ const getBarChartOpts = (chartOption: ChartOption) => {
         widthVal: chartOption.widthVal ?? undefined,
         heightVal: chartOption.heightVal ?? undefined,
         zoomMode: chartOption.zoomMode ?? false,
+        detailMode: chartOption.detailMode ?? true,
         enableDateAdapter: chartOption.enableDateAdapter ?? false,
         config : {
             type: "bar",

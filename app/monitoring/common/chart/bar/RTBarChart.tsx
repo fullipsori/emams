@@ -3,6 +3,8 @@ import { Chart, ChartConfiguration, elements } from "chart.js";
 import "chartjs-adapter-date-fns";
 import { useAppSelector } from "@/redux/hooks";
 import {getDataSourceSelector} from "../../data/DataSource";
+import { Button } from "reactstrap";
+import { useRouter } from "next/navigation";
 
 interface ChartProps {
   dataSourceType: string,
@@ -10,6 +12,7 @@ interface ChartProps {
 }
 
 const RTBarChart = (chartProps: ChartProps) => {
+  const router = useRouter();
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
@@ -73,6 +76,10 @@ const RTBarChart = (chartProps: ChartProps) => {
   }, [isZoomed, stackedBarChartProps.widthVal, stackedBarChartProps.heightVal]);
   */
 
+    const handleDetail = () => {
+      router.push(`/monitoring/${chartProps.dataSourceType}`);
+    };
+
   return (
     <React.Fragment>
       <div className={`${isZoomed ? "bg-red-100 box-wrapper " : " bg-white-100"}`}>
@@ -100,6 +107,7 @@ const RTBarChart = (chartProps: ChartProps) => {
                 <img src="/zoom.png" alt="Zoom" />
               )}
             </button>
+            <Button onClick={handleDetail} className="primary text-bg-light" style={{ visibility: chartProps.chartOptions.detailMode? 'visible':'hidden'}}>Click Detail</Button>
           </div>
           <canvas ref={chartRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
         </div>
