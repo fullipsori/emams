@@ -1,9 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react";
-import { createSelector } from "@reduxjs/toolkit";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { MonitorClientState, reset as resetData } from "@/redux/slices/monitoring-client/reducer";
+import React from "react";
 import RTBarChart from "../../common/chart/bar/RTBarChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import getChartOpts from "../../common/chart/bar/BarChartOpts";
@@ -14,29 +11,6 @@ interface ChartProps {
 }
 
 const ConnectionView = (chartProps: ChartProps) => {
-
-  const selectMonitoringData = createSelector(
-    (state: any) => state.MonitoringClientReducer,
-    (monitoringData: MonitorClientState) => ({ labels: monitoringData.labels, minLabel: monitoringData.minLabel, datas: [monitoringData.producerData, monitoringData.consumerData]})
-  )
-  const getMonitoringData = () => useAppSelector(selectMonitoringData);
-
-
-  const defaultBarChartData = () => { 
-    return([
-      {
-        label: "Producer",
-        data: [],
-        backgroundColor: "rgba(82, 90, 124, 0.5)",
-        stack: "Stack 1",
-      },
-      {
-        label: "Consumer",
-        data: [],
-        backgroundColor: "rgba(129, 132, 184, 0.5)",
-        stack: "Stack 1",
-      }
-  ])};
 
   return (
     <React.Fragment>

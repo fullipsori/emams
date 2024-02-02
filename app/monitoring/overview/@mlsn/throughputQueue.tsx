@@ -16,12 +16,6 @@ interface ChartProps {
 
 const ThroughputQueue = (chartProps: ChartProps) => {
 
-  const selectMonitoringData = createSelector(
-    (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps})
-  )
-  const getMonitoringData = () => useAppSelector(selectMonitoringData);
-
   const [yAxisType, setYAxisType] = useState("count");
   const handleYAxisType = (type: string) => {
     if(yAxisType !== type) {

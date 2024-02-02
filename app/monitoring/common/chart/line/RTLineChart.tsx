@@ -4,7 +4,8 @@ import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-date-fns";
 import { useRouter } from "next/navigation";
-import getDataSource from "../../data/DataSource";
+import getDataSourceSelector from "../../data/DataSource";
+import { useAppSelector } from "@/redux/hooks";
 
 
 Chart.register(...registerables, zoomPlugin);
@@ -18,8 +19,7 @@ const RTLineChart = (chartProps: ChartProps) => {
   const router = useRouter();
 
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const dataSourceFunc = getDataSource(chartProps.dataSourceType);
-  const monitoringData = dataSourceFunc();
+  const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
   const newChart = (): Chart | null => {
     const lineChartCanvas = lineChartCanvasRef.current;

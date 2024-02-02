@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartConfiguration, elements } from "chart.js";
 import "chartjs-adapter-date-fns";
-import getDataSource from "../../data/DataSource";
+import { useAppSelector } from "@/redux/hooks";
+import getDataSourceSelector from "../../data/DataSource";
 
 interface ChartProps {
   dataSourceType: string,
@@ -12,8 +13,7 @@ const RTBarChart = (chartProps: ChartProps) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const dataSourceFunc = getDataSource(chartProps.dataSourceType);
-  const monitoringData = dataSourceFunc();
+  const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
   useEffect(() => {
     const barChartCanvas = chartRef.current;

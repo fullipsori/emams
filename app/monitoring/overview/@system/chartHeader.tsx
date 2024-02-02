@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import getDataSource from "../../common/data/DataSource";
+import { useAppSelector } from "@/redux/hooks";
+import getDataSourceSelector from "../../common/data/DataSource";
 
 interface ChartProps {
     title: string;
@@ -11,10 +12,9 @@ interface ChartProps {
 const ChartHeader = (chartProps: ChartProps) => {
     const [headerTitle, setHeaderTitle] = useState(chartProps.title);
 
-    const dataSourceFunc = getDataSource(chartProps.dataSourceType);
-    const monitoringData = dataSourceFunc();
+    const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
-    useEffect(() => {
+    const updateTitle = (monitoringData: any) => {
         if (monitoringData && monitoringData.datas) {
             let newTitle = chartProps.title + " : ";
             for (var i = 0; i < monitoringData.datas.length; i++) {
@@ -26,6 +26,10 @@ const ChartHeader = (chartProps: ChartProps) => {
             }
             setHeaderTitle(newTitle);
         }
+    }
+
+    useEffect(() => {
+        updateTitle(monitoringData);
     }, [monitoringData]);
 
     return (

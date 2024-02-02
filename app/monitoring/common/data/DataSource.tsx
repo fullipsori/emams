@@ -1,4 +1,3 @@
-import { useAppSelector } from "@/redux/hooks";
 import { MonitorClientState } from "@/redux/slices/monitoring-client/reducer";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
 import { MonitorSystemState } from "@/redux/slices/monitoring-system/reducer";
@@ -9,66 +8,50 @@ const selectPendingMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
     (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings })
 )
-const getPendingMonitoringData = () => useAppSelector(selectPendingMonitoringData);
-
 const selectTpsMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
     (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps })
 )
-const getTpsMonitoringData = () => useAppSelector(selectTpsMonitoringData);
-
 const selectConnMonitoringData = createSelector(
     (state: any) => state.MonitoringClientReducer,
     (monitoringData: MonitorClientState) => ({ labels: monitoringData.labels, minLabel: monitoringData.minLabel, datas: [monitoringData.producerData, monitoringData.consumerData] })
 )
-const getConnMonitoringData = () => useAppSelector(selectConnMonitoringData);
-
 const selectCpuMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
     (monitoringData: MonitorSystemState) => ({ names: ["cpu usage"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: [monitoringData.cpuUsages] })
 )
-const getCpuMonitoringData = () => useAppSelector(selectCpuMonitoringData);
-
 const selectDiskMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
     (monitoringData: MonitorSystemState) => ({ names: ["read", "write"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.diskIO })
 )
-const getDiskMonitoringData = () => useAppSelector(selectDiskMonitoringData);
-
 const selectMemoryMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
     (monitoringData: MonitorSystemState) => ({ names: ["memory usage"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: [monitoringData.memoryUsages] })
 )
-const getMemoryMonitoringData = () => useAppSelector(selectMemoryMonitoringData);
-
 const selectNetworkMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
     (monitoringData: MonitorSystemState) => ({ names: ["received", "send"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.networkIO })
 )
-const getNetworkMonitoringData = () => useAppSelector(selectNetworkMonitoringData);
 
-
-const getDataSource = (sourceType: string) : () => any | null => {
-
-
+const getDataSourceSelector = (sourceType: string) : any | null => {
     switch(sourceType) {
         case "pending":
-            return(getPendingMonitoringData);
+            return(selectPendingMonitoringData);
         case "throughput":
-            return(getTpsMonitoringData);
+            return(selectTpsMonitoringData);
         case "connection":
-            return(getConnMonitoringData);
+            return(selectConnMonitoringData);
         case "cpuUsage":
-            return(getCpuMonitoringData);
+            return(selectCpuMonitoringData);
         case "diskUsage":
-            return(getDiskMonitoringData);
+            return(selectDiskMonitoringData);
         case "memoryUsage":
-            return(getMemoryMonitoringData);
+            return(selectMemoryMonitoringData);
         case "networkUsage":
-            return(getNetworkMonitoringData);
+            return(selectNetworkMonitoringData);
         default:
-            return(()=>null);
+            return(null);
     }
 }
 
-export default getDataSource;
+export default getDataSourceSelector;
