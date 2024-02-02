@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartConfiguration, elements } from "chart.js";
 import "chartjs-adapter-date-fns";
 import { useAppSelector } from "@/redux/hooks";
-import getDataSourceSelector from "../../data/DataSource";
+import {getDataSourceSelector} from "../../data/DataSource";
 
 interface ChartProps {
   dataSourceType: string,

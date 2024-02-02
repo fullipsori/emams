@@ -5,9 +5,25 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { Container, Row, Col, Button } from "reactstrap";
 import RTLineChart from "../common/chart/line/RTLineChart";
-import getChartOpts from "../common/chart/line/LineChartOpts";
+import getLineChartOpts from "../common/chart/line/LineChartOpts";
+import { dataSourceType, getDataSourceCount } from "../common/data/DataSource";
 
 const Detail = (props: any) => {
+    const [selectedMonitorType, setSelectedMonitorType] = useState(props.params.srcId);
+
+    const monitorOptions= [
+        { value: dataSourceType.PENDING, label: 'Pending Queues' },
+        { value: dataSourceType.THROUGHPUT, label: 'Throughput' },
+        { value: dataSourceType.CONNECTION, label: 'Connection' },
+        { value: dataSourceType.CPU_USAGE, label: 'CPU Usage' },
+        { value: dataSourceType.DISK_USAGE, label: 'DISK Usage' },
+        { value: dataSourceType.MEMORY_USAGE, label: 'Memory Usage' },
+        { value: dataSourceType.NETWORK_USAGE, label: 'Network Usage' },
+    ];
+    function handleMonitoryType(selectedValue: any) {
+        console.log("value:" + selectedValue.value);
+        setSelectedMonitorType(selectedValue.value);
+    }
 
     const handleBack = () => {
         console.log("Back");
@@ -16,17 +32,7 @@ const Detail = (props: any) => {
         console.log("save to file");
     }
 
-    const monitorOptions= [
-        { value: 'queue', label: 'Pending Queues' },
-        { value: 'transaction', label: 'Transaction' },
-        { value: 'connection', label: 'Connection' },
-    ];
-    const [selectedMonitorType, setSelectedMonitorType] = useState<any>(null);
-    function handleMonitoryType(selectedValue: any) {
-        console.log("value:" + selectedValue);
-        setSelectedMonitorType(selectedValue);
-    }
-
+    console.log(selectedMonitorType)
     const title = "  모니터링 지표 ";
     return(
         <React.Fragment>
@@ -46,7 +52,7 @@ const Detail = (props: any) => {
                     </Row>
                     <Row>
                         <div className="border-2 align-items-center text-center bg-white-100" style={{height: "80vh"}} >
-                             <RTLineChart dataSourceType={props.params.srcId}  chartOptions={getChartOpts({count:3, widthVal:"100%", heightVal:"100%"}) }/>
+                             <RTLineChart dataSourceType={selectedMonitorType}  chartOptions={getLineChartOpts({count:getDataSourceCount(selectedMonitorType)}) }/>
                         </div>
                     </Row>
                 </Col>

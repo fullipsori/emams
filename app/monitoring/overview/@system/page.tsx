@@ -5,29 +5,13 @@ import { Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap';
 import "../../monitoring.css";
 import RTGaugeChart from "../../common/chart/gauge/RTGaugeChart";
 import DockerInfo from "./DockerInfo";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { createSelector } from "@reduxjs/toolkit";
 import CpuUsage from "./cpuUsage";
 import MemoryUsage from "./memoryUsage";
 import DiskUsage from "./diskUsage";
 import NetworkUsage from "./networkUsage";
-import { MonitorSystemState, reset as resetData } from "@/redux/slices/monitoring-system/reducer";
+import { dataSourceType } from "../../common/data/DataSource";
 
 const Monitoring = () => {
-/*
-    const selectCpuData = createSelector(
-        (state: any) => state.MonitoringSystemReducer,
-        (monitoringData: MonitorSystemState) => ({ names: ["cpu"], datas: monitoringData.cpuUsages })
-    )
-    const selectMemoryData = createSelector(
-        (state: any) => state.MonitoringSystemReducer,
-        (monitoringData: MonitorSystemState) => ({ names: ["memory"], datas: monitoringData.memoryUsages })
-    )
-    const selectDiskData = createSelector(
-        (state: any) => state.MonitoringSystemReducer,
-        (monitoringData: MonitorSystemState) => ({ names: ["disk"], datas: monitoringData.diskUsages })
-    )
-*/
 
     return (
         <React.Fragment>
@@ -52,7 +36,7 @@ const Monitoring = () => {
                                                         </CardHeader> */}
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
-                                                            <RTGaugeChart dataSourceType="cpuUsage"/>
+                                                            <RTGaugeChart dataSourceType={dataSourceType.CPU_USAGE}/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -60,7 +44,7 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">Mem 사용률</h6>
-                                                            <RTGaugeChart dataSourceType="memoryUsage"/>
+                                                            <RTGaugeChart dataSourceType={dataSourceType.MEMORY_USAGE}/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -68,7 +52,7 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률</h6>
-                                                            <RTGaugeChart dataSourceType="diskStatus"/>
+                                                            <RTGaugeChart dataSourceType={dataSourceType.DISK_STATUS}/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -105,7 +89,6 @@ const Monitoring = () => {
                                     <NetworkUsage />
                                 </Col>
                             </Row>
-
                         </CardBody>
                     </Card>
             </div>

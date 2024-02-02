@@ -4,7 +4,7 @@ import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-date-fns";
 import { useRouter } from "next/navigation";
-import getDataSourceSelector from "../../data/DataSource";
+import {getDataSourceSelector} from "../../data/DataSource";
 import { useAppSelector } from "@/redux/hooks";
 
 
@@ -43,6 +43,7 @@ const RTLineChart = (chartProps: ChartProps) => {
       lineChartInstance = newChart();
     }
 
+    console.log("hmm")
     return () => {
       if (lineChartInstance) {
         lineChartInstance.destroy();

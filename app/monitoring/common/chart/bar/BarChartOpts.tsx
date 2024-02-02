@@ -18,7 +18,7 @@ interface ChartOption {
     enableDateAdapter?: boolean,
 }
 
-const getChartOpts = (chartOption: ChartOption) => {
+const getBarChartOpts = (chartOption: ChartOption) => {
     return {
         count: chartOption.count,
         widthVal: chartOption.widthVal ?? undefined,
@@ -102,4 +102,4 @@ const getChartOpts = (chartOption: ChartOption) => {
 
     };
 };
-export default getChartOpts;
+export default getBarChartOpts;

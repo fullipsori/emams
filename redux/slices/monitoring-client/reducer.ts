@@ -3,6 +3,7 @@ import { getClientInfoData } from "./thunk";
 
 
 export type MonitorClientState = {
+    count: number,
     timeRange: number,
     minLabel: number,
     labels: string[],
@@ -12,6 +13,7 @@ export type MonitorClientState = {
 };
 
 const initialState : any = {
+    count: 2,
     timeRange: 60,
     minLabel: 0,
     labels: [],

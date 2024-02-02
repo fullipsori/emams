@@ -3,7 +3,8 @@
 import React from "react";
 import RTBarChart from "../../common/chart/bar/RTBarChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
-import getChartOpts from "../../common/chart/bar/BarChartOpts";
+import getBarChartOpts from "../../common/chart/bar/BarChartOpts";
+import { dataSourceType, getDataSourceCount } from "../../common/data/DataSource";
 
 interface ChartProps {
     widthVal?: string;
@@ -20,7 +21,7 @@ const ConnectionView = (chartProps: ChartProps) => {
           </h3>
         </CardHeader>
         <CardBody>
-          <RTBarChart dataSourceType="connection" chartOptions={getChartOpts({count:2, isStack:true, names:["producer","consumer"], widthVal:chartProps.widthVal, heightVal:chartProps.heightVal})}/>
+          <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, names:["producer","consumer"], widthVal:chartProps.widthVal, heightVal:chartProps.heightVal})}/>
         </CardBody>
       </Card>
     </React.Fragment>

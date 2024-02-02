@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart, registerables } from "chart.js";
 import "chartjs-plugin-datalabels";
 import { useAppSelector } from "@/redux/hooks";
-import getDataSourceSelector from "../../data/DataSource";
+import {getDataSourceSelector} from "../../data/DataSource";
 
 Chart.register(...registerables);
 

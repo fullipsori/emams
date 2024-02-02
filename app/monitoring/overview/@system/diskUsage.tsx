@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import RTLineChart from "../../common/chart/line/RTLineChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import ChartHeader from "./chartHeader";
-import getChartOpts from "../../common/chart/line/LineChartOpts";
+import getLineChartOpts from "../../common/chart/line/LineChartOpts";
+import { dataSourceType, getDataSourceCount } from "../../common/data/DataSource";
 
 interface ChartProps {
     widthVal?: string;
@@ -13,8 +14,6 @@ interface ChartProps {
 
 const DiskUsage = (chartProps: ChartProps) => {
 
-
-
   return (
     <React.Fragment>
       <Card>
@@ -22,7 +21,7 @@ const DiskUsage = (chartProps: ChartProps) => {
           <ChartHeader title="DISK read/write" dataSourceType="diskUsage"/>
         </CardHeader>
         <CardBody className="p-0">
-            <RTLineChart dataSourceType="diskUsage" chartOptions={getChartOpts({ count: 2, widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
+            <RTLineChart dataSourceType={dataSourceType.DISK_USAGE} chartOptions={getLineChartOpts({ count: getDataSourceCount(dataSourceType.DISK_USAGE), widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
         </CardBody>
       </Card>
     </React.Fragment>

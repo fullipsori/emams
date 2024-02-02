@@ -4,7 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import RTLineChart from "../../common/chart/line/RTLineChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import ChartHeader from "./chartHeader";
-import getChartOpts from "../../common/chart/line/LineChartOpts";
+import getLineChartOpts from "../../common/chart/line/LineChartOpts";
+import { dataSourceType, getDataSourceCount } from "../../common/data/DataSource";
 
 interface ChartProps {
     widthVal?: string;
@@ -22,7 +23,7 @@ const MemoryUsage = (chartProps: ChartProps) => {
           <ChartHeader title="Memory usage" dataSourceType="memoryUsage"/>
         </CardHeader>
         <CardBody className="p-0">
-            <RTLineChart dataSourceType="memoryUsage" chartOptions={getChartOpts({ count: 1, widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
+            <RTLineChart dataSourceType={dataSourceType.MEMORY_USAGE} chartOptions={getLineChartOpts({ count: getDataSourceCount(dataSourceType.MEMORY_USAGE), widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
         </CardBody>
       </Card>
     </React.Fragment>

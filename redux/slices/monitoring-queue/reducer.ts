@@ -2,8 +2,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getMonitoringQueueData } from './thunk';
 
 export type MonitorQueueState = {
+    count: number,
     timeRange: number, // seconds
-    queueCounts: number,
     queueNames: string[],
     minLabel: number,
     queueLabels: number[],
@@ -13,8 +13,8 @@ export type MonitorQueueState = {
 };
 
 export const initialState = {
+    count: 3,
     timeRange: 5*60, // default: 5min
-    queueCounts: 0,
     queueNames: [],
     minLabel: 0,
     queueLabels: [],

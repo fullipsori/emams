@@ -1,64 +1,103 @@
+import { useAppSelector } from "@/redux/hooks";
 import { MonitorClientState } from "@/redux/slices/monitoring-client/reducer";
 import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
 import { MonitorSystemState } from "@/redux/slices/monitoring-system/reducer";
 import { createSelector } from "@reduxjs/toolkit";
 
 
+const dataSourceType = {
+    PENDING : "pending",
+    THROUGHPUT: "throughput",
+    CONNECTION: "connection",
+    CPU_USAGE: "cpuUsage",
+    DISK_USAGE: "diskUsage",
+    MEMORY_USAGE: "memoryUsage",
+    NETWORK_USAGE: "networkUsage",
+    DISK_STATUS: "diskStatus"
+};
+
 const selectPendingMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings })
+    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings })
 )
 const selectTpsMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps })
+    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps })
 )
 const selectConnMonitoringData = createSelector(
     (state: any) => state.MonitoringClientReducer,
-    (monitoringData: MonitorClientState) => ({ labels: monitoringData.labels, minLabel: monitoringData.minLabel, datas: [monitoringData.producerData, monitoringData.consumerData] })
+    (monitoringData: MonitorClientState) => ({count: monitoringData.count, labels: monitoringData.labels, minLabel: monitoringData.minLabel, datas: [monitoringData.producerData, monitoringData.consumerData] })
 )
 const selectCpuMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["cpu usage"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: [monitoringData.cpuUsages] })
+    (monitoringData: MonitorSystemState) => ({count: 1, names: ["cpu usage"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: [monitoringData.cpuUsages] })
 )
 const selectDiskMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["read", "write"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.diskIO })
+    (monitoringData: MonitorSystemState) => ({count: 2, names: ["read", "write"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.diskIO })
 )
 const selectMemoryMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["memory usage"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: [monitoringData.memoryUsages] })
+    (monitoringData: MonitorSystemState) => ({count: 1, names: ["memory usage"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: [monitoringData.memoryUsages] })
 )
 const selectNetworkMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["received", "send"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.networkIO })
+    (monitoringData: MonitorSystemState) => ({count: 2, names: ["received", "send"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.networkIO })
 )
 
 const selectDiskStatusData = createSelector(
     (state: any) => state.MonitoringSystemReducer,
-    (monitoringData: MonitorSystemState) => ({ names: ["disk"], datas: [monitoringData.diskUsages] })
+    (monitoringData: MonitorSystemState) => ({count: 1, names: ["disk"], datas: [monitoringData.diskUsages] })
 )
 
 const getDataSourceSelector = (sourceType: string) : any | null => {
     switch(sourceType) {
-        case "pending":
+        case dataSourceType.PENDING:
             return(selectPendingMonitoringData);
-        case "throughput":
+        case dataSourceType.THROUGHPUT:
             return(selectTpsMonitoringData);
-        case "connection":
+        case dataSourceType.CONNECTION:
             return(selectConnMonitoringData);
-        case "cpuUsage":
+        case dataSourceType.CPU_USAGE:
             return(selectCpuMonitoringData);
-        case "diskUsage":
+        case dataSourceType.DISK_USAGE:
             return(selectDiskMonitoringData);
-        case "memoryUsage":
+        case dataSourceType.MEMORY_USAGE:
             return(selectMemoryMonitoringData);
-        case "networkUsage":
+        case dataSourceType.NETWORK_USAGE:
             return(selectNetworkMonitoringData);
-        case "diskStatus":
+        case dataSourceType.DISK_STATUS:
             return(selectDiskStatusData);
         default:
             return(null);
     }
 }
 
-export default getDataSourceSelector;
+const getDataSourceCount = (sourceType: string) : number => {
+    switch(sourceType) {
+        case dataSourceType.PENDING:
+            return(useAppSelector(selectPendingMonitoringData).count);
+        case dataSourceType.THROUGHPUT:
+            return(useAppSelector(selectTpsMonitoringData).count);
+        case dataSourceType.CONNECTION:
+            return(useAppSelector(selectConnMonitoringData).count);
+        case dataSourceType.CPU_USAGE:
+            return(useAppSelector(selectCpuMonitoringData).count);
+        case dataSourceType.DISK_USAGE:
+            return(useAppSelector(selectDiskMonitoringData).count);
+        case dataSourceType.MEMORY_USAGE:
+            return(useAppSelector(selectMemoryMonitoringData).count);
+        case dataSourceType.NETWORK_USAGE:
+            return(useAppSelector(selectNetworkMonitoringData).count);
+        case dataSourceType.DISK_STATUS:
+            return(useAppSelector(selectDiskStatusData).count);
+        default:
+            return(0);
+    }
+}
+
+export {
+    dataSourceType,
+    getDataSourceCount,
+    getDataSourceSelector
+};

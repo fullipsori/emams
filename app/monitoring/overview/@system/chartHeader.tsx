@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
-import getDataSourceSelector from "../../common/data/DataSource";
+import {getDataSourceSelector} from "../../common/data/DataSource";
 
 interface ChartProps {
     title: string;

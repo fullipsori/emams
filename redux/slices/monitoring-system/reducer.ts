@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getMonitoringSystemData } from './thunk';
 
 export type MonitorSystemState = {
+    count: number,
     timeRange: number,
     minLabel: number,
     labels: string[],
@@ -17,6 +18,7 @@ export type MonitorSystemState = {
 };
 
 export const initialState = {
+    count: 1,
     timeRange: 5*60,
     minLabel: 0,
     labels: [],
