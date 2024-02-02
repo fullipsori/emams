@@ -51,7 +51,7 @@ const Monitoring = () => {
                                                         </CardHeader> */}
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
-                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectCpuData)}/>
+                                                            <RTGaugeChart dataSourceType="cpuStatus"/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -59,7 +59,7 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">Mem 사용률</h6>
-                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectMemoryData)}/>
+                                                            <RTGaugeChart dataSourceType="memoryStatus"/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -67,7 +67,7 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률%</h6>
-                                                            <RTGaugeChart monitoringDataCallback={() => useAppSelector(selectDiskData)}/>
+                                                            <RTGaugeChart dataSourceType="diskStatus"/>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>

@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, registerables } from "chart.js";
 import "chartjs-plugin-datalabels";
+import { useAppSelector } from "@/redux/hooks";
+import getDataSourceSelector from "../../data/DataSource";
 
 Chart.register(...registerables);
 
 interface ChartProps {
-  monitoringDataCallback: () => any;
   widthVal?: string;
   heightVal?: string;
+  dataSourceType: string,
 }
 
 const RTGaugeChart = (chartProps: ChartProps) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
-  const monitoringData = chartProps.monitoringDataCallback();
+  const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
   const gaugeChartText = {
      id: "gaugeChartText",

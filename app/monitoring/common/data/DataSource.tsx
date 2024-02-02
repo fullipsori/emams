@@ -33,6 +33,19 @@ const selectNetworkMonitoringData = createSelector(
     (monitoringData: MonitorSystemState) => ({ names: ["received", "send"], minLabel: monitoringData.minLabel, labels: monitoringData.labels, datas: monitoringData.networkIO })
 )
 
+const selectCpuStatusData = createSelector(
+    (state: any) => state.MonitoringSystemReducer,
+    (monitoringData: MonitorSystemState) => ({ names: ["cpu"], datas: monitoringData.cpuUsages })
+)
+const selectMemoryStatusData = createSelector(
+    (state: any) => state.MonitoringSystemReducer,
+    (monitoringData: MonitorSystemState) => ({ names: ["memory"], datas: monitoringData.memoryUsages })
+)
+const selectDiskStatusData = createSelector(
+    (state: any) => state.MonitoringSystemReducer,
+    (monitoringData: MonitorSystemState) => ({ names: ["disk"], datas: monitoringData.diskUsages })
+)
+
 const getDataSourceSelector = (sourceType: string) : any | null => {
     switch(sourceType) {
         case "pending":
@@ -49,6 +62,12 @@ const getDataSourceSelector = (sourceType: string) : any | null => {
             return(selectMemoryMonitoringData);
         case "networkUsage":
             return(selectNetworkMonitoringData);
+        case "cpuStatus":
+            return(selectCpuStatusData);
+        case "memoryStatus":
+            return(selectMemoryStatusData);
+        case "diskStatus":
+            return(selectDiskStatusData);
         default:
             return(null);
     }
