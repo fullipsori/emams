@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { MonitorClientState, reset as resetData } from "@/redux/slices/monitoring-client/reducer";
 import RTBarChart from "../../common/chart/bar/RTBarChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
+import getChartOpts from "../../common/chart/bar/BarChartOpts";
 
 interface ChartProps {
     widthVal?: string;
@@ -45,7 +46,7 @@ const ConnectionView = (chartProps: ChartProps) => {
           </h3>
         </CardHeader>
         <CardBody>
-          <RTBarChart monitoringDataCallback={getMonitoringData} defaultChartData={defaultBarChartData} stack={true} widthVal={chartProps.widthVal ?? "40vw"} heightVal={chartProps.heightVal ?? "20vh"} />
+          <RTBarChart dataSourceType="connection" chartOptions={getChartOpts({count:2, isStack:true, names:["producer","consumer"], widthVal:chartProps.widthVal, heightVal:chartProps.heightVal})}/>
         </CardBody>
       </Card>
     </React.Fragment>

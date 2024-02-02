@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import RTLineChart from "../../common/chart/line/RTLineChart";
-import getLineChartOpts from "../../common/chart/line/LineChartOpts";
+import getChartOpts from "../../common/chart/line/LineChartOpts";
 
 interface ChartProps {
     countValue: number;
@@ -31,7 +31,7 @@ const PendingQueue = (chartProps: ChartProps) => {
             </h3>
         </CardHeader>
         <CardBody>
-          <RTLineChart dataSourceType="pending"  chartOptions={getLineChartOpts({count:chartProps.countValue})}/>
+          <RTLineChart dataSourceType="pending"  chartOptions={getChartOpts({count:chartProps.countValue, widthVal: chartProps.widthVal, heightVal: chartProps.heightVal})}/>
         </CardBody>
       </Card>
     </React.Fragment>

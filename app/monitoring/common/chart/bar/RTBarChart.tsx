@@ -1,20 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartConfiguration, elements } from "chart.js";
 import "chartjs-adapter-date-fns";
+import getDataSource from "../../data/DataSource";
 
 interface ChartProps {
-  monitoringDataCallback: () => any;
-  defaultChartData: () => any;
-  stack: boolean;
-  widthVal?: string;
-  heightVal?: string;
+  dataSourceType: string,
+  chartOptions: any,
 }
 
 const RTBarChart = (chartProps: ChartProps) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const monitoringData = chartProps.monitoringDataCallback();
+  const dataSourceFunc = getDataSource(chartProps.dataSourceType);
+  const monitoringData = dataSourceFunc();
 
   useEffect(() => {
     const barChartCanvas = chartRef.current;
@@ -23,68 +22,7 @@ const RTBarChart = (chartProps: ChartProps) => {
 
     if (barChartCanvas) {
       Chart.getChart(barChartCanvas)?.destroy();
-
-      chartInstance = new Chart(barChartCanvas, {
-        type: "bar",
-        data: {
-          labels: [],
-          datasets: chartProps.defaultChartData(),
-        },
-        options: {
-          animation: false,
-          indexAxis: "x",
-          scales: {
-            x: {
-              type: undefined,
-              ticks: {
-                autoSkip: true,
-                maxTicksLimit: 10,
-                callback(tickValue, index, ticks) {
-                  const dateTime: Date = new Date(this.getLabelForValue(index));
-                  const hours = dateTime.getHours().toString().padStart(2, "0");
-                  const minutes = dateTime.getMinutes().toString().padStart(2, "0");
-                  const seconds = dateTime.getSeconds().toString().padStart(2, "0");
-                  return `${hours}:${minutes}:${seconds}`;
-                }
-              },
-              stacked: chartProps.stack,
-              beginAtZero: true,
-            },
-            y: {
-              stacked: chartProps.stack,
-              ticks: {
-                callback: function (value: any, index, values) {
-                  return Math.abs(value);
-                },
-              },
-            },
-          },
-          plugins: {
-            tooltip: {
-              yAlign: "bottom",
-              titleAlign: "center",
-              callbacks: {
-                label: function (context: any) {
-                  return `${context.dataset.label} ${Math.abs(context.raw)}`;
-                },
-              },
-            },
-          },
-          // 클릭한 차트 정보
-          onClick: (event, activeElements) => {
-            if (chartInstance && activeElements.length > 0) {
-              const activeElement = activeElements[0];
-              const datasetIndex = activeElement.datasetIndex;
-              const dataIndex = activeElement.index;
-              const datasetLabel = chartInstance.data.datasets[datasetIndex].label;
-              const dataValue = chartInstance.data.datasets[datasetIndex].data[dataIndex];
-              const dataLabel = chartInstance.data.labels ?? [];
-              // const dataLabelValue = dataLabel[datasetIndex];
-              console.log(`${datasetLabel} :: ${dataValue}`);
-            }
-          },
-        },
-      } as ChartConfiguration);
+      chartInstance = new Chart(barChartCanvas, chartProps.chartOptions.config);
     }
 
     return () => {
@@ -163,7 +101,7 @@ const RTBarChart = (chartProps: ChartProps) => {
               )}
             </button>
           </div>
-          <canvas ref={chartRef} width={(chartProps.widthVal || '40vw')} height={(chartProps.heightVal || '20vh')}></canvas>
+          <canvas ref={chartRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
         </div>
       </div>
     </React.Fragment>

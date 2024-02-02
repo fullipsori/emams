@@ -11,14 +11,17 @@ interface ChartOption {
     names?: string[],
     labels?: (number | string)[],
     datas?: number[][],
-    disableDateAdapter?: boolean
+    legendPos?: string,
+    enableDateAdapter ?: boolean
 }
 
-const getLineChartOpts = (chartOption: ChartOption) => {
+const getChartOpts = (chartOption: ChartOption) => {
     return {
         count: chartOption.count,
+        widthVal: chartOption.widthVal,
+        heightVal: chartOption.heightVal,
         zoomMode: chartOption.zoomMode ?? false,
-        disableDateAdapter: chartOption.disableDateAdapter ?? false,
+        enableDateAdapter: chartOption.enableDateAdapter ?? true,
         config: {
             type: "line",
             data: {
@@ -40,8 +43,8 @@ const getLineChartOpts = (chartOption: ChartOption) => {
                 animation: false,
                 scales: {
                     x: {
-                        type: chartOption.disableDateAdapter? undefined : 'time',
-                        time: chartOption.disableDateAdapter? undefined : { displayFormats: { second: 'HH:mm:ss' } },
+                        type: chartOption.enableDateAdapter == false ?  undefined : 'time',
+                        time: chartOption.enableDateAdapter == false ?  undefined : { displayFormats: { second: 'HH:mm:ss' } },
                         ticks: {
                             font: {
                                 family: 'Poppins',
@@ -64,7 +67,7 @@ const getLineChartOpts = (chartOption: ChartOption) => {
                     axis: "x",
                 },
                 plugins: {
-                    legend: { position: "bottom" },
+                    legend: chartOption.legendPos ? { position: chartOption.legendPos } :{ position: "bottom" },
                     zoom: chartOption.zoomDrag ? { zoom: { drag: { enabled: true, }, mode: "x", }, } : undefined,
                 },
             },
@@ -72,4 +75,4 @@ const getLineChartOpts = (chartOption: ChartOption) => {
 
     };
 };
-export default getLineChartOpts;
+export default getChartOpts;

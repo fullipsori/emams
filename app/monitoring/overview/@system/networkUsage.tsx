@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import RTLineChart from "../../common/chart/line/RTLineChart";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import ChartHeader from "./chartHeader";
-import getLineChartOpts from "../../common/chart/line/LineChartOpts";
+import getChartOpts from "../../common/chart/line/LineChartOpts";
 
 interface ChartProps {
     widthVal?: string;
@@ -21,7 +21,7 @@ const NetworkUsage = (chartProps: ChartProps) => {
           <ChartHeader title="Network IO" dataSourceType="networkUsage"/>
         </CardHeader>
         <CardBody className="p-0">
-            <RTLineChart dataSourceType="networkUsage" chartOptions={getLineChartOpts({ count: 2 })} />
+            <RTLineChart dataSourceType="networkUsage" chartOptions={getChartOpts({ count: 2, widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
         </CardBody>
       </Card>        
     </React.Fragment>
