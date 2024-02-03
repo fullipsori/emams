@@ -4,7 +4,6 @@ import './globals.css'
 import '../app/assets/scss/themes.scss';
 import NavBar from './components/nav/Navbar'
 import { Providers } from '@/redux/provider';
-import fakeBackend from './monitoring/helpers/fakeBackend';
 
 const inter = Inter({ subsets: ['latin'] })
 

@@ -1,9 +1,6 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react";
-import { createSelector } from "@reduxjs/toolkit";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
 import { Card, CardBody, CardHeader } from "reactstrap";
 import RTLineChart from "../../common/chart/line/RTLineChart";
 import getLineChartOpts from "../../common/chart/line/LineChartOpts";

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { Card, CardBody, CardHeader, Col, Container, Row } from 'reactstrap';
-import "../../monitoring.css";
+import "../../assets/monitoring.css";
 import RTGaugeChart from "../../common/chart/gauge/RTGaugeChart";
 import DockerInfo from "./DockerInfo";
 import CpuUsage from "./cpuUsage";
@@ -31,9 +31,6 @@ const Monitoring = () => {
                                             <Row>
                                                 <Col lg={3} sm={6}>
                                                     <Card>
-                                                        {/* <CardHeader className="align-items-center text-center">
-                                                            <h6 className="fw-bold text-muted m-0">CPU 사용률</h6>
-                                                        </CardHeader> */}
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
                                                             <RTGaugeChart dataSourceType={dataSourceType.CPU_USAGE}/>

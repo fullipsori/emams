@@ -51,8 +51,10 @@ const RTBarChart = (chartProps: ChartProps) => {
 
 
     chartInstance.data.labels = monitoringData.labels;
-    chartInstance.data.datasets[0].data = monitoringData.datas[0];
-    chartInstance.data.datasets[1].data = monitoringData.datas[1];
+    for (let step = 0; step < chartProps.chartOptions.count; step++) {
+      chartInstance.data.datasets[step].label = monitoringData.names[step];
+      chartInstance.data.datasets[step].data = monitoringData.datas[step];
+    }
 
     chartInstance.update();
   };

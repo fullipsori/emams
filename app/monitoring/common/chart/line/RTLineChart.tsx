@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart, ChartDataset, registerables } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-date-fns";
-import { useRouter } from "next/navigation";
 import { getDataSourceSelector } from "../../data/DataSource";
 import { useAppSelector } from "@/redux/hooks";
 import { Button } from "reactstrap";
@@ -17,7 +16,6 @@ interface ChartProps {
 }
 
 const RTLineChart = (chartProps: ChartProps) => {
-  const router = useRouter();
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 

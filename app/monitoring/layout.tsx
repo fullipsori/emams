@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
-import Footer from './layouts/Footer'
+import Footer from './layouts/monitorFooter'
 import React from 'react'
 import { Col, Container, Row } from 'reactstrap'
-import MonitorHeader from './layouts/monitorHeader'
+import { MonitorHeader } from './layouts/monitorHeader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +21,7 @@ export default function MonitoringLayout(props: {
             <div id="layout-wrapper">
                 <Container fluid>
                     <Row className='mb-1'>
-                        <MonitorHeader title="EMAMS" pageTitle="Monitoring" />
+                        <MonitorHeader/>
                     </Row>
                     <Row>
                         <Col lg={12}>

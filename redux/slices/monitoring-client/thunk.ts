@@ -3,17 +3,17 @@ import {
     getClientInfo as getClientInfoApi,
 } from "../../../app/monitoring/helpers/fakebackend_helper";
 
-interface ClientInfoParam {
-    mlsn: string,
-    period: string
+interface reqClientType {
+    serverType: string;
+    sTime: number;
+    eTime: number;
+    mlsn: string;
+    clientList: string[];
 }
 
-export const getClientInfoData = createAsyncThunk("monitoring/getClientInfoData", async (params:any) => {
+export const getClientInfoData = createAsyncThunk("monitoring/getClientInfoData", async (params:reqClientType) => {
   try {
-    var response;
-    if (params.period === "now") {
-      response = getClientInfoApi(params.mlsn);
-    }
+    var response = getClientInfoApi(params);
     return response;
   } catch (error) {
     return error;

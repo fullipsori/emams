@@ -4,9 +4,8 @@ import { MonitorQueueState } from "@/redux/slices/monitoring-queue/reducer";
 import { MonitorSystemState } from "@/redux/slices/monitoring-system/reducer";
 import { createSelector } from "@reduxjs/toolkit";
 
-
 const dataSourceType = {
-    PENDING : "pending",
+    PENDING: "pending",
     THROUGHPUT: "throughput",
     CONNECTION: "connection",
     CPU_USAGE: "cpuUsage",
@@ -18,15 +17,15 @@ const dataSourceType = {
 
 const selectPendingMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings })
+    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings})
 )
 const selectTpsMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps })
+    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps})
 )
 const selectConnMonitoringData = createSelector(
     (state: any) => state.MonitoringClientReducer,
-    (monitoringData: MonitorClientState) => ({count: monitoringData.count, labels: monitoringData.labels, minLabel: monitoringData.minLabel, datas: [monitoringData.producerData, monitoringData.consumerData] })
+    (monitoringData: MonitorClientState) => ({count: monitoringData.count, names: monitoringData.clientNames, labels: monitoringData.labels, minLabel: monitoringData.minLabel, datas: monitoringData.datas})
 )
 const selectCpuMonitoringData = createSelector(
     (selectorState: any) => selectorState.MonitoringSystemReducer,

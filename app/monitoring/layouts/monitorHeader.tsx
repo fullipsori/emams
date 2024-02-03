@@ -1,22 +1,23 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { Col, Label, Row } from 'reactstrap';
 
 import btc from "../../assets/images/svg/crypto-icons/btc.svg";
 import eth from "../../assets/images/svg/crypto-icons/eth.svg";
 import ltc from "../../assets/images/svg/crypto-icons/ltc.svg";
-import { useAppDispatch } from '@/redux/hooks';
-import { reset as resetMonitor, updateRefreshMode, updateTimeRange } from '@/redux/slices/monitoring/reducer';
-import { reset as resetClientData } from '@/redux/slices/monitoring-client/reducer';
-import { reset as resetQueueData } from '@/redux/slices/monitoring-queue/reducer';
-import { reset as resetSystemData  } from '@/redux/slices/monitoring-system/reducer';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { MonitorState, reset as resetMonitor, updateNode, updateRefreshMode, updateTimeRange as updateMonitorTimeRange } from '@/redux/slices/monitoring/reducer';
+import { reset as resetClientData, updateTimeRange as updateClientTimeRange } from '@/redux/slices/monitoring-client/reducer';
+import { MonitorQueueState, reset as resetQueueData, updateTimeRange as updateQueueTimeRange } from '@/redux/slices/monitoring-queue/reducer';
+import { reset as resetSystemData, updateTimeRange as updateSystemTimeRange  } from '@/redux/slices/monitoring-system/reducer';
 import Select from 'react-select';
 
 import { getClientInfoData } from '@/redux/slices/monitoring-client/thunk';
 import { getMonitoringSystemData } from '@/redux/slices/monitoring-system/thunk';
-import { getMonitoringQueueData } from '@/redux/slices/monitoring-queue/thunk';
+import { getMonitoringQueueData, getMonitoringQueueList } from '@/redux/slices/monitoring-queue/thunk';
+import { getMonitoringAllNodes } from '@/redux/slices/monitoring/thunk';
+import { createSelector } from '@reduxjs/toolkit';
 
 interface BreadCrumbProps {
     title: string;
@@ -39,25 +40,79 @@ export function useInterval(callback: () => void, delay: number | null) {
         if (!delay && delay !== 0) {
             return
         }
+        console.log("timer started");
         const id = setInterval(() => savedCallback.current(), delay)
-        return () => clearInterval(id)
+        return () => {
+            console.log("timer cleared")
+            clearInterval(id)
+        }
     }, [delay])
 }
 
-const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
+/* display queue types*/
+const queuesOptions = [
+    { value: 'order', label: 'Top5. Name Order' },
+    { value: 'pending', label: 'Top5. Pending Queues' },
+    { value: 'hrate', label: 'Top5. 60s High Message In Rate' },
+    { value: 'lrate', label: 'Top5. 60s Low Message In Rate' },
+];
+/* x-axis time range */
+const timeRangeOptions = [
+    { value: 5 * 60, label: 'last 5 mins' },
+    { value: 14 * 60, label: 'last 15 mins' },
+    { value: 29 * 60, label: 'last 30 mins' },
+    { value: 0 * 3600, label: 'last 1 hour' },
+    { value: 2 * 3600, label: 'last 3 hours' },
+    { value: 5 * 3600, label: 'last 6 hours' },
+    { value: 11 * 3600, label: 'last 12 hours' },
+    { value: 23 * 3600, label: 'last 24 hours' },
+    { value: 1 * 86400, label: 'last 2 days' },
+    { value: 7 * 86400, label: 'last 7 days' }
+];
+
+const refreshOptions = [
+    { value: 0, label: 'off' },
+    { value: 1, label: '1s' },
+    { value: 5, label: '5s' },
+    { value: 10, label: '10s' },
+    { value: 30, label: '30s' },
+    { value: 1 * 60, label: '1m' },
+    { value: 5 * 60, label: '5m' },
+    { value: 15 * 60, label: '15m' },
+    { value: 30 * 60, label: '30m' },
+    { value: 3600, label: '1h' },
+    { value: 2 * 3600, label: '2h' },
+    { value: 86400, label: '1d' }
+];
+
+const MonitorHeader = () => {
     const dispatch: any = useAppDispatch();
-    const [chartData, setChartData] = useState<number>();
+    const selectNodeData = createSelector(
+        (state: any) => state.MonitoringReducer,
+        (monitoringData: MonitorState) => ({ serverType: monitoringData.serverType, nodeInfo: monitoringData.nodeInfo })
+    )
+    const monitoringData = useAppSelector(selectNodeData);    
+    const selectQueueData = createSelector(
+        (state: any) => state.MonitoringQueueReducer,
+        (monitoringData: MonitorQueueState) => ({ queueNames: monitoringData.queueNames, pendingValueMode: monitoringData.pendingValueMode, tpsValueMode: monitoringData.tpsValueMode })
+    )
+    const monitoringQueueData = useAppSelector(selectQueueData);    
 
-    /* 헤더에서 chart update 용 timer 를 구동한다. */
-    useEffect(() => {
-        if (chartData) {
-            dispatch(getMonitoringQueueData({ period: "now", queueCount: 3}));
-            dispatch(getClientInfoData({mlsn: "default", period: "now"}));
-            dispatch(getMonitoringSystemData({msn: "default", period: "now"}));
-        }
-    }, [chartData])
 
+    const [mlsnOptions, setMlsnOptions] = useState<any[]>([]);
+    const [curNode, setCurNode] = useState<any>(null);
+    const [queueType, setQueueType] = useState<string>(queuesOptions[0].value);
+    const [timeRange, setTimeRange] = useState<{ period?: number, fixedRange?: { sTime: number, eTime: number}}>({period: timeRangeOptions[0].value});
+    const [refreshMode, setRefreshMode] = useState<number>(refreshOptions[1].value);
+
+    const [chartTime, setChartTime] = useState<number|null>(null);
+
+
+    /* initial loading */
     useEffect(() => {
+        dispatch(getMonitoringAllNodes({
+            serverType: monitoringData.serverType
+        }));
         return () => {
             dispatch(resetQueueData());
             dispatch(resetClientData());
@@ -66,79 +121,111 @@ const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
         }
     }, [dispatch]);
 
+    useEffect(() => {
+        if(monitoringData.nodeInfo.length > 0) {
+            const data: any[] = [];
+            for (let n of monitoringData.nodeInfo) {
+                for (let lsn of n.mlsns) {
+                    data.push({ value: { msn: n.msn, mlsn: lsn }, label: `${n.msn}>${lsn}` });
+                }
+            }
+            if (data.length > 0) {
+                setMlsnOptions(data);
+            }
+        }
+    }, [monitoringData.nodeInfo]);
+
+    useEffect(() => {
+        if(curNode) {
+            dispatch(updateNode(curNode))
+            dispatch(resetQueueData());
+            dispatch(resetClientData());
+            dispatch(resetSystemData());
+        }
+    },[curNode]);
+    
+    useEffect(() => {
+        if(curNode && curNode.mlsn) {
+            dispatch(getMonitoringQueueList({
+                serverType: monitoringData.serverType,
+                msn: curNode.msn,
+                mlsn: curNode.mlsn,
+                queueType: queueType,
+                maxCount: 3,
+            }));
+        }
+    },[curNode, queueType]);
+
+    useEffect(() => {
+        dispatch(updateMonitorTimeRange(timeRange));
+        dispatch(updateQueueTimeRange(timeRange));
+        dispatch(updateSystemTimeRange(timeRange));
+        dispatch(updateClientTimeRange(timeRange));
+    }, [timeRange]);
+
+    useEffect(() => {
+        dispatch(updateRefreshMode(refreshMode));
+    },[refreshMode]);
+
+    /* 헤더에서 chart update 용 timer 를 구동한다. */
+    useEffect(() => {
+        if (chartTime && (timeRange.period ?? 0 > 0)) {
+            dispatch(getMonitoringQueueData({
+                serverType: monitoringData.serverType,
+                sTime: chartTime - 1000,
+                eTime: chartTime,
+                nameList: monitoringQueueData.queueNames,
+                pendingValueMode: monitoringQueueData.pendingValueMode,
+                tpsValueMode: monitoringQueueData.tpsValueMode,
+
+             }));
+            dispatch(getClientInfoData({
+                serverType: monitoringData.serverType,
+                sTime: chartTime - 1000,
+                eTime: chartTime,
+                mlsn: curNode.mlsn,
+                clientList: ["producer", "consumer"],
+            }));
+            dispatch(getMonitoringSystemData({
+                serverType: monitoringData.serverType,
+                sTime: chartTime - 1000,
+                eTime: chartTime,
+                msn: curNode.msn,
+            }));
+        }
+    }, [chartTime])
+
+    /** 시간 변경시 정상적으로 바뀌는지 확인 한다. */
     const timerFunction = () => {
-        setChartData((new Date()).getTime());
+        console.log("hmm:" + new Date().getTime())
+        setChartTime((new Date()).getTime());
     };
-    useInterval(() => { timerFunction() }, 1000);
 
-    /* mlsn select : server api*/
-    const mlsnOptions = [
-        { value: 'MES01-edpVPN01', label: 'MES01 > edpVPN01' },
-        { value: 'MES01-edpVPN02', label: 'MES01 > edpVPN02' },
-        { value: 'MES02-edpVPN01', label: 'MES02 > edpVPN01' },
-    ];
-    const [selectedMlsn, setSelectedMlsn] = useState<any>(null);
-    function handleSelectMlsn(selectedValue: any) {
-        console.log("value:" + selectedMlsn);
-        setSelectedMlsn(selectedValue);
+    useEffect(() => {
+        if (!curNode || !refreshMode) {
+            return
+        }
+        const id = setInterval(() => timerFunction(), refreshMode * 1000)
+        return () => {
+            clearInterval(id)
+        }
+    }, [curNode, refreshMode])
+
+    function handleSelectNode(selectedValue: any) {
+        setCurNode(selectedValue.value);
     }
-
-    /* display queue types*/
-    const queuesOptions = [
-        { value: 'order', label: 'Top5. Name Order' },
-        { value: 'pending', label: 'Top5. Pending Queues' },
-        { value: 'hrate', label: 'Top5. 60s High Message In Rate' },
-        { value: 'lrate', label: 'Top5. 60s Low Message In Rate' },
-    ];
-    const [selectedQueueType, setSelectedQueueType] = useState<any>(null);
     function handleSelectQueueType(selectedValue: any) {
-        setSelectedQueueType(selectedValue);
+        setQueueType(selectedValue.value);
     }
-
-    /* x-axis time range */
-    const timeRangeOptions = [
-        { value: 5 * 60, label: 'last 5 mins' },
-        { value: 15 * 60, label: 'last 15 mins' },
-        { value: 30 * 60, label: 'last 30 mins' },
-        { value: 1 * 3600, label: 'last 1 hour' },
-        { value: 3 * 3600, label: 'last 3 hours' },
-        { value: 6 * 3600, label: 'last 6 hours' },
-        { value: 12 * 3600, label: 'last 12 hours' },
-        { value: 24 * 3600, label: 'last 24 hours' },
-        { value: 2 * 86400, label: 'last 2 days' },
-        { value: 7 * 86400, label: 'last 7 days' }
-    ];
-    const [selectedTimeRange, setSelectedTimeRange] = useState<any>(null);
     function handleSelectTimeRange(selectedValue: any) {
-        setSelectedTimeRange(selectedValue);
+        const timeRange = {
+            period: selectedValue.value,
+        }
+        setTimeRange(timeRange);
     }
-
-    const periodOptions = [
-        { value: 0, label: 'off' },
-        { value: 5, label: '5s' },
-        { value: 10, label: '10s' },
-        { value: 30, label: '30s' },
-        { value: 1 * 60, label: '1m' },
-        { value: 5 * 60, label: '5m' },
-        { value: 15 * 60, label: '15m' },
-        { value: 30 * 60, label: '30m' },
-        { value: 3600, label: '1h' },
-        { value: 2 * 3600, label: '2h' },
-        { value: 86400, label: '1d' }
-    ];
-    const [selectedPeroid, setSelectedPeriod] = useState<any>(null);
-    function handleSelectPeriod(selectedValue: any) {
-        setSelectedPeriod(selectedValue);
+    function handleSelectRefrehMode(selectedValue: any) {
+        setRefreshMode(selectedValue.value);
     }
-
-    /* update reducer */
-    useEffect(() => {
-        dispatch(updateTimeRange(selectedTimeRange));
-    }, [selectedTimeRange]);
-
-    useEffect(() => {
-        dispatch(updateRefreshMode(selectedPeroid));
-    }, [selectedPeroid]);
 
     return (
         <React.Fragment>
@@ -146,15 +233,15 @@ const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
                 <Col lg={3} className='d-sm-flex align-items-center'>
                     <Label htmlFor="choices-mlsn" className="form-label text-muted mb-0">Message VPN</Label>
                     <Select id="choices-mlsn" className='mb-0 ml-3'
-                        value={selectedMlsn}
-                        onChange={(selected: any) => { handleSelectMlsn(selected); }}
+                        value={curNode}
+                        onChange={(selected: any) => { handleSelectNode(selected); }}
                         placeholder="Select mlsn"
                         options={mlsnOptions} />
                 </Col>
                 <Col lg={4} className='d-sm-flex align-items-center'>
                     <Label htmlFor="choices-queues" className="form-label text-muted mb-0">Queues</Label>
                     <Select id="choices-queues" className='mb-0 ml-3'
-                        value={selectedQueueType}
+                        value={queueType}
                         onChange={(selected: any) => { handleSelectQueueType(selected); }}
                         placeholder="Select Queue Type"
                         options={queuesOptions} />
@@ -166,7 +253,7 @@ const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
                         </span>
                     </div>
                     <Select id="choices-time-ranges" className='mb-0 ml-3'
-                        value={selectedTimeRange}
+                        value={timeRange}
                         onChange={(selected: any) => { handleSelectTimeRange(selected); }}
                         placeholder="Select Time Ranges"
                         options={timeRangeOptions} />
@@ -182,14 +269,14 @@ const MonitorHeader = ({ title, pageTitle }: BreadCrumbProps) => {
                         </span>
                     </div>
                     <Select id="choices-period" className='mb-0 ml-3'
-                        value={selectedPeroid}
-                        onChange={(selected: any) => { handleSelectPeriod(selected); }}
+                        value={refreshMode}
+                        onChange={(selected: any) => { handleSelectRefrehMode(selected); }}
                         placeholder="Select period"
-                        options={periodOptions} />
+                        options={refreshOptions} />
                 </Col>
             </Row>
         </React.Fragment>
     );
 };
 
-export default MonitorHeader;
+export { MonitorHeader, queuesOptions, timeRangeOptions, refreshOptions };

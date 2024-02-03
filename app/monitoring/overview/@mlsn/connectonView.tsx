@@ -21,7 +21,7 @@ const ConnectionView = (chartProps: ChartProps) => {
           <ChartHeader title="Consumers 개수 " dataSourceType={dataSourceType.CONNECTION} />
         </CardHeader>
         <CardBody className="p-0">
-          <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, names:["producer","consumer"], widthVal:chartProps.widthVal, heightVal:chartProps.heightVal})}/>
+          <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, widthVal:chartProps.widthVal, heightVal:chartProps.heightVal})}/>
         </CardBody>
       </Card>
     </React.Fragment>
