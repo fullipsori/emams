@@ -17,11 +17,11 @@ const dataSourceType = {
 
 const selectPendingMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queuePendings})
+    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.pendingMinLabel, labels: monitoringData.pendingLabels, datas: monitoringData.pending})
 )
 const selectTpsMonitoringData = createSelector(
     (state: any) => state.MonitoringQueueReducer,
-    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.minLabel, labels: monitoringData.queueLabels, datas: monitoringData.queueTps})
+    (monitoringData: MonitorQueueState) => ({ count: monitoringData.count, names: monitoringData.queueNames, minLabel: monitoringData.tpsMinLabel, labels: monitoringData.tpsLabels, datas: monitoringData.tps})
 )
 const selectConnMonitoringData = createSelector(
     (state: any) => state.MonitoringClientReducer,

@@ -41,10 +41,7 @@ const ChartHeader = (chartProps: ChartProps) => {
 
     return (
         <React.Fragment>
-            <div className="d-flex justify-content-between align-items-center">
-                <h4 className="card-title mb-0 fw-bold"> {headerTitle}</h4>
-                <Button onClick={handleDetail} className="primary text-bg-light">Click Detail</Button>
-            </div>
+            <h4 className="card-title mb-0 fw-bold"> {headerTitle}</h4>
         </React.Fragment>
     );
 };

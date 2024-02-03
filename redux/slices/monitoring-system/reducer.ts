@@ -26,7 +26,7 @@ export const initialState = {
     memoryUsages: [],
     diskUsages: [],
     coreCount: 0,
-    memorySize: 256,
+    memorySize: 0,
     diskIO: [],
     networkIO: [],
     automatic: true,

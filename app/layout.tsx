@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import './assets/nifty/vendors/themify-icons/themify-icons.css'
 import '../app/assets/scss/themes.scss';
 import NavBar from './components/nav/Navbar'
 import { Providers } from '@/redux/provider';

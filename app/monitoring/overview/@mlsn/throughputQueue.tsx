@@ -26,7 +26,7 @@ const ThroughputQueue = (chartProps: ChartProps) => {
     <React.Fragment>
       <Card className="mb-1 pb-0">
         <CardHeader className="py-1">
-          <ChartHeader title="Messages In/Out Rate " dataSourceType={dataSourceType.THROUGHPUT} handleYAxis={handleYAxisType} />
+          <ChartHeader title="Messages In/Out Rate " dataSourceType={dataSourceType.THROUGHPUT}/>
         </CardHeader>
         <CardBody className="p-0">
           <RTLineChart dataSourceType={dataSourceType.THROUGHPUT} chartOptions={getLineChartOpts({count:getDataSourceCount(dataSourceType.THROUGHPUT), widthVal:chartProps.widthVal, heightVal:chartProps.heightVal})} />

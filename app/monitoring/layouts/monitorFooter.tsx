@@ -13,7 +13,7 @@ const Footer = () => {
                         </Col>
                         <Col sm={6}>
                             <div className="text-sm-end d-none d-sm-block">
-                                Developed by kim, sang-hoon
+                                Developed by epozen.
                             </div>
                         </Col>
                     </Row>

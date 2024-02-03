@@ -17,7 +17,7 @@ interface ChartProps {
 
 const RTLineChart = (chartProps: ChartProps) => {
   const lineChartCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
+  const monitoringData : any = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
   const newChart = (): Chart | null => {
     const lineChartCanvas = lineChartCanvasRef.current;
@@ -68,7 +68,7 @@ const RTLineChart = (chartProps: ChartProps) => {
 
   useEffect(() => {
     updateChart(monitoringData);
-  }, [monitoringData]);
+  }, [monitoringData.labels]);
 
   const [isZoomed, setIsZoomed] = useState(false);
   const handleZoom = () => {

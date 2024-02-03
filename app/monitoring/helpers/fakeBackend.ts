@@ -47,11 +47,9 @@ const fakeBackend = () => {
   const refreshUnit = 1000; //seconds
   mock.onGet(url.GET_MONITORING_QUEUE_DATA).reply((config: any) => {
     return new Promise((resolve, reject) => {
-      console.log("nameList:" + config.params.nameList)
         setTimeout(() => {
           if(config.params.serverType === 'solace') {
             const count = (config.params.eTime - config.params.sTime)/refreshUnit;
-            console.log("lCount:" + count);
             const resultData = {
               label: Array.from({ length: count }, (_, index) => config.params.sTime + refreshUnit * (index+1)),
               names: [...config.params.nameList],
@@ -60,14 +58,14 @@ const fakeBackend = () => {
                   return Array.from({ length: count }, () => Math.round(Math.random() * 100));
                 })
                 : Array.from({ length: config.params.nameList.length }, () => {
-                  return Array.from({ length: count }, () => Math.random() * 100 / 100);
+                  return Array.from({ length: count }, () => Math.random() * 10000);
                 }),
               tps: (config.params.tpsValueMode === "count") ?
                 Array.from({ length: config.params.nameList.length }, () => {
                   return Array.from({ length: count }, () => Math.round(Math.random() * 100));
                 })
                 : Array.from({ length: config.params.nameList.length }, () => {
-                  return Array.from({ length: count }, () => Math.random() * 100 / 100);
+                  return Array.from({ length: count }, () => Math.random() * 10000);
                 }) 
             }
             resolve([200, resultData]);
@@ -108,8 +106,8 @@ const fakeBackend = () => {
             cpuUsage: Array.from({length:count}, ()=> Math.random()*100),
             memoryUsage: Array.from({length:count}, ()=> Math.random()*100),
             diskUsage: Array.from({length:count}, ()=> Math.random()*100),
-            coreCount: 4,
-            memorySize: 256,
+            coreCount: (config.params.msn === "broker-1")? 4 : (config.params.msn === "broker-2")? 8 : 16,
+            memorySize: (config.params.msn === "broker-1")? 128 : (config.params.msn === "broker-2")? 256 : 512,
             diskRead: Array.from({length:count}, ()=> Math.round(Math.random()*10000)),
             diskWrite: Array.from({length:count}, ()=> Math.round(Math.random()*10000)),
             networkRead: Array.from({length:count}, ()=> Math.round(Math.random()*10000)),

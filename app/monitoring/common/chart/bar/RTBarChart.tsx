@@ -15,7 +15,7 @@ const RTBarChart = (chartProps: ChartProps) => {
   const router = useRouter();
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
-  const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
+  const monitoringData : any = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
 
   useEffect(() => {
     const barChartCanvas = chartRef.current;
@@ -36,7 +36,7 @@ const RTBarChart = (chartProps: ChartProps) => {
 
   useEffect(() => {
     updateChart(monitoringData);
-  }, [monitoringData]);
+  }, [monitoringData.labels]);
 
 
   const updateChart = async (monitoringData: any) => {
@@ -46,7 +46,7 @@ const RTBarChart = (chartProps: ChartProps) => {
     const chartInstance = Chart.getChart(chartCanvas);
     if (!chartInstance) return;
 
-    if (!monitoringData || !monitoringData.labels)
+    if (!monitoringData || !monitoringData.labels || monitoringData.labels.length <= 0)
       return;
 
 

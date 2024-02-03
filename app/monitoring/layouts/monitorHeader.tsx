@@ -40,10 +40,8 @@ export function useInterval(callback: () => void, delay: number | null) {
         if (!delay && delay !== 0) {
             return
         }
-        console.log("timer started");
         const id = setInterval(() => savedCallback.current(), delay)
         return () => {
-            console.log("timer cleared")
             clearInterval(id)
         }
     }, [delay])
@@ -197,7 +195,6 @@ const MonitorHeader = () => {
 
     /** 시간 변경시 정상적으로 바뀌는지 확인 한다. */
     const timerFunction = () => {
-        console.log("hmm:" + new Date().getTime())
         setChartTime((new Date()).getTime());
     };
 

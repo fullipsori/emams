@@ -6,11 +6,13 @@ export type MonitorQueueState = {
     count: number;
     timeRange: { period?: number, fixedRange?: { sTime: number, eTime: number } };
     queueNames: string[];
-    minLabel: number;
-    queueLabels: number[];
-    queuePendings: number[][];
+    pendingMinLabel: number;
+    pendingLabels: number[];
+    pending: number[][];
     pendingValueMode: string;
-    queueTps: number[][];
+    tpsMinLabel: number;
+    tpsLabels: number[],
+    tps: number[][];
     tpsValueMode: string;
     error: any;
 };
@@ -19,11 +21,13 @@ export const initialState = {
     count: 3,
     timeRange: { period: 5 * 60 }, // in seconds
     queueNames: [],
-    minLabel: 0,
-    queueLabels: [],
-    queuePendings:[],
+    pendingMinLabel: 0,
+    pendingLabels: [],
+    pending:[],
     pendingValueMode: "count",
-    queueTps:[],
+    tpsMinLabel: 0,
+    tpsLabels: [],
+    tps:[],
     tpsValueMode: "count",
     error: {}
 };
@@ -39,8 +43,14 @@ const MonitoringQueueSlice = createSlice({
     updateValueMode: (state:MonitorQueueState, action: PayloadAction<any>) => {
       if(action.payload.dataSourceType === dataSourceType.PENDING)  {
         state.pendingValueMode = action.payload.valueMode;
+        state.pendingLabels = [];
+        state.pendingMinLabel = 0;
+        state.pending = [];
       }else{
         state.tpsValueMode = action.payload.valueMode;
+        state.tpsLabels = [];
+        state.tpsMinLabel = 0;
+        state.tps = [];
       }
     },
     updateTimeRange: (state: MonitorQueueState, action: PayloadAction<any>) => {
@@ -59,37 +69,64 @@ const MonitoringQueueSlice = createSlice({
         if(action.payload && action.payload.label && action.payload.label.length > 0) {
           if(state.timeRange.fixedRange) {
             state.queueNames = action.payload.names;
-            state.queueLabels = action.payload.label;
-            state.queuePendings = action.payload.pending;
-            state.queueTps = action.payload.tps;
+            state.pendingLabels = action.payload.label;
+            state.pending = action.payload.pending;
+            state.pendingMinLabel = action.payload.pendingLabels[0];
+            state.tpsLabels = [...action.payload.label]; // reference 임으로 하나는 복사.
+            state.tps = action.payload.tps;
+            state.tpsMinLabel = action.payload.tpsLabels[0];
           }else{
-            state.minLabel = action.payload.label[action.payload.label.length - 1] - (state.timeRange.period ?? 5 * 60) * 1000;
+            state.queueNames = action.payload.names;
+            /* pending chart */
+            state.pendingMinLabel = action.payload.label[action.payload.label.length - 1] - (state.timeRange.period ?? 5 * 60) * 1000;
             let shiftCount = 0;
             let index = 0;
-            while (state.queueLabels.length > 0 && state.queueLabels[index++] < state.minLabel) {
+            while (state.pendingLabels.length > 0 && state.pendingLabels[index++] < state.pendingMinLabel) {
               shiftCount++;
             }
 
             for (let i = 0; i < shiftCount; i++) {
-              state.queueLabels.shift();
-              for (let j = 0; j < state.queuePendings.length; j++) {
-                state.queuePendings[j].shift();
-                state.queueTps[j].shift();
+              state.pendingLabels.shift();
+              for (let j = 0; j < state.pending.length; j++) {
+                state.pending[j].shift();
               }
-              state.minLabel = state.queueLabels[0];
+              state.pendingMinLabel = state.pendingLabels[0];
             }
 
-            state.queueNames = action.payload.names;
-            state.queueLabels.push(...action.payload.label);
-            if(state.queuePendings[0]) {
+            state.pendingLabels.push(...action.payload.label);
+            if(state.pending[0]) {
               for (let i = 0; i < action.payload.pending.length; i++) {
-                state.queuePendings[i].push(...action.payload.pending[i]);
-                state.queueTps[i].push(...action.payload.tps[i]);
+                state.pending[i].push(...action.payload.pending[i]);
               }
             }else{
-              state.queuePendings = action.payload.pending;
-              state.queueTps = action.payload.tps;
+              state.pending= action.payload.pending;
             }
+
+            /* tps chart */
+            state.tpsMinLabel = action.payload.label[action.payload.label.length - 1] - (state.timeRange.period ?? 5 * 60) * 1000;
+            shiftCount = 0;
+            index = 0;
+            while (state.tpsLabels.length > 0 && state.tpsLabels[index++] < state.tpsMinLabel) {
+              shiftCount++;
+            }
+
+            for (let i = 0; i < shiftCount; i++) {
+              state.tpsLabels.shift();
+              for (let j = 0; j < state.tps.length; j++) {
+                state.tps[j].shift();
+              }
+              state.tpsMinLabel = state.tpsLabels[0];
+            }
+
+            state.tpsLabels.push(...action.payload.label);
+            if(state.tps[0]) {
+              for (let i = 0; i < action.payload.tps.length; i++) {
+                state.tps[i].push(...action.payload.tps[i]);
+              }
+            }else{
+              state.tps= action.payload.tps;
+            }
+
           }
         }
     });
@@ -102,7 +139,8 @@ const MonitoringQueueSlice = createSlice({
 export const {
   reset,
   updateTimeRange,
-  updateCount
+  updateCount,
+  updateValueMode
 } = MonitoringQueueSlice.actions;
 
 export const MonitoringQueueReducer = MonitoringQueueSlice.reducer;

@@ -2,7 +2,7 @@
 
 import React from "react";
 import RTBarChart from "../../common/chart/bar/RTBarChart";
-import { Card, CardBody, CardHeader } from "reactstrap";
+import { Card, CardBody, CardHeader, Collapse, Nav, NavItem, NavLink, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 import getBarChartOpts from "../../common/chart/bar/BarChartOpts";
 import { dataSourceType, getDataSourceCount } from "../../common/data/DataSource";
 import ChartHeader from "./ChartHeader";

@@ -14,19 +14,11 @@ interface ChartProps {
 }
 
 const PendingQueue = (chartProps: ChartProps) => {
-
-  const [yAxisType, setYAxisType] = useState("count");
-  const handleYAxisType = (type: string) => {
-    if(yAxisType !== type) {
-      setYAxisType(type);
-    }
-  };
-
   return (
     <React.Fragment>
       <Card className="mb-1 pb-0">
         <CardHeader className="py-1">
-          <ChartHeader title="Pending Messages " dataSourceType={dataSourceType.PENDING} handleYAxis={handleYAxisType}/>
+          <ChartHeader title="Pending Messages " dataSourceType={dataSourceType.PENDING} />
         </CardHeader>
         <CardBody className="p-0">
           <RTLineChart dataSourceType={dataSourceType.PENDING}  chartOptions={getLineChartOpts({count:getDataSourceCount(dataSourceType.PENDING), widthVal: chartProps.widthVal, heightVal: chartProps.heightVal})}/>
