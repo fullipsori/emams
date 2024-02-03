@@ -12,7 +12,6 @@ interface ChartProps {
 }
 
 const ChartHeader = (chartProps: ChartProps) => {
-    const router = useRouter();
     const [headerTitle, setHeaderTitle] = useState(chartProps.title);
 
     const monitoringData = useAppSelector(getDataSourceSelector(chartProps.dataSourceType));
@@ -34,10 +33,6 @@ const ChartHeader = (chartProps: ChartProps) => {
     useEffect(() => {
         updateTitle(monitoringData);
     }, [monitoringData]);
-
-    const handleDetail = () => {
-        router.push(`/monitoring/${chartProps.dataSourceType}`);
-    };
 
     return (
         <React.Fragment>

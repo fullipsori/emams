@@ -24,14 +24,14 @@ const Monitoring = () => {
             <div className="m-subpage-content">
                     <Card className="mb-1 pb-0">
                         <CardHeader>
-                            <h4 className="card-title mb-0 fw-bolder"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i>Message Broker Resource Usage</h4>
+                            <h4 className="card-title mb-0 fw-bolder"><i className="ri-stop-fill align-middle fs-18 text-primary me-2 "></i>Message Broker Resource Usage</h4>
                         </CardHeader>
                         <CardBody className="pt-0 pb-0">
                             <Row>
-                                <Col lg={6}>
+                                <Col lg={7}>
                                     <Card className="mb-1">
                                         <CardHeader >
-                                            <h5 className="fw-bold text-muted m-2">NODE 정보</h5>
+                                            <h5 className="fw-bold text-muted m-2 fs-5">NODE 정보</h5>
                                         </CardHeader>
                                         <CardBody className="">
                                             <Row>

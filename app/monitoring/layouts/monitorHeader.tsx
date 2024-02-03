@@ -99,9 +99,10 @@ const MonitorHeader = () => {
 
     const [mlsnOptions, setMlsnOptions] = useState<any[]>([]);
     const [curNode, setCurNode] = useState<any>(null);
-    const [queueType, setQueueType] = useState<string>(queuesOptions[0].value);
-    const [timeRange, setTimeRange] = useState<{ period?: number, fixedRange?: { sTime: number, eTime: number}}>({period: timeRangeOptions[0].value});
-    const [refreshMode, setRefreshMode] = useState<number>(refreshOptions[1].value);
+    const [queueType, setQueueType] = useState(queuesOptions[0]);
+    // const [timeRange, setTimeRange] = useState<{ period?: number, fixedRange?: { sTime: number, eTime: number}}>({period: timeRangeOptions[0].value});
+    const [timeRange, setTimeRange] = useState(timeRangeOptions[0]);
+    const [refreshMode, setRefreshMode] = useState(refreshOptions[1]);
 
     const [chartTime, setChartTime] = useState<number|null>(null);
 
@@ -143,31 +144,35 @@ const MonitorHeader = () => {
     },[curNode]);
     
     useEffect(() => {
-        if(curNode && curNode.mlsn) {
+        if(curNode && curNode.value.mlsn) {
             dispatch(getMonitoringQueueList({
                 serverType: monitoringData.serverType,
-                msn: curNode.msn,
-                mlsn: curNode.mlsn,
-                queueType: queueType,
+                msn: curNode.value.msn,
+                mlsn: curNode.value.mlsn,
+                queueType: queueType.value,
                 maxCount: 3,
             }));
         }
     },[curNode, queueType]);
 
     useEffect(() => {
-        dispatch(updateMonitorTimeRange(timeRange));
-        dispatch(updateQueueTimeRange(timeRange));
-        dispatch(updateSystemTimeRange(timeRange));
-        dispatch(updateClientTimeRange(timeRange));
+        //  timeRange : { period?: number, fixedRange?: { sTime: number, eTime: number}}>({period: timeRangeOptions[0].value}
+        const tRange = {
+            period: timeRange.value
+        }
+        dispatch(updateMonitorTimeRange(tRange));
+        dispatch(updateQueueTimeRange(tRange));
+        dispatch(updateSystemTimeRange(tRange));
+        dispatch(updateClientTimeRange(tRange));
     }, [timeRange]);
 
     useEffect(() => {
-        dispatch(updateRefreshMode(refreshMode));
+        dispatch(updateRefreshMode(refreshMode.value));
     },[refreshMode]);
 
     /* 헤더에서 chart update 용 timer 를 구동한다. */
     useEffect(() => {
-        if (chartTime && (timeRange.period ?? 0 > 0)) {
+        if (chartTime && (timeRange.value > 0)) {
             dispatch(getMonitoringQueueData({
                 serverType: monitoringData.serverType,
                 sTime: chartTime - 1000,
@@ -202,27 +207,11 @@ const MonitorHeader = () => {
         if (!curNode || !refreshMode) {
             return
         }
-        const id = setInterval(() => timerFunction(), refreshMode * 1000)
+        const id = setInterval(() => timerFunction(), refreshMode.value * 1000)
         return () => {
             clearInterval(id)
         }
     }, [curNode, refreshMode])
-
-    function handleSelectNode(selectedValue: any) {
-        setCurNode(selectedValue.value);
-    }
-    function handleSelectQueueType(selectedValue: any) {
-        setQueueType(selectedValue.value);
-    }
-    function handleSelectTimeRange(selectedValue: any) {
-        const timeRange = {
-            period: selectedValue.value,
-        }
-        setTimeRange(timeRange);
-    }
-    function handleSelectRefrehMode(selectedValue: any) {
-        setRefreshMode(selectedValue.value);
-    }
 
     return (
         <React.Fragment>
@@ -231,7 +220,7 @@ const MonitorHeader = () => {
                     <Label htmlFor="choices-mlsn" className="form-label text-muted mb-0">Message VPN</Label>
                     <Select id="choices-mlsn" className='mb-0 ml-3'
                         value={curNode}
-                        onChange={(selected: any) => { handleSelectNode(selected); }}
+                        onChange={(selected: any) => { setCurNode(selected); }}
                         placeholder="Select mlsn"
                         options={mlsnOptions} />
                 </Col>
@@ -239,11 +228,11 @@ const MonitorHeader = () => {
                     <Label htmlFor="choices-queues" className="form-label text-muted mb-0">Queues</Label>
                     <Select id="choices-queues" className='mb-0 ml-3'
                         value={queueType}
-                        onChange={(selected: any) => { handleSelectQueueType(selected); }}
+                        onChange={(selected: any) => { setQueueType(selected); }}
                         placeholder="Select Queue Type"
                         options={queuesOptions} />
                 </Col>
-                <Col lg={5} className='ml-auto d-sm-flex align-items-center'>
+                <Col className='ml-auto d-sm-flex align-items-center'>
                     <div className="flex-shrink-0 avatar-xs ">
                         <span className="avatar-title bg-light p-1 rounded-circle">
                             <img src={btc} className="img-fluid" alt="" />
@@ -251,7 +240,7 @@ const MonitorHeader = () => {
                     </div>
                     <Select id="choices-time-ranges" className='mb-0 ml-3'
                         value={timeRange}
-                        onChange={(selected: any) => { handleSelectTimeRange(selected); }}
+                        onChange={(selected: any) => { setTimeRange(selected); }}
                         placeholder="Select Time Ranges"
                         options={timeRangeOptions} />
 
@@ -267,7 +256,7 @@ const MonitorHeader = () => {
                     </div>
                     <Select id="choices-period" className='mb-0 ml-3'
                         value={refreshMode}
-                        onChange={(selected: any) => { handleSelectRefrehMode(selected); }}
+                        onChange={(selected: any) => { setRefreshMode(selected); }}
                         placeholder="Select period"
                         options={refreshOptions} />
                 </Col>
