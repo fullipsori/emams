@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getQueueList as getMonitoringQueueListApi,
     getMonitoringQueueData as getMonitoringQueueApi,
-} from "../../../app/monitoring/helpers/fakebackend_helper";
+} from "@/app/(monitor)/monitor/helpers/fakebackend_helper";
 
 interface reqQueueListType {
   serverType: string;

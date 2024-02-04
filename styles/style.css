@@ -1,0 +1,47 @@
+.inputField {
+  background-color: #000;
+  border: none;
+  border-bottom: 2px solid gray;
+  width: 350px;
+  height: 40px;
+  color: #fff;
+  outline: none;
+}
+
+.inputField:focus {
+  border-bottom-color: #00c895;
+}
+
+.loginButton {
+  background-color: #00c895;
+  border-color: transparent;
+  border-radius: 20px;
+  color: #fff;
+  width: 350px;
+  height: 40px;
+  margin-top: 100px;
+}
+
+/* .tabulator-page {
+  display: none;
+} */
+
+/* styles.css */
+.inputField {
+  background-color: white;
+  cursor: text;
+  color: #000;
+  border-color: #000;
+  border-style: solid;
+}
+
+.inputFieldReadOnly {
+  background-color: #f8f8f8;
+  cursor: default;
+  color: #999;
+  border-color: #dddddd;
+}
+
+.inputFieldReadOnly:focus {
+  border-color: #dddddd;
+}

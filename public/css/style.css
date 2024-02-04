@@ -58,3 +58,64 @@
   display: inline-block;
   border-color: black;
 }
+
+.diagram-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 600px;
+  height: 200px;
+}
+
+.producer-box,
+.consumer-box {
+  width: 100px;
+  height: 50px;
+  background-color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+.queue-cylinder {
+  width: 60px;
+  height: 100px;
+  background-color: skyblue;
+  border-radius: 30px 30px 0 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.queue-cylinder::before,
+.queue-cylinder::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.queue-cylinder::before {
+  top: 0;
+  background-color: skyblue;
+}
+
+.queue-cylinder::after {
+  bottom: -15px;
+  background-color: darkblue;
+}
+
+.queue-stats {
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  z-index: 1;
+}

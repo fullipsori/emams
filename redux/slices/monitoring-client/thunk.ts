@@ -1,7 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-    getClientInfo as getClientInfoApi,
-} from "../../../app/monitoring/helpers/fakebackend_helper";
+import { getClientInfo as getClientInfoApi } from "@/app/(monitor)/monitor/helpers/fakebackend_helper";
 
 interface reqClientType {
     serverType: string;

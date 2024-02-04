@@ -1,11 +1,29 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = config.externals || [];
-      config.externals.push({ hammerjs: "commonjs hammerjs" });
-    }
+const apiUrl = process.env.API_URL;
 
+const nextConfig = {
+  reactStrictMode: false,
+  swcMinify: true,
+  compiler: {
+    styledComponents: true,
+  },
+  output: "standalone",
+  // webpack5: true,
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
     return config;
   },
+  // experimental: {
+  //   nextScriptWorkers: true,
+  // },
+  async rewrites() {
+    return [
+      {
+        source: "/api/v2/:path*",
+        destination: (apiUrl)? `${apiUrl}/:path*` : `/error/:path*`,
+      },
+    ];
+  },
 };
+
+module.exports = nextConfig;

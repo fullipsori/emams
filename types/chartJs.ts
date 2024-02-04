@@ -3,4 +3,5 @@ export interface chartJsProps {
   labels: string[];
   widthVal: number;
   heightVal: number;
+  id?: number;
 }

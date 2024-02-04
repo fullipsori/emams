@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getMonitoringQueueData, getMonitoringQueueList } from './thunk';
-import { dataSourceType } from "@/app/monitoring/common/data/DataSource";
+import { dataSourceType } from "@/app/(monitor)/monitor/common/data/DataSource";
 
 export type MonitorQueueState = {
     count: number;

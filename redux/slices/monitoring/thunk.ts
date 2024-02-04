@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getAllNodes as getAllNodesApi,
-} from "../../../app/monitoring/helpers/fakebackend_helper";
+}from "@/app/(monitor)/monitor/helpers/fakebackend_helper";
 
 interface reqNodeType {
   serverType: string;

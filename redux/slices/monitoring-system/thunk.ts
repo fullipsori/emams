@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getMonitoringSystemData as getMonitoringSystemApi,
-} from "../../../app/monitoring/helpers/fakebackend_helper";
+} from "@/app/(monitor)/monitor/helpers/fakebackend_helper";
 
 interface reqSystemType{
   serverType: string;
