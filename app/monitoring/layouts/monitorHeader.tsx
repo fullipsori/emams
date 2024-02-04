@@ -104,7 +104,7 @@ const MonitorHeader = () => {
     const [timeRange, setTimeRange] = useState(timeRangeOptions[0]);
     const [refreshMode, setRefreshMode] = useState(refreshOptions[1]);
 
-    const [chartTime, setChartTime] = useState<number|null>(null);
+    const [chartTime, setChartTime] = useState<number|null>(0);
 
 
     /* initial loading */
@@ -136,7 +136,7 @@ const MonitorHeader = () => {
 
     useEffect(() => {
         if(curNode) {
-            dispatch(updateNode(curNode))
+            dispatch(updateNode(curNode.value))
             dispatch(resetQueueData());
             dispatch(resetClientData());
             dispatch(resetSystemData());
@@ -175,7 +175,7 @@ const MonitorHeader = () => {
         if (chartTime && (timeRange.value > 0)) {
             dispatch(getMonitoringQueueData({
                 serverType: monitoringData.serverType,
-                sTime: chartTime - 1000,
+                sTime: chartTime - 1000*refreshMode.value,
                 eTime: chartTime,
                 nameList: monitoringQueueData.queueNames,
                 pendingValueMode: monitoringQueueData.pendingValueMode,
@@ -184,16 +184,16 @@ const MonitorHeader = () => {
              }));
             dispatch(getClientInfoData({
                 serverType: monitoringData.serverType,
-                sTime: chartTime - 1000,
+                sTime: chartTime - 1000*refreshMode.value,
                 eTime: chartTime,
-                mlsn: curNode.mlsn,
+                mlsn: curNode.value.mlsn,
                 clientList: ["producer", "consumer"],
             }));
             dispatch(getMonitoringSystemData({
                 serverType: monitoringData.serverType,
-                sTime: chartTime - 1000,
+                sTime: chartTime - 1000*refreshMode.value,
                 eTime: chartTime,
-                msn: curNode.msn,
+                msn: curNode.value.msn,
             }));
         }
     }, [chartTime])
@@ -204,7 +204,7 @@ const MonitorHeader = () => {
     };
 
     useEffect(() => {
-        if (!curNode || !refreshMode) {
+        if (!curNode || !refreshMode || refreshMode.value==0) {
             return
         }
         const id = setInterval(() => timerFunction(), refreshMode.value * 1000)
