@@ -97,7 +97,6 @@ const fakeBackend = () => {
   });
 
   mock.onGet(url.GET_MONITORING_SYSTEM_DATA).reply((config: any) => {
-    console.log("config.params.msn:" + config.params.msn)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if(config.params.serverType === 'solace') {

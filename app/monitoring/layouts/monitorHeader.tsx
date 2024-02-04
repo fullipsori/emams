@@ -3,9 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, Label, Row } from 'reactstrap';
 
-import btc from "../../assets/images/svg/crypto-icons/btc.svg";
-import eth from "../../assets/images/svg/crypto-icons/eth.svg";
-import ltc from "../../assets/images/svg/crypto-icons/ltc.svg";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { MonitorState, reset as resetMonitor, updateNode, updateRefreshMode, updateTimeRange as updateMonitorTimeRange } from '@/redux/slices/monitoring/reducer';
 import { reset as resetClientData, updateTimeRange as updateClientTimeRange } from '@/redux/slices/monitoring-client/reducer';
@@ -18,6 +15,7 @@ import { getMonitoringSystemData } from '@/redux/slices/monitoring-system/thunk'
 import { getMonitoringQueueData, getMonitoringQueueList } from '@/redux/slices/monitoring-queue/thunk';
 import { getMonitoringAllNodes } from '@/redux/slices/monitoring/thunk';
 import { createSelector } from '@reduxjs/toolkit';
+import { fullscreen } from '../common/FullScreen';
 
 interface BreadCrumbProps {
     title: string;
@@ -156,7 +154,6 @@ const MonitorHeader = () => {
     },[curNode, queueType]);
 
     useEffect(() => {
-        //  timeRange : { period?: number, fixedRange?: { sTime: number, eTime: number}}>({period: timeRangeOptions[0].value}
         const tRange = {
             period: timeRange.value
         }
@@ -213,6 +210,9 @@ const MonitorHeader = () => {
         }
     }, [curNode, refreshMode])
 
+    {/* <button onClick={()=> fullscreen(document.getElementById("layout-wrapper"))}>Make FullScreen</button>
+<button onClick={() => exitFullScreen()}>Exit FullScreen</button> */}
+
     return (
         <React.Fragment>
             <Row className="m-page-title-box">
@@ -236,7 +236,7 @@ const MonitorHeader = () => {
                     <div className='d-sm-flex ml-auto'>
                         <div className="flex-shrink-0 avatar-xs ">
                             <span className="avatar-title  p-1 rounded-circle">
-                                <i className="ti-desktop"></i>
+                                <i className="ti-desktop" onClick={()=>fullscreen(document.getElementById("layout-wrapper"))}></i>
                                 {/* <img src={btc} className="img-fluid" alt="" /> */}
                             </span>
                         </div>

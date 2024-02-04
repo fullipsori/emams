@@ -12,7 +12,6 @@ import getBarChartOpts from "../common/chart/bar/BarChartOpts";
 
 const Detail = (props: any) => {
     const router = useRouter();
-    const [selectedMonitorType, setSelectedMonitorType] = useState(props.params.srcId);
 
     const monitorOptions= [
         { value: dataSourceType.PENDING, label: 'Pending Queues' },
@@ -43,7 +42,7 @@ const Detail = (props: any) => {
                             <h4 className="text-muted mb-0 fw-bold fs-15" onClick={handleBack}><i className="ti-arrow-left"></i></h4>
                             <h4 className="text-muted mb-0 fw-bold fs-15 ml-2">{title}</h4>
                             <Select id="choices-monitor-type" className='mb-0 ml-3'
-                                value={selectedMonitorType}
+                                value={monitorOptions.find((item)=>item.value===props.params.srcId) ?? monitorOptions[0]}
                                 onChange={(selected: any) => { handleMonitoryType(selected); }}
                                 placeholder="Select monitor type"
                                 options={monitorOptions} />
@@ -56,7 +55,7 @@ const Detail = (props: any) => {
                                 (props.params.srcId === dataSourceType.CONNECTION)? 
                                     <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, names:["producer","consumer"], legendPos: "right"})}/>
                                     :
-                                    <RTLineChart dataSourceType={selectedMonitorType} chartOptions={getLineChartOpts({count:getDataSourceCount(selectedMonitorType), legendPos: "right"}) }/>
+                                    <RTLineChart dataSourceType={props.params.srcId} chartOptions={getLineChartOpts({count:getDataSourceCount(props.params.srcId), legendPos: "right"}) }/>
                             }
                         </div>
                 </Col>
