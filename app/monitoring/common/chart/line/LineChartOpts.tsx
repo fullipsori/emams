@@ -8,6 +8,7 @@ interface ChartOption {
     zoomDrag?: boolean,
     zoomMode?: boolean,
     maxTickSize?: number,
+    chartTitle?: string,
     names?: string[],
     labels?: (number | string)[],
     datas?: number[][],
@@ -21,6 +22,7 @@ const getLineChartOpts = (chartOption: ChartOption) => {
         widthVal: chartOption.widthVal,
         heightVal: chartOption.heightVal,
         zoomMode: chartOption.zoomMode ?? false,
+        chartTitle: chartOption.chartTitle,
         enableDateAdapter: chartOption.enableDateAdapter ?? true,
         config: {
             type: "line",
@@ -69,6 +71,19 @@ const getLineChartOpts = (chartOption: ChartOption) => {
                 plugins: {
                     legend: chartOption.legendPos ? { position: chartOption.legendPos } :{ position: "bottom" },
                     zoom: chartOption.zoomDrag ? { zoom: { drag: { enabled: true, }, mode: "x", }, } : undefined,
+                    title: {
+                        display: (chartOption.chartTitle)? true : false,
+                        title: `  ${chartOption.chartTitle}`,
+                        font: {
+                            weight: 'bold',
+                            size: 16,
+                        },
+                        align: 'start', 
+                        padding: {
+                            top: 0,
+                            bottom: 10,
+                        }
+                    }
                 },
             },
         }

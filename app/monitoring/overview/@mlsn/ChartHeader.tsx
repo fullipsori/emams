@@ -52,7 +52,7 @@ const ChartHeader = (chartProps: ChartProps) => {
 
     return (
         <React.Fragment>
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center m-1">
                 <h4 className="card-title mb-0 fw-bold"><i className="ri-stop-fill align-middle fs-18 text-primary me-2"></i> {chartProps.title}
                     {
                         (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT) && <span style={{textDecoration: (yAxisMode === "count")? "underline" : ""}} onClick={() => handleYAxisMode("count")}>{'[건수'}</span>

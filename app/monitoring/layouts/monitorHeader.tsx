@@ -125,7 +125,7 @@ const MonitorHeader = () => {
             const data: any[] = [];
             for (let n of monitoringData.nodeInfo) {
                 for (let lsn of n.mlsns) {
-                    data.push({ value: { msn: n.msn, mlsn: lsn }, label: `${n.msn}>${lsn}` });
+                    data.push({ value: { msn: n.msn, mlsn: lsn }, label: `${n.msn} > ${lsn}` });
                 }
             }
             if (data.length > 0) {
@@ -218,7 +218,7 @@ const MonitorHeader = () => {
             <Row className="m-page-title-box">
                 <Col lg={3} className='d-sm-flex align-items-center'>
                     <Label htmlFor="choices-mlsn" className="form-label text-muted mb-0">Message VPN</Label>
-                    <Select id="choices-mlsn" className='mb-0 ml-3'
+                    <Select id="choices-mlsn" className='mb-0 ml-3 w-60' 
                         value={curNode}
                         onChange={(selected: any) => { setCurNode(selected); }}
                         placeholder="Select mlsn"
@@ -226,39 +226,44 @@ const MonitorHeader = () => {
                 </Col>
                 <Col lg={4} className='d-sm-flex align-items-center'>
                     <Label htmlFor="choices-queues" className="form-label text-muted mb-0">Queues</Label>
-                    <Select id="choices-queues" className='mb-0 ml-3'
+                    <Select id="choices-queues" className='mb-0 ml-3 w-50'
                         value={queueType}
                         onChange={(selected: any) => { setQueueType(selected); }}
                         placeholder="Select Queue Type"
                         options={queuesOptions} />
                 </Col>
-                <Col className='ml-auto d-sm-flex align-items-center'>
-                    <div className="flex-shrink-0 avatar-xs ">
-                        <span className="avatar-title bg-light p-1 rounded-circle">
-                            <img src={btc} className="img-fluid" alt="" />
-                        </span>
-                    </div>
-                    <Select id="choices-time-ranges" className='mb-0 ml-3'
-                        value={timeRange}
-                        onChange={(selected: any) => { setTimeRange(selected); }}
-                        placeholder="Select Time Ranges"
-                        options={timeRangeOptions} />
+                <Col lg={5} className='d-sm-flex align-items-center'>
+                    <div className='d-sm-flex ml-auto'>
+                        <div className="flex-shrink-0 avatar-xs ">
+                            <span className="avatar-title  p-1 rounded-circle">
+                                <i className="ti-desktop"></i>
+                                {/* <img src={btc} className="img-fluid" alt="" /> */}
+                            </span>
+                        </div>
+                        <Select id="choices-time-ranges" className='mb-0 ml-3 w-40'
+                            value={timeRange}
+                            onChange={(selected: any) => { setTimeRange(selected); }}
+                            placeholder="Select Time Ranges"
+                            options={timeRangeOptions} />
 
-                    <div className="flex-shrink-0 avatar-xs ml-3">
-                        <span className="avatar-title bg-light p-1 rounded-circle">
-                            <img src={eth} className="img-fluid" alt="" />
-                        </span>
+                        <div className="flex-shrink-0 avatar-xs ml-3 ">
+                            <span className="avatar-title  p-1 rounded-circle">
+                                <i className="ti-zoom-out"></i>
+                                {/* <img src={eth} className="img-fluid" alt="" /> */}
+                            </span>
+                        </div>
+                        <div className="flex-shrink-0 avatar-xs ml-3 ">
+                            <span className="avatar-title p-1 ">
+                                <i className="ti-reload"></i>
+                                {/* <img src={ltc} className="img-fluid" alt="" /> */}
+                            </span>
+                        </div>
+                        <Select id="choices-refresh" className='mb-0 ml-0 w-20'
+                            value={refreshMode}
+                            onChange={(selected: any) => { setRefreshMode(selected); }}
+                            placeholder="Select period"
+                            options={refreshOptions} />
                     </div>
-                    <div className="flex-shrink-0 avatar-xs ml-3">
-                        <span className="avatar-title bg-light p-1 rounded-circle">
-                            <img src={ltc} className="img-fluid" alt="" />
-                        </span>
-                    </div>
-                    <Select id="choices-period" className='mb-0 ml-3'
-                        value={refreshMode}
-                        onChange={(selected: any) => { setRefreshMode(selected); }}
-                        placeholder="Select period"
-                        options={refreshOptions} />
                 </Col>
             </Row>
         </React.Fragment>

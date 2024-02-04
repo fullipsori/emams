@@ -5,7 +5,6 @@ import zoomPlugin from "chartjs-plugin-zoom";
 import "chartjs-adapter-date-fns";
 import { getDataSourceSelector } from "../../data/DataSource";
 import { useAppSelector } from "@/redux/hooks";
-import { Button } from "reactstrap";
 
 
 Chart.register(...registerables, zoomPlugin);
@@ -48,6 +47,20 @@ const RTLineChart = (chartProps: ChartProps) => {
     };
   }, []);
 
+  const updateTitle = (title: any) => {
+    if (monitoringData && monitoringData.datas) {
+      let newTitle = `  ${title} : `;
+      for (var i = 0; i < monitoringData.datas.length; i++) {
+        const lastValue = Math.round(monitoringData.datas[i][monitoringData.datas[i].length - 1] * 100) / 100;
+        newTitle += lastValue.toString();
+        if (i < (monitoringData.datas.length - 1)) {
+          newTitle += " / ";
+        }
+      }
+      return newTitle;
+    }
+  }
+
   const updateChart = async (monitoringData: any) => {
     const lineChartCanvas = lineChartCanvasRef.current;
     if (lineChartCanvas) {
@@ -60,6 +73,10 @@ const RTLineChart = (chartProps: ChartProps) => {
         for (var step = 0; step < chartProps.chartOptions.count; step++) {
           chartInstance.data.datasets[step].label = monitoringData.names[step];
           chartInstance.data.datasets[step].data = monitoringData.datas[step];
+        }
+
+        if(chartInstance.options.plugins && chartInstance.options.plugins.title && chartInstance.options.plugins.title.display) {
+          chartInstance.options.plugins.title.text = updateTitle(chartProps.chartOptions.chartTitle);
         }
         chartInstance.update();
       }
