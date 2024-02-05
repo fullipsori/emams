@@ -14,6 +14,8 @@ interface reqQueueListType {
 
 interface reqQueueType {
   serverType: string,
+  msn: string;
+  mlsn: string;
   sTime: number,
   eTime: number,
   nameList: string[],

@@ -72,11 +72,6 @@ const RTBarChart = (chartProps: ChartProps) => {
     }
   }, [isZoomed, stackedBarChartProps.widthVal, stackedBarChartProps.heightVal]);
   */
-
-    const handleDetail = () => {
-      router.push(`/monitoring/${chartProps.dataSourceType}`);
-    };
-
   return (
     <React.Fragment>
       <div className={"bg-white-100"}>

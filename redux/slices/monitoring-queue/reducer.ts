@@ -59,7 +59,7 @@ const MonitoringQueueSlice = createSlice({
   },
   extraReducers: (builder) => {
       builder.addCase(getMonitoringQueueList.fulfilled, (state: MonitorQueueState, action: PayloadAction<any>) => {
-        return {...initialState, queueNames: action.payload.queueList};
+        return {...initialState, queueNames: action.payload.queueList, count: action.payload.queueList.length ?? 0};
     });
     builder.addCase(getMonitoringQueueList.rejected, (state: MonitorQueueState, action:PayloadAction<any>) => {
       state.error = action.payload.error || null;

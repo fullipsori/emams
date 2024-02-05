@@ -173,6 +173,8 @@ const MonitorHeader = () => {
         if (chartTime && (timeRange.value > 0)) {
             dispatch(getMonitoringQueueData({
                 serverType: monitoringData.serverType,
+                msn: curNode.value.msn,
+                mlsn: curNode.value.mlsn,
                 sTime: chartTime - 1000*refreshMode.value,
                 eTime: chartTime,
                 nameList: monitoringQueueData.queueNames,
@@ -185,7 +187,7 @@ const MonitorHeader = () => {
                 sTime: chartTime - 1000*refreshMode.value,
                 eTime: chartTime,
                 mlsn: curNode.value.mlsn,
-                clientList: ["producer", "consumer"],
+                clientList: ["producer", "consumer"], //"all"
             }));
             dispatch(getMonitoringSystemData({
                 serverType: monitoringData.serverType,
@@ -210,9 +212,6 @@ const MonitorHeader = () => {
             clearInterval(id)
         }
     }, [curNode, refreshMode])
-
-    {/* <button onClick={()=> fullscreen(document.getElementById("layout-wrapper"))}>Make FullScreen</button>
-<button onClick={() => exitFullScreen()}>Exit FullScreen</button> */}
 
     return (
         <React.Fragment>

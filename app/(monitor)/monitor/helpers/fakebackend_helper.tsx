@@ -7,7 +7,10 @@ import * as url from "./url_helper";
 fakeBackend();
 
 const monitorAxios = axios.create({
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+        "Content-Type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+    },
     timeout: 5000,
 });
 
@@ -45,6 +48,8 @@ export const getQueueList = (params: any) => monitorAxios.get(url.GET_QUEUE_LIST
 
 export const getMonitoringQueueData = (params: any) => monitorAxios.get(url.GET_MONITORING_QUEUE_DATA, { params: { 
     serverType: params.serverType,
+    msn: params.msn,
+    mlsn: params.mlsn,
     sTime: params.sTime,
     eTime: params.eTime,
     nameList: params.nameList,
