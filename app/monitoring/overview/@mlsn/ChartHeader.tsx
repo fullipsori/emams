@@ -67,6 +67,9 @@ const ChartHeader = (chartProps: ChartProps) => {
                         <span className="text-muted fs-16"><i className="ti-menu align-middle"></i></span>
                     </DropdownToggle>
                     <DropdownMenu className="dropdown-menu-end" >
+                        <DropdownItem onClick={() => { onChangeChartPeriod("zoom-in"); }}>zoom-in(disabled)</DropdownItem>
+                        <DropdownItem onClick={() => { onChangeChartPeriod("zoom-out"); }}>zoom-out(disabled)</DropdownItem>
+                        <DropdownItem onClick={() => { onChangeChartPeriod("zoom-reset"); }}>zoom-reset(disabled)</DropdownItem>
                         <DropdownItem onClick={() => { onChangeChartPeriod("detail"); }}>Detail</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
