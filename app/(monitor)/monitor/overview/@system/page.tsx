@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardHeader, Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
+import { Card, CardBody, CardHeader, CardTitle, Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import "../../assets/monitoring.css";
 import RTGaugeChart from "../../common/chart/gauge/RTGaugeChart";
 import SystemResource from "./SystemResource";
@@ -21,17 +21,18 @@ const Monitoring = () => {
 
     return (
         <React.Fragment>
-            <div className="m-subpage-content">
-                    <Card className="mb-1 pb-0">
+            <div className="content__boxed">
+                <Row>
+                    <Card className="p-0">
                         <CardHeader>
-                            <h4 className="card-title mb-0 fw-bolder"><i className="psi-retro align-middle fs-18 text-primary me-2 "></i>Message Broker Resource Usage</h4>
+                            <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 text-primary me-2 "></i>Message Broker Resource Usage</h6>
                         </CardHeader>
-                        <CardBody className="pt-0 pb-0">
+                        <CardBody>
                             <Row>
-                                <Col lg={7}>
-                                    <Card className="mb-1">
-                                        <CardHeader >
-                                            <h5 className="fw-bold text-muted m-2 fs-5">NODE 정보</h5>
+                                <Col lg={8}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h6 className="fw-bold m-2 ">NODE 정보</h6>
                                         </CardHeader>
                                         <CardBody className="">
                                             <Row>
@@ -39,7 +40,7 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
-                                                            <RTGaugeChart dataSourceType={dataSourceType.CPU_USAGE}/>
+                                                            <RTGaugeChart dataSourceType={dataSourceType.CPU_USAGE} />
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -47,7 +48,7 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">MEM 사용률</h6>
-                                                            <RTGaugeChart dataSourceType={dataSourceType.MEMORY_USAGE}/>
+                                                            <RTGaugeChart dataSourceType={dataSourceType.MEMORY_USAGE} />
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -55,7 +56,7 @@ const Monitoring = () => {
                                                     <Card>
                                                         <CardBody>
                                                             <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률</h6>
-                                                            <RTGaugeChart dataSourceType={dataSourceType.DISK_STATUS}/>
+                                                            <RTGaugeChart dataSourceType={dataSourceType.DISK_STATUS} />
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -71,9 +72,11 @@ const Monitoring = () => {
                             </Row>
                         </CardBody>
                     </Card>
-                    <Card>
+                </Row>
+                <Row>
+                    <Card className="p-0">
                         <CardHeader className="d-flex justify-content-between">
-                            <h4 className="card-title mb-0 fw-bolder "><i className="psi-retro align-middle fs-18 text-primary me-2"></i>Message Broker Resource Usages (CPU/Memory/Disk IO/Netowork IO)</h4>
+                            <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 text-primary me-2 "></i>Message Broker Resource Usage (CPU/Memory/Disk IO/Network IO)</h6>
                             <Dropdown className="card-header-dropdown" isOpen={isUserDropdown} toggle={toggleDropdown} direction="start">
                                 <DropdownToggle tag="a" className="text-reset dropdown-btn" role="button">
                                     <span className="text-muted fs-16"><i className="psi-receipt align-middle"></i></span>
@@ -104,6 +107,7 @@ const Monitoring = () => {
                             </Row>
                         </CardBody>
                     </Card>
+                </Row>
             </div>
         </React.Fragment>
     );

@@ -8,7 +8,6 @@ import { dataSourceType, getDataSourceCount } from "../../common/data/DataSource
 import ChartHeader from "./ChartHeader";
 
 interface ChartProps {
-    countValue: number;
     widthVal?: string;
     heightVal?: string;
 }

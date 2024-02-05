@@ -10,24 +10,24 @@ import ConnectionView from "./connectonView";
 const Monitoring = () => {
     return (
         <React.Fragment>
-            <div id="m-subpage-content">
-                <Container fluid >
+            <div className="content__boxed">
                     <Row>
                         <Col lg={12}>
-                            <PendingQueue countValue={3}/>
+                            <PendingQueue />
                         </Col>
                     </Row>
                     <Row>
                         <Col lg={12}>
-                            <ThroughputQueue countValue={3}/>
+                            <ThroughputQueue />
                         </Col>
                     </Row>
+
                     <Row>
                         <Col lg={12}>
                             <ConnectionView/>
                         </Col>
                     </Row>
-                </Container>
+
             </div>
         </React.Fragment>
     );

@@ -9,18 +9,18 @@ export default function MonitoringLayout(props: {
 }) {
     return (
         <React.Fragment>
-            <div id="layout-wrapper">
+            <div className="content__boxed ">
                 <Row>
-                    <Col lg={12}>
-                        {props.children}
+                    <Col lg={8}>
+                        {props.system}
+                    </Col>
+                    <Col lg={4}>
+                        {props.mlsn}
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg={8} className='p-0'>
-                        {props.system}
-                    </Col>
-                    <Col lg={4} className='p-0'>
-                        {props.mlsn}
+                    <Col lg={12}>
+                        {props.children}
                     </Col>
                 </Row>
             </div>

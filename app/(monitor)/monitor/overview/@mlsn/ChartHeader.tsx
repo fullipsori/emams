@@ -52,15 +52,15 @@ const ChartHeader = (chartProps: ChartProps) => {
 
     return (
         <React.Fragment>
-            <div className="d-flex justify-content-between align-items-center m-1">
-                <h4 className="card-title mb-0 fw-bold"><i className="psi-retro align-middle fs-18 text-primary me-2"></i> {chartProps.title}
+            <div className="d-flex justify-content-between">
+                <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 text-primary me-2 "></i>{chartProps.title}
                     {
                         (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT) && <span style={{textDecoration: (yAxisMode === "count")? "underline" : ""}} onClick={() => handleYAxisMode("count")}>{'[건수'}</span>
                     }
                     {
                         (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT) && <span style={{textDecoration: (yAxisMode === "bytes")? "underline" : ""}} onClick={() => handleYAxisMode("bytes")}>{ '|Bytes]'}</span>
                     }
-                </h4>
+                </h6>
 
                 <Dropdown className="card-header-dropdown" isOpen={isUserDropdown} toggle={toggleDropdown} direction="start">
                     <DropdownToggle tag="a" className="text-reset dropdown-btn" role="button">

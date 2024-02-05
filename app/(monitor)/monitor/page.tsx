@@ -6,6 +6,7 @@ export const metadata: Metadata = {
 };
 
 export default function Monitor() {
+
   return (
     <div>
       <VpnState />

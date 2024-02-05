@@ -8,7 +8,6 @@ import { dataSourceType, getDataSourceCount } from "../../common/data/DataSource
 import ChartHeader from "./ChartHeader";
 
 interface ChartProps {
-    countValue: number;
     widthVal?: string;
     heightVal?: string;
 }
@@ -16,8 +15,8 @@ interface ChartProps {
 const PendingQueue = (chartProps: ChartProps) => {
   return (
     <React.Fragment>
-      <Card className="mb-1 pb-0">
-        <CardHeader className="py-1">
+      <Card className="mb-1">
+        <CardHeader className="py-0">
           <ChartHeader title="Pending Messages " dataSourceType={dataSourceType.PENDING} />
         </CardHeader>
         <CardBody className="p-0">

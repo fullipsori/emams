@@ -215,54 +215,50 @@ const MonitorHeader = () => {
 
     return (
         <React.Fragment>
-            <Row className="m-page-title-box">
-                <Col lg={3} className='d-sm-flex align-items-center'>
-                    <Label htmlFor="choices-mlsn" className="form-label text-muted mb-0 fs-5">Message VPN</Label>
-                    <Select id="choices-mlsn" className='mb-0 ml-3 p-3 w-50' 
-                        value={curNode}
-                        onChange={(selected: any) => { setCurNode(selected); }}
-                        placeholder="Select mlsn"
-                        options={mlsnOptions} />
-                </Col>
-                <Col lg={4} className='d-sm-flex align-items-center'>
-                    <Label htmlFor="choices-queues" className="form-label text-muted mb-0 fs-5">Queues</Label>
-                    <Select id="choices-queues" className='mb-0 ml-3 p-3 w-50'
-                        value={queueType}
-                        onChange={(selected: any) => { setQueueType(selected); }}
-                        placeholder="Select Queue Type"
-                        options={queuesOptions} />
-                </Col>
-                <Col lg={5} className='d-sm-flex  align-items-center justify-content-end'>
-                    <div className='d-sm-flex ml-auto'>
-                        <div className="flex-shrink-0 ">
-                            <span className="p-3">
-                                <i className="psi-monitor-3" onClick={()=>fullscreen(document.getElementById("layout-wrapper"))}></i>
-                            </span>
-                        </div>
-                        <Select id="choices-time-ranges" className='mb-0 ml-3 w-100'
+            <div className='content__wrap monitor-top'>
+                <Row>
+                    <Col lg={3} className='d-flex gap-2 align-items-center'>
+                        <Label htmlFor="choices-mlsn" className="form-label mb-0 fs-6 fw-bolder">Message VPN</Label>
+                        <Select id="choices-mlsn" className='w-50'
+                            value={curNode}
+                            onChange={(selected: any) => { setCurNode(selected); }}
+                            placeholder="Select mlsn"
+                            options={mlsnOptions} />
+                    </Col>
+                    <Col lg={4} className='d-flex align-items-center gap-2'>
+                        <Label htmlFor="choices-queues" className="form-label  mb-0 fs-6 fw-bolder">Queues</Label>
+                        <Select id="choices-queues" className='w-50'
+                            value={queueType}
+                            onChange={(selected: any) => { setQueueType(selected); }}
+                            placeholder="Select Queue Type"
+                            options={queuesOptions} />
+                    </Col>
+                    <Col lg={5} className='d-flex align-items-center justify-content-lg-end gap-1'>
+                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="full-screen" onClick={() => fullscreen(document.getElementById("monitor-wrapper"))}>
+                            <i className="psi-monitor-3 fs-5" ></i>
+                        </button>
+                        <Select id="choices-time-ranges" className='w-50'
                             value={timeRange}
                             onChange={(selected: any) => { setTimeRange(selected); }}
                             placeholder="Select Time Ranges"
                             options={timeRangeOptions} />
 
-                        <div className="flex-shrink-0 avatar-xs ml-3 ml_4">
-                            <span className="avatar-title  p-1 rounded-circle">
-                                <i className="psi-resize"></i>
-                            </span>
+                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="resize">
+                            <i className="psi-resize fs-5"></i>
+                        </button>
+                        <div className='btn-group me-1 '>
+                            <button className="monitor-btn btn-icon btn-outline-light" aria-label="reload">
+                                <i className="psi-reload fs-5"></i>
+                            </button>
+                            <Select id="choices-refresh" className=''
+                                value={refreshMode}
+                                onChange={(selected: any) => { setRefreshMode(selected); }}
+                                placeholder="Select period"
+                                options={refreshOptions} />
                         </div>
-                        <div className="flex-shrink-0 avatar-xs ml-3 ml-4">
-                            <span className="avatar-title p-1 ">
-                                <i className="psi-reload"></i>
-                            </span>
-                        </div>
-                        <Select id="choices-refresh" className='mb-0 ml-0 w-75'
-                            value={refreshMode}
-                            onChange={(selected: any) => { setRefreshMode(selected); }}
-                            placeholder="Select period"
-                            options={refreshOptions} />
-                    </div>
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+            </div>
         </React.Fragment>
     );
 };
