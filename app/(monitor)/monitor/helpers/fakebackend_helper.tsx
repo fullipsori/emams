@@ -1,17 +1,41 @@
 "use client "
+
 import axios from "axios";
-import { APIClient } from "./api_helper";
 import fakeBackend from "./fakeBackend";
-
 import * as url from "./url_helper";
-
-const api = new APIClient();
 
 fakeBackend();
 
-export const getAllNodes = (params: any) => axios.get(url.GET_ALL_NODES, { params : { serverType: params.serverType}});
+const monitorAxios = axios.create({
+    headers: { "Content-Type": "application/json" },
+    timeout: 5000,
+});
 
-export const getQueueList = (params: any) => axios.get(url.GET_QUEUE_LIST, { params: {
+monitorAxios.interceptors.response.use(
+    (respose) => (respose.data)? respose.data : respose,
+    (error) => {
+        let message;
+        switch (error.status) {
+            case 500:
+                message = "Internal Server Error";
+                break;
+            case 401:
+                message = "Invalid credentials";
+                break;
+            case 404:
+                message = "Sorry! the data you are looking for could not be found";
+                break;
+            default:
+                message = error.message || error;
+        }
+        return Promise.reject(message);
+    }
+);
+
+
+export const getAllNodes = (params: any) => monitorAxios.get(url.GET_ALL_NODES, { params : { serverType: params.serverType}});
+
+export const getQueueList = (params: any) => monitorAxios.get(url.GET_QUEUE_LIST, { params: {
     serverType: params.serverType,
     msn: params.msn,
     mlsn: params.mlsn,
@@ -19,7 +43,7 @@ export const getQueueList = (params: any) => axios.get(url.GET_QUEUE_LIST, { par
     maxCount: params.maxCount,
 }});
 
-export const getMonitoringQueueData = (params: any) => axios.get(url.GET_MONITORING_QUEUE_DATA, { params: { 
+export const getMonitoringQueueData = (params: any) => monitorAxios.get(url.GET_MONITORING_QUEUE_DATA, { params: { 
     serverType: params.serverType,
     sTime: params.sTime,
     eTime: params.eTime,
@@ -28,14 +52,14 @@ export const getMonitoringQueueData = (params: any) => axios.get(url.GET_MONITOR
     tpsValueMode: params.tpsValueMode,
 }});
 
-export const getClientInfo = (params: any) => axios.get(url.GET_MONITORING_CLIENT_INFO, { params: { 
+export const getClientInfo = (params: any) => monitorAxios.get(url.GET_MONITORING_CLIENT_INFO, { params: { 
     serverType: params.serverType,
     sTime: params.sTime,
     eTime: params.eTime,
     mlsn: params.mlsn,
     clientList: params.clientList,
 }});
-export const getMonitoringSystemData = (params: any) => axios.get(url.GET_MONITORING_SYSTEM_DATA, { params: { 
+export const getMonitoringSystemData = (params: any) => monitorAxios.get(url.GET_MONITORING_SYSTEM_DATA, { params: { 
     serverType: params.serverType,
     sTime: params.sTime,
     eTime: params.eTime,
