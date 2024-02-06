@@ -17,11 +17,6 @@ import { getMonitoringAllNodes } from '@/redux/slices/monitoring/thunk';
 import { createSelector } from '@reduxjs/toolkit';
 import { fullscreen } from '../common/FullScreen';
 
-interface BreadCrumbProps {
-    title: string;
-    pageTitle: string;
-}
-
 export function useInterval(callback: () => void, delay: number | null) {
     const savedCallback = useRef(callback)
 
@@ -94,7 +89,6 @@ const MonitorHeader = () => {
     )
     const monitoringQueueData = useAppSelector(selectQueueData);    
 
-
     const [mlsnOptions, setMlsnOptions] = useState<any[]>([]);
     const [curNode, setCurNode] = useState<any>(null);
     const [queueType, setQueueType] = useState(queuesOptions[0]);
@@ -107,7 +101,6 @@ const MonitorHeader = () => {
 
     /* initial loading */
     useEffect(() => {
-        console.log("called")
         dispatch(getMonitoringAllNodes({
             serverType: monitoringData.serverType
         }));
@@ -213,6 +206,13 @@ const MonitorHeader = () => {
         }
     }, [curNode, refreshMode])
 
+    const handleResize = () => {
+        console.log("resize");
+    }
+    const handleReload = () => {
+        console.log("reload");
+    }
+
     return (
         <React.Fragment>
             <div className='content__wrap monitor-top'>
@@ -234,7 +234,8 @@ const MonitorHeader = () => {
                             options={queuesOptions} />
                     </Col>
                     <Col lg={5} className='d-flex align-items-center justify-content-lg-end gap-1'>
-                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="full-screen" onClick={() => fullscreen(document.getElementById("monitor-wrapper"))}>
+                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="full-screen" 
+                            onClick={() => fullscreen(document.getElementById("monitor-wrapper"))}>
                             <i className="psi-monitor-3 fs-5" ></i>
                         </button>
                         <Select id="choices-time-ranges" className='w-50'
@@ -243,11 +244,13 @@ const MonitorHeader = () => {
                             placeholder="Select Time Ranges"
                             options={timeRangeOptions} />
 
-                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="resize">
+                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="resize"
+                            onClick={handleResize}>
                             <i className="psi-resize fs-5"></i>
                         </button>
                         <div className='btn-group me-1 '>
-                            <button className="monitor-btn btn-icon btn-outline-light" aria-label="reload">
+                            <button className="monitor-btn btn-icon btn-outline-light" aria-label="reload"
+                                onClick={handleReload}>
                                 <i className="psi-reload fs-5"></i>
                             </button>
                             <Select id="choices-refresh" className=''

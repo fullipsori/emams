@@ -1,12 +1,12 @@
 "use client"
 
-import axios from "axios";
+import { AxiosInstance } from "axios";
 import MockAdapter from "axios-mock-adapter";
 import * as url from "./url_helper";
 // import { accessToken, nodeApiToken } from "../jwt-token-access/accessToken";
 
-const fakeBackend = () => {
-  const mock = new MockAdapter(axios);
+const fakeBackend = (monitorAxios: AxiosInstance) => {
+  const mock = new MockAdapter(monitorAxios);
 
   mock.onGet(url.GET_ALL_NODES).reply((config: any) => {
     return new Promise((resolve, reject) => {

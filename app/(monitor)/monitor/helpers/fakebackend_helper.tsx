@@ -4,16 +4,14 @@ import axios from "axios";
 import fakeBackend from "./fakeBackend";
 import * as url from "./url_helper";
 
-fakeBackend();
-
 const monitorAxios = axios.create({
+    baseURL: 'http://localhost:9999',
     headers: { 
         "Content-Type": "application/json; charset=utf-8",
         "Access-Control-Allow-Origin": "*",
     },
     timeout: 5000,
 });
-
 monitorAxios.interceptors.response.use(
     (respose) => (respose.data)? respose.data : respose,
     (error) => {
@@ -35,6 +33,7 @@ monitorAxios.interceptors.response.use(
     }
 );
 
+fakeBackend(monitorAxios);
 
 export const getAllNodes = (params: any) => monitorAxios.get(url.GET_ALL_NODES, { params : { serverType: params.serverType}});
 
