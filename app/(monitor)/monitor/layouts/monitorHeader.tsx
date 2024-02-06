@@ -191,7 +191,6 @@ const MonitorHeader = () => {
         }
     }, [chartTime])
 
-    /** 시간 변경시 정상적으로 바뀌는지 확인 한다. */
     const timerFunction = () => {
         setChartTime((new Date()).getTime());
     };
@@ -215,7 +214,6 @@ const MonitorHeader = () => {
 
     return (
         <React.Fragment>
-            <div className='content__wrap monitor-top'>
                 <Row>
                     <Col lg={3} className='d-flex gap-2 align-items-center'>
                         <Label htmlFor="choices-mlsn" className="form-label mb-0 fs-6 fw-bolder">Message VPN</Label>
@@ -261,7 +259,6 @@ const MonitorHeader = () => {
                         </div>
                     </Col>
                 </Row>
-            </div>
         </React.Fragment>
     );
 };

@@ -23,7 +23,7 @@ const Monitoring = () => {
         <React.Fragment>
             <div className="content__boxed">
                 <Row>
-                    <Card className="p-0">
+                    <Card className="">
                         <CardHeader>
                             <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 text-primary me-2 "></i>Message Broker Resource Usage</h6>
                         </CardHeader>

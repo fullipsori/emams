@@ -14,21 +14,21 @@ export default function MonitoringLayout(props: {
 }) {
     return (
         <React.Fragment>
-            <div id='monitor-wrapper' className='monitor-wrap overflow-y-auto'>
-                <div className='content__boxed'>
-                    <MonitorHeader />
-                </div>
-                <div className='content__boxed'>
-                    {props.children}
+            <div id='monitor-wrapper' className='overflow-y-auto overflow-x-hidden'>
+                <div className='monitor-wrap'>
+                    <div className='monitor-top'>
+                        <MonitorHeader />
+                    </div>
+                    <div className='monitor-body'>
+                        <div className='content__boxed'>
+                            {props.children}
+                        </div>
+                    </div>
+                    <div className='monitor-footer'>
+                        <MonitorFooter />
+                    </div>
                 </div>
             </div>
-
-                    <MonitorFooter />
-            {/* <footer className="mt-auto">
-                <div className="content__boxed">
-                    <MonitorFooter />
-                </div>
-            </footer> */}
         </React.Fragment>
     )
 }
