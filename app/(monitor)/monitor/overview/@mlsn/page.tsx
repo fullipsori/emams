@@ -11,18 +11,18 @@ const Monitoring = () => {
         <React.Fragment>
             <div className="content__boxed">
                     <Row>
-                        <Col xl={12}>
+                        <Col xl={12} lg={12}>
                             <PendingQueue />
                         </Col>
                     </Row>
                     <Row>
-                        <Col xl={12}>
+                        <Col xl={12} lg={12}>
                             <ThroughputQueue />
                         </Col>
                     </Row>
 
                     <Row>
-                        <Col xl={12}>
+                        <Col xl={12} lg={12}>
                             <ConnectionView/>
                         </Col>
                     </Row>

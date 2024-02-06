@@ -22,21 +22,21 @@ const Monitoring = () => {
         <React.Fragment>
             <div className="content__boxed">
                 <Row className="pb-1">
-                    <Col lg={12}>
+                    <Col>
                         <Card >
                             <CardHeader>
                                 <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 me-2 "></i>Message Broker Resource Usage</h6>
                             </CardHeader>
                             <CardBody>
                                 <Row>
-                                    <Col xl={8}>
+                                    <Col lg={8} md={12}>
                                         <Card>
                                             <CardHeader>
                                                 <h6 className="fw-bold m-2 fs-6">NODE 정보</h6>
                                             </CardHeader>
                                             <CardBody className="">
                                                 <Row>
-                                                    <Col xl={3} lg={6}>
+                                                    <Col md={3} sm={6}>
                                                         <Card>
                                                             <CardBody>
                                                                 <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
@@ -44,7 +44,7 @@ const Monitoring = () => {
                                                             </CardBody>
                                                         </Card>
                                                     </Col>
-                                                    <Col xl={3} lg={6}>
+                                                    <Col md={3} sm={6}>
                                                         <Card>
                                                             <CardBody>
                                                                 <h6 className="fw-bold text-muted m-1 text-center">MEM 사용률</h6>
@@ -52,7 +52,7 @@ const Monitoring = () => {
                                                             </CardBody>
                                                         </Card>
                                                     </Col>
-                                                    <Col xl={3} lg={6}>
+                                                    <Col md={3} sm={6}>
                                                         <Card>
                                                             <CardBody>
                                                                 <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률</h6>
@@ -60,7 +60,7 @@ const Monitoring = () => {
                                                             </CardBody>
                                                         </Card>
                                                     </Col>
-                                                    <Col xl={3} lg={6} className="m-0">
+                                                    <Col md={3} sm={6} className="m-0">
                                                         <SystemResource />
                                                     </Col>
                                                 </Row>
@@ -76,7 +76,7 @@ const Monitoring = () => {
 
                 </Row>
                 <Row>
-                    <Col xl={12}>
+                    <Col>
                         <Card >
                             <CardHeader className="d-flex justify-content-between">
                                 <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 me-2 "></i>Message Broker Resource Usage (CPU/Memory/Disk IO/Network IO)</h6>
@@ -93,18 +93,18 @@ const Monitoring = () => {
                             </CardHeader>
                             <CardBody>
                                 <Row>
-                                    <Col xl={6}>
+                                    <Col xl={6} lg={12}>
                                         <CpuUsage />
                                     </Col>
-                                    <Col xl={6}>
+                                    <Col xl={6} lg={12}>
                                         <MemoryUsage />
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col xl={6}>
+                                    <Col xl={6} lg={12}>
                                         <DiskUsage />
                                     </Col>
-                                    <Col xl={6}>
+                                    <Col xl={6} lg={12}>
                                         <NetworkUsage />
                                     </Col>
                                 </Row>

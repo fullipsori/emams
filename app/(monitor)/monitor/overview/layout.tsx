@@ -11,15 +11,15 @@ export default function MonitoringLayout(props: {
         <React.Fragment>
             <div className="content__boxed ">
                 <Row>
-                    <Col lg={8}>
+                    <Col xxl={8}>
                         {props.system}
                     </Col>
-                    <Col lg={4}>
+                    <Col xxl={4}>
                         {props.mlsn}
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg={12}>
+                    <Col>
                         {props.children}
                     </Col>
                 </Row>
