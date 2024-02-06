@@ -16,7 +16,7 @@ const PendingQueue = (chartProps: ChartProps) => {
   return (
     <React.Fragment>
       <Card className="mb-1">
-        <CardHeader className="py-0">
+        <CardHeader>
           <ChartHeader title="Pending Messages " dataSourceType={dataSourceType.PENDING} />
         </CardHeader>
         <CardBody className="p-0">

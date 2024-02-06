@@ -17,7 +17,7 @@ const ConnectionView = (chartProps: ChartProps) => {
   return (
     <React.Fragment>
       <Card>
-        <CardHeader className="py-1">
+        <CardHeader className="mb-1">
           <ChartHeader title="Consumers 개수 " dataSourceType={dataSourceType.CONNECTION} />
         </CardHeader>
         <CardBody className="p-0">

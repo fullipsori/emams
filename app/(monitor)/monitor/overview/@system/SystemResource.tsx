@@ -28,30 +28,22 @@ const SystemResource = () => {
             <Row>
                 <Card className="card-animate">
                     <CardBody>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <p className="fw-medium text-muted mb-1">CPU 크기</p>
-                                <h4 className="mt-0 ff-secondary fw-semibold fs-4">
-                                    <span className="text-success">{coreCount}</span>
-                                    {unitCore}
-                                </h4>
-                            </div>
-                        </div>
+                        <h6 className="fw-bold text-muted mb-1">CPU 크기</h6>
+                        <h4 className="mt-0 ff-secondary fw-semibold fs-4">
+                            <span className="text-success">{coreCount}</span>
+                            {unitCore}
+                        </h4>
                     </CardBody>
                 </Card>
             </Row>
             <Row>
                 <Card className="card-animate">
                     <CardBody>
-                        <div className="d-flex justify-content-between">
-                            <div className="">
-                                <p className="fw-medium text-muted mb-1">MEMORY</p>
-                                <h4 className="mt-0 ff-secondary fw-bold fs-4">
-                                    <span className="text-success">{memorySize}</span>
-                                    {unitMem}
-                                </h4>
-                            </div>
-                        </div>
+                        <p className="fw-bold text-muted mb-1">MEMORY</p>
+                        <h4 className="mt-0 ff-secondary fw-bold fs-4">
+                            <span className="text-success">{memorySize}</span>
+                            {unitMem}
+                        </h4>
                     </CardBody>
                 </Card>
             </Row>

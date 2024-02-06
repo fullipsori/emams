@@ -216,7 +216,7 @@ const MonitorHeader = () => {
         <React.Fragment>
                 <Row>
                     <Col lg={3} className='d-flex gap-2 align-items-center'>
-                        <Label htmlFor="choices-mlsn" className="form-label mb-0 fs-6 fw-bolder">Message VPN</Label>
+                        <Label htmlFor="choices-mlsn" className="form-label text-light mb-0 fs-6 fw-bolder">Message VPN</Label>
                         <Select id="choices-mlsn" className='w-50'
                             value={curNode}
                             onChange={(selected: any) => { setCurNode(selected); }}
@@ -224,7 +224,7 @@ const MonitorHeader = () => {
                             options={mlsnOptions} />
                     </Col>
                     <Col lg={4} className='d-flex align-items-center gap-2'>
-                        <Label htmlFor="choices-queues" className="form-label  mb-0 fs-6 fw-bolder">Queues</Label>
+                        <Label htmlFor="choices-queues" className="form-label text-light mb-0 fs-6 fw-bolder">Queues</Label>
                         <Select id="choices-queues" className='w-50'
                             value={queueType}
                             onChange={(selected: any) => { setQueueType(selected); }}
@@ -232,9 +232,9 @@ const MonitorHeader = () => {
                             options={queuesOptions} />
                     </Col>
                     <Col lg={5} className='d-flex align-items-center justify-content-lg-end gap-1'>
-                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="full-screen" 
+                        <button className="monitor-btn monitor-btn-icon btn-outline-light" aria-label="full-screen" 
                             onClick={() => fullscreen(document.getElementById("monitor-wrapper"))}>
-                            <i className="psi-monitor-3 fs-5" ></i>
+                            <i className="pli-monitor-3 fs-5" ></i>
                         </button>
                         <Select id="choices-time-ranges" className='w-50'
                             value={timeRange}
@@ -242,14 +242,14 @@ const MonitorHeader = () => {
                             placeholder="Select Time Ranges"
                             options={timeRangeOptions} />
 
-                        <button className="monitor-btn btn-icon btn-outline-light" aria-label="resize"
+                        <button className="monitor-btn monitor-btn-icon btn-outline-light " aria-label="resize"
                             onClick={handleResize}>
-                            <i className="psi-resize fs-5"></i>
+                            <i className="pli-resize fs-5"></i>
                         </button>
                         <div className='btn-group me-1 '>
-                            <button className="monitor-btn btn-icon btn-outline-light" aria-label="reload"
+                            <button className="monitor-btn monitor-btn-icon btn-outline-light" aria-label="reload"
                                 onClick={handleReload}>
-                                <i className="psi-reload fs-5"></i>
+                                <i className="pli-reload fs-5"></i>
                             </button>
                             <Select id="choices-refresh" className=''
                                 value={refreshMode}

@@ -16,8 +16,8 @@ const ThroughputQueue = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-      <Card className="mb-1 pb-0">
-        <CardHeader className="py-1">
+      <Card className="mb-1">
+        <CardHeader >
           <ChartHeader title="Messages In/Out Rate " dataSourceType={dataSourceType.THROUGHPUT}/>
         </CardHeader>
         <CardBody className="p-0">

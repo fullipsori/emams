@@ -53,7 +53,7 @@ const ChartHeader = (chartProps: ChartProps) => {
     return (
         <React.Fragment>
             <div className="d-flex justify-content-between">
-                <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 text-primary me-2 "></i>{chartProps.title}
+                <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 me-2 "></i>{chartProps.title}
                     {
                         (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT) && <span style={{textDecoration: (yAxisMode === "count")? "underline" : ""}} onClick={() => handleYAxisMode("count")}>{'[건수'}</span>
                     }
@@ -64,7 +64,7 @@ const ChartHeader = (chartProps: ChartProps) => {
 
                 <Dropdown className="card-header-dropdown" isOpen={isUserDropdown} toggle={toggleDropdown} direction="start">
                     <DropdownToggle tag="a" className="text-reset dropdown-btn" role="button">
-                        <span className="text-muted fs-16"><i className="psi-receipt align-middle"></i></span>
+                        <span className="text-muted "><i className="psi-receipt align-middle fs-5"></i></span>
                     </DropdownToggle>
                     <DropdownMenu className="dropdown-menu-end" >
                         <DropdownItem onClick={() => { onChangeChartPeriod("detail"); }}>Detail</DropdownItem>
