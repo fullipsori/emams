@@ -16,28 +16,23 @@ const PaginationBtn: React.FC<PaginationButtonsProps> = ({
   isNextActive,
 }) => {
   return (
-    <div style={{ display: "flex", gap: 10 }}>
+    <div className="col-md-6">
       <button
-        style={{
-          borderColor: "transparent",
-          backgroundColor: "transparent",
-          fontSize: 14,
-          color: isFirstActive ? "#fff" : "gray",
-        }}
+        type="button"
+        className="btn btn-outline-light sol_mr_6"
         onClick={onFirstClick}
       >
-        {"< first"}
+        <i className="sol_i_first sol_mr_6"></i>First
+      </button>
+      <button type="button" className="btn btn-outline-light sol_mr_6">
+        <i className="sol_i_prev sol_mr_6"></i>Prev
       </button>
       <button
-        style={{
-          borderColor: "transparent",
-          backgroundColor: "transparent",
-          fontSize: 14,
-          color: isNextActive ? "#fff" : "gray",
-        }}
+        type="button"
+        className="btn btn-outline-light"
         onClick={onNextClick}
       >
-        {"next >"}
+        Next<i className="sol_i_next sol_ml_6"></i>
       </button>
     </div>
   );

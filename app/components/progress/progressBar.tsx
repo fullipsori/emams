@@ -109,7 +109,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           height: height + 5,
           backgroundColor: "#6b6b6b",
           borderRadius: "50%",
-          cursor: "pointer",
+          // cursor: "pointer",
         }}
       />
       {/* raise 동그라미 */}
@@ -125,7 +125,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           height: height + 5,
           backgroundColor: "#6b6b6b",
           borderRadius: "50%",
-          cursor: "pointer",
+          // cursor: "pointer",
         }}
       />
       {/* <div

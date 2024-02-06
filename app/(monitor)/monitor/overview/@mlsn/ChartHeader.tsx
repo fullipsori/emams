@@ -20,7 +20,7 @@ const ChartHeader = (chartProps: ChartProps) => {
 
     const [isUserDropdown, setUserDropdown] = useState<boolean>(false);
     const toggleDropdown = () => setUserDropdown(!isUserDropdown);
-    const selectMonitorState = createSelector(
+const selectMonitorState = createSelector(
         (state: any) => state.MonitoringReducer,
         (monitoringData: MonitorState) => ({ nodeState: monitoringData.curNode })
     )

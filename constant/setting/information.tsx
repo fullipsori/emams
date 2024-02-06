@@ -5,14 +5,16 @@ import { useEffect, useRef, useState, MouseEvent } from "react";
 interface InformationProps {
   isEditStatus: boolean;
   onEditChange?: (isEditing: boolean) => void;
+  isEnableStatus: boolean;
 }
 
 const Information: React.FC<InformationProps> = ({
   isEditStatus,
   onEditChange,
+  isEnableStatus,
 }) => {
   const [isEdit, setIsEdit] = useState<boolean>(true);
-  const [isEnable, setIsEnable] = useState<boolean>(true);
+  const [isEnable, setIsEnable] = useState<boolean>(isEnableStatus);
   const handleToggleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsEnable(event.target.checked);
   };
@@ -24,7 +26,7 @@ const Information: React.FC<InformationProps> = ({
     onEditChange?.(false);
   };
 
-  useEffect(() => setIsEdit(isEditStatus), [isEditStatus]);
+  useEffect(() => setIsEdit(isEditStatus), [isEditStatus, isEnableStatus]);
 
   return (
     <div

@@ -48,13 +48,13 @@ const getLineChartOpts = (chartOption: ChartOption) => {
                         type: chartOption.enableDateAdapter == false ?  undefined : 'time',
                         time: chartOption.enableDateAdapter == false ?  undefined : { displayFormats: { second: 'HH:mm:ss' } },
                         ticks: {
-                            autoSkip: true,
+                                                        autoSkip: true,
                             maxTicksLimit: chartOption.maxTickSize ?? 20,
                         },
                     },
                     y: {
                         ticks: {
-                        },
+                                                    },
                         min: 0,
                     },
                 },

@@ -6,9 +6,7 @@ const VpnState = () => {
   const selectedRow = useAppSelector((state) => state.isVpn.selectedRow);
 
   return (
-    <div>
-      {selectedRow && <div>{selectedRow ? selectedRow.msgVpnName : ""}</div>}
-    </div>
+    <>{selectedRow && <div>{selectedRow ? selectedRow.msgVpnName : ""}</div>}</>
   );
 };
 

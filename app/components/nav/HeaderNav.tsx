@@ -4,72 +4,65 @@ import Image from "next/image";
 import Link from "next/link";
 
 const HeaderNav = () => {
-  // const [open, setOpen] = useState(false);
-  // const handleSearchBoxClick = () => {
-  //   console.log("searchBox를 클릭했습니다.");
-  //   setOpen(!open);
-  // };
 
   return (
     <>
       <header className="header">
         <div className="header__inner">
-          <div className="header__brand">
-            <div className="brand-wrap" title="EMS Monitoring Application">
-              <Link href={"/"} className="brand-img stretched-link">
-                <Image src={"/assets/img/user_img/logo.svg"} width={27} height={24} alt="logo" />
-              </Link>
-              <div className="brand-title">EMMA</div>
-            </div>
-          </div>
-          <div className="header__content">
-            <div className="header__content-start">
-              <button type="button" className="nav-toggler header__btn btn btn-icon btn-sm btn_menuopen btn_header_w" aria-label="Nav Toggler">
-                <Image src={"/assets/img/user_img/i_menuopen.png"} width={14} height={10} alt="Menu Button"/>
-                {/* <img alt="Menu Button" loading="lazy" width="14" height="10" decoding="async" data-nimg="1" style={{ color: "transparent" }} src="/assets/img/user_img/i_menuopen.png" /> */}
-              </button>
-            </div>
-            <div className="header__content-end">
-              <span className="mr_6 header_name">Admin</span>
-              <Link href={"/my/myInfo"}>
-                <button className="header__btn btn btn-icon btn-sm" type="button" aria-expanded="true" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title={"myInfo" as string}>
-                  <i className="i_h_male" title="사용자 설정"></i>
-                </button>
-              </Link>
-              <button className="header__btn btn btn-icon btn-sm" type="button" aria-expanded="false" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title={"Logout" as string}>
-                <i className="i_h_unlock" title="로그아웃"></i>
-              </button>
-              <div className="d-flex justify-content-center btn_langage_group" style={{ marginBottom: 0 }}>
-                {/* <Link href={router.pathname} locale="en">
-                  <button 
-                    className={
-                      lang === "en"
-                      ? "btn btn_english active"
-                        : "btn btn_english"
-                      }
-                    type="button"
-                    onClick={handleEnClick}
-                    >
-                    <span className="i_langage i_english mr_3"></span>
-                    <span className="langage_name">English</span>
-                    </button>
-                  </Link> */}
+					<div className="sol_header_menuopen">
+						<button type="button" className="nav-toggler header__btn btn btn-icon btn-sm">
+							<i className="sol_i_menuopen"></i>
+						</button>
+					</div>	
 
-                {/* <Link href={router.pathname} locale="ko">
-                  <button
-                    className={
-                      lang === "ko" ? "btn btn_korean active" : "btn btn_korean"
-                    }
-                    type="button"
-                    onClick={handleKoClick}
-                  >
-                  <span className="i_langage i_korean mr_3"></span>
-                    <span className="langage_name">한국어</span>
-                    </button>
-                  </Link> */}
-              </div>
-            </div>
-          </div>
+					<div className="header__brand">
+						<div className="brand-title">ACell EMMA</div>						
+						<div className="brand-wrap" title="EMAMS">
+						  <a className="brand-img stretched-link" href="/">
+                <Image src={"/assets/img/solace_img/bi_img.png"} width={19} height={17} alt="logo" />
+						  </a>
+						</div>		
+					</div>
+
+					<div className="header__content row">
+						<div className="header__content-end d-flex justify-content-end">
+							<div className="sol_header_menu">
+								<button className="header__btn btn btn-icon btn-sm">
+									<i className="sol_i_message"></i>
+								</button>
+								<button className="header__btn btn btn-icon btn-sm">
+									<i className="sol_i_alrm"></i>
+								</button>
+								<button className="header__btn btn btn-icon btn-sm sol_r_6">
+									<i className="sol_i_sound"></i>
+								</button>							
+							</div>
+
+							<div className="d-flex flex-wrap gap-2">
+								<div className="btn-group">
+									<button className="btn btn-sm hstack sol_btn_language" data-bs-toggle="dropdown">
+										<i className="sol_i_global sol_r_6"></i>English
+									</button>
+									<ul className="dropdown-menu">
+										<li><a className="dropdown-item">Korean</a></li>
+										<li><a className="dropdown-item">China</a></li>
+									</ul>
+								</div>
+								
+								<div className="btn-group">
+									<a className="btn btn-sm hstack sol_btn_language" data-bs-toggle="dropdown">
+										gogs76
+									</a>
+									<ul className="dropdown-menu">
+										<li><a className="dropdown-item">Help</a></li>
+										<li><a className="dropdown-item">Account</a></li>
+										<li><a className="dropdown-item">Setting</a></li>
+										<li><a className="dropdown-item"><i className="sol_i_logout sol_r_6"></i>Logout</a></li>
+									</ul>
+								</div>																		
+							</div>
+						</div>
+					</div>
         </div>
       </header>
     </>

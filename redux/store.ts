@@ -1,7 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import vpnReducer from "./vpnSlice";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import { MonitoringReducer } from "./slices/monitoring/reducer";
 import { MonitoringClientReducer } from "./slices/monitoring-client/reducer";
 import { MonitoringQueueReducer } from "./slices/monitoring-queue/reducer";
@@ -28,7 +37,13 @@ export const makeStore = () => {
       MonitoringQueueReducer,
       MonitoringSystemReducer,
     },
-    devTools: process.env.NODE_ENV !== 'production',
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+    devTools: process.env.NODE_ENV !== "production",
   });
   const persistor = persistStore(store);
   return { store, persistor };

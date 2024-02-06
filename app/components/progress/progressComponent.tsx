@@ -8,25 +8,39 @@ interface ProgressComponentProps {
   isEditStatus?: boolean;
   proData: any;
 }
-
 const ProgressComponent: React.FC<ProgressComponentProps> = ({
   title,
   isEditStatus,
   proData,
 }) => {
-  const [proDataVal, setProDataVal] = useState<any>(proData);
+  console.log(proData);
+
+  const [proDataVal, setProDataVal] = useState<any>(proData || {});
   const [clearPercentage, setClearPercentage] = useState<number>(
-    proDataVal.clearPercent
+    proDataVal?.clearPercent || 0
   );
   const [raisePercentage, setRaisePercentage] = useState<number>(
-    proDataVal.setPercent
+    proDataVal?.setPercent || 0
   );
   const [showWarning, setShowWarning] = useState<boolean>(false);
-  const [clearShap, setClearShap] = useState<number>(0);
-  const [raiseShap, setRaiseShap] = useState<number>(0);
-  const [btn1Status, setBtn1Status] = useState<boolean>(true);
-  const [btn2Status, setBtn2Status] = useState<boolean>(false);
+  const [clearShap, setClearShap] = useState<number>(
+    proDataVal?.clearValue || 0
+  );
+  const [raiseShap, setRaiseShap] = useState<number>(proDataVal?.setVaue || 0);
   const [isEdit, setIsEdit] = useState<boolean>(true);
+
+  // 버튼 상태
+  const hasPercentData =
+    proData && "clearPercent" in proData && "setPercent" in proData;
+  const hasValueData =
+    proData && "clearValue" in proData && "setValue" in proData;
+
+  // 버튼 상태를 관리할 상태 변수들
+  const [btn1Status, setBtn1Status] = useState<boolean>(hasPercentData);
+  const [btn2Status, setBtn2Status] = useState<boolean>(hasValueData);
+
+  // title
+  const componentTitle = title || "Default Title";
 
   // button 상태
   const handleBtn1Click = () => {
@@ -37,6 +51,15 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({
     setBtn1Status(false);
     setBtn2Status(true);
   };
+
+  useEffect(() => {
+    if (proData) {
+      setClearPercentage(proData.clearPercent);
+      setRaisePercentage(proData.setPercent);
+      setClearShap(proData.clearValue);
+      setRaiseShap(proData.setValue);
+    }
+  }, [proData]);
 
   //  ProgressComponent 입력 값
   const handleClearValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +107,14 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({
   }, [isEditStatus]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        width: 700,
+        justifyContent: "space-between",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -93,7 +123,9 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({
           alignSelf: "center",
         }}
       >
-        <div style={{ alignSelf: "center", fontWeight: 500 }}>{title}</div>
+        <div style={{ alignSelf: "center", fontWeight: 500 }}>
+          {componentTitle}
+        </div>
         <div
           style={{
             display: "flex",
@@ -111,9 +143,10 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({
               backgroundColor: btn1Status ? "#b4abab" : "#fff",
               borderRadius: 3,
               margin: 3,
+              cursor: "default",
             }}
             onClick={handleBtn1Click}
-            disabled={!isEdit}
+            disabled={!isEditStatus || !btn1Status}
           >
             %
           </button>
@@ -123,9 +156,10 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({
               backgroundColor: btn2Status ? "#b4abab" : "#fff",
               borderRadius: 3,
               margin: 3,
+              cursor: "default",
             }}
             onClick={handleBtn2Click}
-            disabled={!isEdit}
+            disabled={!isEditStatus || !btn2Status}
           >
             #
           </button>

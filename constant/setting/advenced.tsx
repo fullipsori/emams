@@ -1,42 +1,57 @@
 "use client";
 
+import Input from "@/app/components/input/input";
 import ProgressComponent from "@/app/components/progress/progressComponent";
 import { ProgressData } from "@/data/gridData";
-import { useState } from "react";
+import { useAppSelector } from "@/hook/hook";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface AdvancedProp {
+  data: any;
   hiddenMenu: boolean;
   isEditStatus: boolean;
 }
 
-const Advenced: React.FC<AdvancedProp> = ({ hiddenMenu, isEditStatus }) => {
+const Advenced: React.FC<AdvancedProp> = ({
+  data,
+  hiddenMenu,
+  isEditStatus,
+}) => {
+  useEffect(() => {}, [data]);
+
+  console.log(data);
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}></div>
+      <div style={{ display: "flex" }}></div>
       {hiddenMenu && (
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 80,
+            gap: 60,
             marginBottom: 200,
           }}
         >
           <ProgressComponent
-            title={"Alert Thresholds1"}
+            title={"eventConnectionCountThreshold"}
             isEditStatus={isEditStatus}
-            proData={ProgressData.eventConnectionCountThreshold}
+            proData={data.eventConnectionCountThreshold}
           />
+          <Input text={"maxConnectionCount"} value={data.maxConnectionCount} />
           <ProgressComponent
-            title={"Alert Thresholds2"}
+            title={"eventEndpointCountThreshold"}
             isEditStatus={isEditStatus}
-            proData={ProgressData.eventEgressFlowCountThreshold}
+            proData={data.eventMsgSpoolUsageThreshold}
           />
+          <Input text={"maxEgressFlowCount"} value={data.maxEgressFlowCount} />
           <ProgressComponent
-            title={"Alert Thresholds3"}
+            title={"eventMsgSpoolUsageThreshold"}
             isEditStatus={isEditStatus}
-            proData={ProgressData.eventEndpointCountThreshold}
+            proData={data.eventEndpointCountThreshold}
           />
+          <Input text={"maxEndpointCount"} value={data.maxEndpointCount} />
         </div>
       )}
     </div>

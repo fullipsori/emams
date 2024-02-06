@@ -34,6 +34,8 @@ export const Tab = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof Link>
 >(function Tab(props, ref) {
   const id = props.href.toString();
+  console.log('Tab Id >>> ', id)
+  console.log('props >>> ', props)
   return (
     <Ariakit.Tab
       id={id}

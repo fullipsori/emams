@@ -1,0 +1,502 @@
+@charset "utf-8";
+/* CSS Document */
+
+.root {
+	background: #2F3032;
+}
+
+/*********** header ***********/
+.header {
+  background-color: #171717;
+  color: #7a878e;
+  border-bottom: 1px solid #363739;
+  grid-area: 1 / 1 / 2 / 3;
+}
+
+.header__inner {
+  align-items: center;
+  display: flex;
+  height: 3.125rem;
+  padding-inline: 1rem;
+  box-shadow: 10px 0 10px 0 #000000;
+  border-bottom: 1px solid rgba(204, 204, 220, 0.12);
+}
+
+.brand-title {
+	font-family: "Inter", sans-serif !important;
+}
+
+.mn--max .header__brand {
+	padding-inline-start: 0;
+}
+
+
+/*********** mainnav ***********/
+.mainnav__menu {
+	font-size: 0.875rem !important; 
+}
+
+.mainnav .scrollable-content {
+  background-color: #202124;
+  scrollbar-width: none;
+}
+
+.hd--expanded.mn--max .content__header:before {
+	background-color: transparent !important;
+}
+
+.mainnav__inner .mainnav__menu > .nav-item > .nav-link:not(.collapsed):not(.active) {
+	color: #A2A4A9 !important;
+}
+
+.root .mainnav__inner .nav-link {
+	color: #A2A4A9 !important;
+	align-items: center;
+}
+
+.mainnav__menu .nav-item .nav-link:hover .nav-label {
+	color: #DA5346;
+}
+
+.hd--expanded.mn--min .content__header:before {
+	background-color: transparent !important;
+}
+
+.mn--max .mainnav {
+	background: #2F3032;
+}
+
+.mn--min .mainnav {
+	max-width: 3.875rem;
+}
+
+.mainnav__inner .mainnav__menu .nav-link {
+	padding-block: 0.625rem !important;
+}
+
+.mainnav__inner .mainnav__menu > .nav-item > .nav-link.active {
+	color: #f8f8f8 !important;
+	font-weight: normal;
+}
+
+.nav:not(.nav-pills) .nav-link.active {
+	color: #FE7366 !important;
+	font-weight: normal;
+}
+
+/*********** body ***********/
+.hd--expanded .content__header {
+	background-color: transparent !important;
+}
+
+.content {
+	background: #2F3032;
+}
+
+.no-gutters {
+	margin-right: 0;
+	margin-left: 0;
+	
+	>.col,
+	>[class*="col-"] {
+	  padding-right: 0;
+	  padding-left: 0;
+	}
+}
+
+/******************************************** 240124 new css (sol_ 앞에 추가) ********************************************/ 
+.sol_mr_6 {
+	margin-right: 6px;
+}
+
+.sol_ml_6 {
+	margin-left: 0.375rem;
+}
+
+.sol_ml_10 {
+	margin-left: 10px;
+}
+
+.sol_pt_5 {
+	padding-top: 5px;
+}
+
+.sol_header_menuopen {
+	margin-left: 1rem;
+}
+
+.sol_header_menu {
+	list-style: none;
+}
+
+.sol_header_menu button {margin-left: 14px;}
+.sol_header_menu button:first-child {margin-left: 0;}
+
+/* menu icon */
+.sol_i_menu {
+	position: relative;
+	display: block;
+	width: 30px;
+	height: 30px;
+	margin: 0;
+}
+
+.nav-item .nav-link .sol_i_menu {
+	content: "";
+	display: block;
+	width: 30px;
+	height: 30px;
+}
+
+.sol_i_dashboard,
+.sol_i_messagebr,
+.sol_i_msn,
+.sol_i_emams {
+	background: url("../img/solace_img/icon_sidemenu.png");
+	background-size: 200px 80px;	
+	background-repeat: no-repeat;
+	width: 30px;
+	height: 30px;			
+}
+
+.sol_i_dashboard {
+	background-position: 0 0;
+} 
+
+.nav-item .nav-link:hover .sol_i_dashboard {
+	background-position: 0 -40px;	
+}
+
+.sol_i_messagebr {
+	background-position: -40px 0;
+}
+
+.nav-item .nav-link:hover .sol_i_messagebr,
+.nav-item .active .sol_i_messagebr {
+	background-position: -40px -40px;	
+}
+
+.sol_i_msn {
+	background-position: -80px 0;
+}
+
+.nav-item .nav-link:hover .sol_i_msn,
+.nav-item .active .sol_i_msn {
+	background-position: -80px -40px;	
+}
+
+.sol_i_emams {
+	background-position: -120px 0;
+}
+
+.nav-item .nav-link:hover .sol_i_emams,
+.nav-item .active .sol_i_emams {
+	background-position: -120px -40px;	
+}
+
+.sol_i_menuopen {
+	display: inline-block;
+	background: url("../img/solace_img/icon_allmenu.png") no-repeat 0 0;
+	width: 14px; 
+	height: 9px;
+}
+
+.sol_i_message,
+.sol_i_alrm,
+.sol_i_sound {
+	display: inline-block;
+	background: url("../img/solace_img/header_icon.png");
+	background-size: 93px 18px;	
+	background-repeat: no-repeat;
+}
+
+.sol_i_search {
+	display: inline-block;	
+	width: 16px;
+	height: 16px;
+	background: url("../img/solace_img/header_icon_search.png");
+	background-size: 17px 17px;		
+	background-position: 0 0;
+}
+
+
+.sol_i_message {
+	width: 16px;
+	height: 18px; 
+	background-position: 0 0;
+}
+
+.sol_i_alrm {
+	width: 14px;
+	height: 18px; 
+	background-position: -39px 0;
+}
+
+.sol_i_sound {
+	width: 17px;
+	height: 16px; 
+	background-position: -76px 0;
+}
+
+.sol_i_global {
+	display: inline-block;	
+	width: 16px; 
+	height: 16px;
+	background: url("../img/solace_img/header_icon_global.png");
+	background-size: 16px 16px;		
+	background-position: 0 0;
+}
+
+.sol_i_logout {
+	display: inline-block;	
+	width: 12px; 
+	height: 12px;
+	background: url("../img/solace_img/header_icon_logout.png");
+	background-size: 60px 20px;		
+	background-position: 0 0;	
+}
+
+.sol_i_delete {
+	display: inline-block;	
+	width: 13px; 
+	height: 14px;
+	background: url("../img/solace_img/header_icon_logout.png");
+	background-size: 60px 20px;		
+	background-position: -20px 0;		
+}
+
+.sol_i_card,
+.sol_i_list {
+	display: inline-block;
+	background: url("../img/solace_img/icon_sort.png");
+	background-size: 48px 12px;	
+	background-repeat: no-repeat;	
+}
+
+.sol_i_card {
+	width: 12px;
+	height: 12px;
+	background-position: 0 0;	
+}
+
+.sol_i_list {
+	width: 16px;
+	height: 12px;
+	background-position: -32px 0;		
+}
+
+.sol_button_btn { 
+	width: 1.5rem;
+	height: 1.5rem;	
+	background-color: #2A2B2C !important;
+	border-radius: 0;
+}
+
+.sol_button_outline {
+	display: flex;
+	height: 28px !important;
+	border: 1px solid #808182;
+	border-radius: 0;
+}
+
+.sol_button_outline:hover,
+.sol_button_outline:focus,
+.sol_button_outline:active {							
+	border: 1px solid #F8F8F8;
+}
+
+.sol_sort {
+	width: 32px !important;
+	height: 32px !important;
+}
+
+.sol_i_first,
+.sol_i_next,
+.sol_i_prev {
+	display: inline-block;
+	background: url("../img/solace_img/icon_button.png");
+	background-size: 45px 15px;	
+	background-repeat: no-repeat;
+}
+
+.sol_i_first {
+	display: inline-block;	
+	width: 8px;
+	height: 8px;
+	background-position: 0 0;
+}
+
+.sol_i_next {
+	display: inline-block;	
+	width: 5px;
+	height: 8px;
+	background-position: -15px 0;
+}
+
+.sol_i_prev {
+	display: inline-block;	
+	width: 5px;
+	height: 8px;
+	background-position: -30px 0;
+}
+
+
+
+/* select */
+.sol_select {
+	padding: 6px;
+	width: 100%;
+	color: #AFB4C1;
+	border: 1px solid #5E6064;
+	border-radius: 0;
+	background: url("../img/solace_img/icon_select.png") no-repeat 95% 50%;
+	font-size: 0.75rem;
+	line-height: 1.5;
+    box-shadow: inset 0 1px 2px rgba(55, 60, 67, 0.075);
+    transition: border-color 0.35s ease-in-out, box-shadow 0.35s ease-in-out;	
+	-webkit-appearance: none;
+	-moz--appearance: none;
+	-appearance: none;
+}
+
+.sol_select::-ms-expand {
+	display: none;
+}
+
+.sol_select > option {
+	padding: 6px 0;
+	background: #2F3032;
+	color: #A4A4A4;
+	border: 1px solid #9B9FA7;
+}
+
+.sol_btn_language,
+.sol_btn_language:hover {
+	height: 24px;
+	font-size: 0.75rem;
+	color: #AFB4C1;
+	background: #2F3032;
+	background: url("../img/solace_img/icon_select.png") no-repeat 95% 50%;
+	border: 1px solid #5E6064;
+	border-radius: 0;
+}
+
+.sol_dropdown {
+	position: absolute;
+	z-index: 1000;
+	display: block;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	color: #A4A4A4;
+	background: #2F3032 !important;
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	box-shadow: 0 0.5rem 2rem 0rem rgba(33, 48, 85, 0.31);	
+	border: 1px solid #9B9FA7;
+}
+
+.sol_dropdown a {
+	display: block;
+	width: 100%;
+	height: 24px;
+	color: #AFB4C1;
+	background: #2F3032;
+	font-size: 0.75rem !important;	
+	line-height: 8px;
+	vertical-align: middle;
+	border-bottom: 1px solid #515558;
+	text-align: left;
+}
+
+.sol_dropdown a:hover {
+	color: #AFB4C1;
+	background: #414447;
+	text-decoration: none;
+}
+
+.sol_breadcrumb_area {
+	padding: 0; 
+	border-bottom: 1px solid #494A4C;
+	height: 34px;
+}
+
+.sol_input_search {
+	padding-left: 30px;
+	width: 298px;	
+	background: #2F3032;
+	background-image: url("../img/solace_img/cont_icon_search.png");
+	background-repeat: no-repeat;
+	background-position: 5px 8px;
+}
+
+.sol_i_close {
+	display: block;
+	width: 10px;
+	height: 10px;
+	background: url("../img/solace_img/cont_icon_searchcls.png")
+}
+
+/* table */
+.sol_th {
+	color: #BBBBBB !important;
+	background-color: #55585A !important;
+	font-weight: normal;
+	border-bottom: 1px solid #656667 !important;
+	border-left: 1px solid #656667 !important;
+}
+
+.sol_th:first-child {
+	border-left: 0 !important;
+}
+
+/* pageview */
+.sol_pagenation_footer button {
+	display: inline-block; 
+}
+
+.sol_w100 {
+	width: 100px;
+}
+
+.sol_w200 {
+	width: 200px;
+}
+
+.sol_w300 {
+	width: 300px;
+}
+
+.sol_a {
+	line-height: 2.215rem;
+	vertical-align: middle;
+}
+
+/* box */
+.sol_box_p0 {
+	border: 1px solid #494A4C;
+}
+
+.sol_box_p10 {
+	padding: 10px;
+	border: 1px solid #494A4C;
+}
+
+.sol_box_bl {
+	border-left: 1px solid #494A4C;
+}
+
+.sol_pagenav_footer {
+	position: absolute;
+	width: 95%;
+	padding: 0 !important;
+	bottom: 10px;
+	margin-right: 20px;
+	background: #2F3032;
+}
+
+.sol_nav_rigbtn_area {
+	margin-top: -7px;
+}

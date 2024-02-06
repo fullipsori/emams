@@ -55,7 +55,7 @@ const RTBarChart = (chartProps: ChartProps) => {
       chartInstance.data.datasets[step].data = monitoringData.datas[step];
     }
 
-    if(chartInstance.options.plugins) {
+if(chartInstance.options.plugins) {
       if (chartInstance.options.plugins.legend) {
         chartInstance.options.plugins.legend.display = true;
       }

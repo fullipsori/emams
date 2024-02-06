@@ -1,6 +1,6 @@
 "use client";
 
-import ConfigBox from "@/app/components/box/configuration/configBox";
+import ConfigBox from "@/constant/summary/configuration/configBox";
 import CylinderPage from "@/app/components/cylinderChart/cylinderPage";
 import StatusLineChart from "@/app/components/lineChart/statusLineChart";
 import { ConfigData, InformationData } from "@/data/gridData";
@@ -11,13 +11,11 @@ export default function Page() {
   const [size, setSize] = useState<boolean>(false);
 
   const handleMsgsBtnClick = () => {
-    alert("msgs를 클릭했습니다");
     setMsgs(true);
     setSize(false);
   };
 
   const handleSizeBtnClick = () => {
-    alert("size를 클릭했습니다");
     setMsgs(false);
     setSize(true);
   };
@@ -29,7 +27,6 @@ export default function Page() {
         flexDirection: "row",
         marginTop: 30,
         gap: 70,
-        // justifyContent: "space-around",
       }}
     >
       <div

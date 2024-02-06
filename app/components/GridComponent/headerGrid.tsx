@@ -9,6 +9,7 @@ import "react-tabulator/lib/styles.css";
 import "react-tabulator/lib/css/tabulator.min.css";
 import { useAppDispatch, useAppSelector } from "@/hook/hook";
 import { setSelectedRow } from "@/redux/vpnSlice";
+import axios from "axios";
 
 interface IData {
   msgVpnName: string;
@@ -21,11 +22,8 @@ const HeaderGrid: React.FC = () => {
   const [gridOpen, setGridOpen] = useState(false);
   const dispatch = useAppDispatch();
   const tableRef = useRef(null);
-  const [data, setData] = useState<IData[]>([
-    { msgVpnName: "acme_aos_dev" },
-    { msgVpnName: "acme_atp_dev" },
-    { msgVpnName: "default" },
-  ]);
+  const [data, setData] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [selectedName, setSelectedName] = useState<string>("");
 
@@ -48,19 +46,55 @@ const HeaderGrid: React.FC = () => {
   const options: ReactTabulatorOptions = {
     layout: "fitColumns",
     placeholder: "데이터가 없습니다",
+    placeholderColor: "#fff",
   };
 
   const columns: ColumnDefinition[] = [
     {
-      title: "",
+      title: "선택",
       field: "isSelected",
       headerSort: false,
       hozAlign: "center",
       width: 50,
       formatter: checkboxFormatter,
     },
-    { title: "Vpn", field: "msgVpnName", hozAlign: "left", width: 180 },
+    { title: "Broker", field: "broker", hozAlign: "left", width: 100 },
+    { title: "Vpn", field: "msgVpnName", hozAlign: "left", width: 100 },
   ];
+
+  const fetchData = async () => {
+    const baseUrl = "/api/v2/msgVpns/";
+    try {
+      const params = {
+        count: 100,
+        cursor: "",
+        where: searchTerm,
+        select: "msgVpnName",
+      };
+
+      const response = await axios.get(baseUrl, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+        params,
+      });
+      const DataVal = response.data.data;
+      console.log("데이터:", DataVal);
+      setData(DataVal);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  // 검색어 핸들링 함수
+  const handleSearchChange = (e: any) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    fetchData();
+  };
 
   const handleApply = () => {
     dispatch(setSelectedRow({ msgVpnName: selectedName }));
@@ -81,24 +115,25 @@ const HeaderGrid: React.FC = () => {
       <div
         style={{
           zIndex: 10,
-          borderRadius: 20,
+          borderRadius: 8,
           backgroundColor: "#fff",
-          width: 200,
-          height: 30,
-          marginRight: 30,
+          width: 120,
+          padding: 5,
           cursor: "pointer",
           borderStyle: "solid",
+          borderWidth: 2,
         }}
         onClick={handleMenuClick}
       >
-        <p
+        + Change Vpn
+        {/* <p
           style={{
             paddingLeft: 5,
-            color: "gray",
+            color: "gray",s
           }}
         >
           {selectedRow ? selectedRow.msgVpnName : "None"}
-        </p>
+        </p> */}
       </div>
       <div
         style={{
@@ -106,17 +141,45 @@ const HeaderGrid: React.FC = () => {
           borderWidth: 2,
           borderRadius: 10,
           backgroundColor: "#d8d8d8",
-          minWidth: 200,
+          width: 250,
         }}
       >
         {gridOpen ? (
-          <div style={{ position: "absolute", backgroundColor: "#fff" }}>
+          <div
+            style={{
+              position: "absolute",
+              backgroundColor: "#d8d8d8",
+              width: 250,
+            }}
+          >
+            <input
+              style={{ width: "100%" }}
+              placeholder="search..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearchClick();
+                }
+              }}
+            />
             <ReactTabulator
               ref={tableRef}
               data={data}
               columns={columns}
               options={options}
             />
+            <p
+              style={{
+                color: "#ff4a4a",
+                paddingRight: 5,
+                paddingLeft: 5,
+                paddingTop: 5,
+              }}
+            >
+              검색 결과는 최대 100건이며, 원하는 검색 결과가 없을 경우 상세한
+              명칭을 입력바랍니다.
+            </p>
             <div
               style={{
                 display: "flex",

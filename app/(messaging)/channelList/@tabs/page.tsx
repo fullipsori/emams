@@ -82,7 +82,7 @@ export default function QueueList() {
     try {
       const baseUrl = '/api/v2/msgVpns/';
       const getQueueUrl = baseUrl.concat('/queues');
-      
+
       console.log(pageSize)
       console.log(sQueueNm)
       console.log(searchInfo.sQueueNm)
@@ -226,58 +226,71 @@ export default function QueueList() {
 
   return (
     <>
-      <div>
-        <input
-          type="text"
-          className="form-control"
-          id="sQueueNm"
-          name="sQueueNm"
-          placeholder="search..."
-          onChange={onChangeSearch}
-          onKeyDown={handleKeydownInput}
-        />
-        <Image
-          width="25"
-          height="25"
-          src={"/search.png"}
-          alt={"menu"}
-          onClick={() => submitQueueSearch()}
-          style={{ cursor: "pointer" }}
+      <div className="tab-content">
+        <div className="row">
+          <div className="col-md-8">
+            <div className="sol_cont_search row no-gutters gap-2">
+              <input type="text" className="form-control sol_input_search" />
+              {/* <button class="btn hstack btn-icon sol_button_outline sol_sort" alt="card"><i class="sol_i_card"></i></button>
+											<button class="btn hstack btn-icon sol_button_outline sol_sort" alt="list"><i class="sol_i_list"></i></button> */}
+            </div>
+          </div>
+          <div className="col-md-4 d-flex justify-content-end gap-2">
+            <div className="btn-group">
+              <a className="btn hstack btn-outline-light" data-bs-toggle="dropdown">Action</a>
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item">Summary 이동</a></li>
+                <li><a className="dropdown-item">Setting</a></li>
+                <li><a className="dropdown-item">Replay 이동</a></li>
+                <li><a className="dropdown-item">Delete All Messages</a></li>
+                <li><a className="dropdown-item">Clone (큐 복제)</a></li>
+                <li><a className="dropdown-item"><i className="sol_i_delete sol_mr_6"></i>Delete</a></li>
+              </ul>
+            </div>
+            <a className="btn hstack btn-outline-info">+ Queue</a>
+          </div>
+        </div>
+
+        <ReactTabulator
+          key={tableKey}
+          onRef={(ref) => (tableRef = ref)}
+          autoResize={false}
+          data={tableData}
+          columns={columns}
+          options={options}
+          events={{
+            renderStarted: renderStarted,
+            rowClick: rowClick,
+            rowContext: rowContext
+          }}
         />
       </div>
-      <ReactTabulator
-        key={tableKey}
-        onRef={(ref) => (tableRef = ref)}
-        autoResize={false}
-        data={tableData}
-        columns={columns}
-        options={options}
-        events={{
-          renderStarted: renderStarted,
-          rowClick: rowClick,
-          rowContext: rowContext
-        }}
-      />
 
-      <div id="table-footer" style={{
-        position: "absolute",
-        bottom: 0,
-        width: "100%",
-        background: "#9399AA",
-        padding: "10px",
-      }}
-      >
-        <div>
-          <select id="pagesize" onChange={handlePageSizeChange} value={pageSize}>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
+      <div className="sol_pagenav_footer">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <button type="button" className="btn btn-outline-light sol_mr_6">
+              <i className="sol_i_first sol_mr_6"></i>First
+            </button>
+            <button type="button" className="btn btn-outline-light sol_mr_6">
+              <i className="sol_i_prev sol_mr_6"></i>Prev
+            </button>
+            <button type="button" className="btn btn-outline-light">
+              Next<i className="sol_i_next sol_ml_6"></i>
+            </button>
+          </div>
 
-          <button style={{ borderColor: "transparent", backgroundColor: "transparent" }} onClick={handleNextBtnClick}>
-            next
-          </button>
+          <div className="col-md-6 d-flex justify-content-center">
+            <span className="col-form-label sol_mr_6">Last Update 2024-01-29 14:41:23</span>
+            <button className="btn hstack btn-outline-secondary">Refresh Data</button>
+            <a href="" className="sol_a sol_mr_6 sol_ml_6">Show</a>
+            <select className="form-select sol_w100">
+              <option selected>100</option>
+              <option>200</option>
+              <option>300</option>
+              <option>400</option>
+            </select>
+          </div>
         </div>
       </div>
     </>

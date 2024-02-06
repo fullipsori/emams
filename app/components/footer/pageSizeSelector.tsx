@@ -11,11 +11,19 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({
   onPageSizeChange,
 }) => {
   return (
-    <select id="pagesize" onChange={onPageSizeChange} value={pageSize}>
-      <option value="10">10</option>
-      <option value="20">20</option>
-      <option value="50">50</option>
-    </select>
+    <>
+      <div className="sol_a sol_mr_6 sol_ml_6">Show</div>
+      <select
+        id="pagesize"
+        className="form-select sol_w100"
+        onChange={onPageSizeChange}
+        value={pageSize}
+      >
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+    </>
   );
 };
 

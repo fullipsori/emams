@@ -3,30 +3,23 @@
 import RefreshData from "@/app/components/footer/refreshData";
 import Advenced from "@/constant/setting/advenced";
 import Information from "@/constant/setting/information";
+import { useAppSelector } from "@/hook/hook";
+import useRefreshData from "@/hook/useRefreshData";
+import { formatDateTime } from "@/utils/dateTimeFormat";
+import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Page() {
+  const selectedRow = useAppSelector((state) => state.isVpn.selectedRow);
+  const msgVpns = selectedRow?.msgVpnName;
+  const [data, setData] = useState<any>({});
   const [isEditStatus, setIsEditStatus] = useState<boolean>(false);
-  const [hiddenMenu, setHiddenMenu] = useState<boolean>(true);
+  const [hiddenMenu, setHiddenMenu] = useState<boolean>(false);
   const [showTips, setShowTips] = useState<boolean>(true);
-  // format YYYY-MM-DD HH:MM:SS
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
-  const dateTimeString =
-    `${year}-${month.toString().padStart(2, "0")}-${day
-      .toString()
-      .padStart(2, "0")} ` +
-    `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
-  const [refreshTime, setRefreshTime] = useState<string>(dateTimeString);
+  const { refreshTime, refreshData } = useRefreshData(
+    formatDateTime(new Date())
+  );
 
   const handleEditChange = (isEditing: boolean) => {
     setIsEditStatus(!isEditing);
@@ -40,13 +33,81 @@ export default function Page() {
     setHiddenMenu(!hiddenMenu);
   };
 
-  const handleRefreshClick = () => {
-    // fetchData();
-    setRefreshTime(dateTimeString);
-  };
-
   const handleTipsClick = () => {
     setShowTips(!showTips);
+  };
+
+  const fetchData = async () => {
+    const baseUrl = `/api/v2/msgVpns/${msgVpns}`;
+    try {
+      const params = {
+        select:
+          "msgVpnName,msgSpoolMsgCount,maxConnectionCount,eventConnectionCountThreshold,serviceRestOutgoingMaxConnectionCount,msgSpoolUsage,maxMsgSpoolUsage,eventMsgSpoolUsageThreshold,maxEndpointCount,eventEndpointCountThreshold,maxEgressFlowCount,state,replicationEnabled,replicationRole,rxMsgRate,rxByteRate,txMsgRate,txByteRate,msgReplayInitializingCount,msgReplayActiveCount,msgReplayPendingCompleteCount,msgReplayFailedCount,dmrEnabled,kafkaBrokerConnectionCount,maxKafkaBrokerConnectionCount",
+      };
+
+      const response = await axios.get(baseUrl, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+        params,
+      });
+      const DataVal = response.data.data;
+      setData(DataVal);
+      console.log("데이터:", DataVal);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const testData = {
+    data: {
+      msgVpnName: "default",
+      msgSpoolMsgCount: 6,
+      maxConnectionCount: 100,
+      eventConnectionCountThreshold: {
+        clearPercent: 60,
+        setPercent: 80,
+      },
+      serviceRestOutgoingMaxConnectionCount: 100,
+      msgSpoolUsage: 780,
+      maxMsgSpoolUsage: 1500,
+      eventMsgSpoolUsageThreshold: {
+        clearPercent: 60,
+        setPercent: 80,
+      },
+      maxEndpointCount: 1002,
+      eventEndpointCountThreshold: {
+        clearPercent: 60,
+        setPercent: 80,
+      },
+      maxEgressFlowCount: 1003,
+      state: "up",
+      replicationEnabled: false,
+      replicationRole: "standby",
+      rxMsgRate: 0,
+      rxByteRate: 0,
+      txMsgRate: 0,
+      txByteRate: 0,
+      msgReplayInitializingCount: 0,
+      msgReplayActiveCount: 0,
+      msgReplayPendingCompleteCount: 0,
+      msgReplayFailedCount: 0,
+      dmrEnabled: true,
+      kafkaBrokerConnectionCount: 0,
+      maxKafkaBrokerConnectionCount: 0,
+    },
+    meta: {
+      request: {
+        method: "GET",
+        uri: "http://192.168.10.7:8080/SEMP/v2/monitor/msgVpns/default?select=msgVpnName,msgSpoolMsgCount,maxConnectionCount,eventConnectionCountThreshold,serviceRestOutgoingMaxConnectionCount,msgSpoolUsage,maxMsgSpoolUsage,eventMsgSpoolUsageThreshold,maxEndpointCount,eventEndpointCountThreshold,maxEgressFlowCount,state,replicationEnabled,replicationRole,rxMsgRate,rxByteRate,txMsgRate,txByteRate,msgReplayInitializingCount,msgReplayActiveCount,msgReplayPendingCompleteCount,msgReplayFailedCount,dmrEnabled,kafkaBrokerConnectionCount,maxKafkaBrokerConnectionCount",
+      },
+      responseCode: 200,
+    },
   };
 
   return (
@@ -98,6 +159,7 @@ export default function Page() {
         <Information
           isEditStatus={!isEditStatus}
           onEditChange={handleEditChange}
+          isEnableStatus={data.dmrEnabled}
         />
         <div
           style={{
@@ -130,7 +192,11 @@ export default function Page() {
             }}
           />
         </div>
-        <Advenced hiddenMenu={hiddenMenu} isEditStatus={!isEditStatus} />
+        <Advenced
+          hiddenMenu={hiddenMenu}
+          isEditStatus={!isEditStatus}
+          data={data}
+        />
       </div>
       <div>
         {showTips ? (
@@ -161,7 +227,7 @@ export default function Page() {
               </div>
               <Image src={"/arrow.png"} alt={"arrow"} width={16} height={16} />
             </div>
-            <div>dudlfkdsaflkjsdlfkjasldkjfa;lsjdf;ljaksfdasdf</div>
+            <div>ef</div>
           </div>
         ) : (
           <div
@@ -203,10 +269,7 @@ export default function Page() {
           paddingRight: 20,
         }}
       >
-        <RefreshData
-          onRefreshClick={handleRefreshClick}
-          refreshTime={refreshTime}
-        />
+        <RefreshData onRefreshClick={refreshData} refreshTime={refreshTime} />
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ export default function MonitoringLayout(props: {
                         </div>
                     </div>
                     <div className='monitor-footer'>
-                        <MonitorFooter />
+                    <MonitorFooter />
                     </div>
                 </div>
             </div>

@@ -217,19 +217,19 @@ const MonitorHeader = () => {
                     <Col lg={3} className='d-flex gap-2 align-items-center'>
                         <Label htmlFor="choices-mlsn" className="form-label text-light mb-0 fs-6 fw-bolder">Message VPN</Label>
                         <Select id="choices-mlsn" className='w-50'
-                            value={curNode}
-                            onChange={(selected: any) => { setCurNode(selected); }}
-                            placeholder="Select mlsn"
-                            options={mlsnOptions} />
-                    </Col>
+                        value={curNode}
+                        onChange={(selected: any) => { setCurNode(selected); }}
+                        placeholder="Select mlsn"
+                        options={mlsnOptions} />
+                </Col>
                     <Col lg={4} className='d-flex align-items-center gap-2'>
                         <Label htmlFor="choices-queues" className="form-label text-light mb-0 fs-6 fw-bolder">Queues</Label>
                         <Select id="choices-queues" className='w-50'
-                            value={queueType}
-                            onChange={(selected: any) => { setQueueType(selected); }}
-                            placeholder="Select Queue Type"
-                            options={queuesOptions} />
-                    </Col>
+                        value={queueType}
+                        onChange={(selected: any) => { setQueueType(selected); }}
+                        placeholder="Select Queue Type"
+                        options={queuesOptions} />
+                </Col>
                     <Col lg={5} className='d-flex align-items-center justify-content-lg-end gap-1'>
                         <button className="monitor-btn monitor-btn-icon btn-outline-light" aria-label="full-screen" 
                             onClick={() => fullscreen(document.getElementById("monitor-wrapper"))}>
@@ -250,14 +250,14 @@ const MonitorHeader = () => {
                                 onClick={handleReload}>
                                 <i className="pli-reload fs-5"></i>
                             </button>
-                            <Select id="choices-refresh" 
-                                value={refreshMode}
-                                onChange={(selected: any) => { setRefreshMode(selected); }}
-                                placeholder="Select period"
-                                options={refreshOptions} />
-                        </div>
-                    </Col>
-                </Row>
+                            <Select id="choices-refresh"
+                            value={refreshMode}
+                            onChange={(selected: any) => { setRefreshMode(selected); }}
+                            placeholder="Select period"
+                            options={refreshOptions} />
+                    </div>
+                </Col>
+            </Row>
         </React.Fragment>
     );
 };

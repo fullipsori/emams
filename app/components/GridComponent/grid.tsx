@@ -63,9 +63,9 @@ const Grid: React.FC<GridProps> = ({ data, columns }) => {
 
   useEffect(() => {
     console.log("selectedVpn이 업데이트됨:", selectedVpn);
-    if (selectedVpn) {
-      dispatch(setSelectedRow({ msgVpnName: selectedVpn }));
-    }
+    // if (selectedVpn) {
+    //   dispatch(setSelectedRow({ msgVpnName: selectedVpn }));
+    // }
   }, [selectedVpn]);
 
   useEffect(() => {
@@ -112,6 +112,9 @@ const Grid: React.FC<GridProps> = ({ data, columns }) => {
       const selectedDataValue = tableRef.current.getSelectedData();
       if (selectedDataValue.length === 1) {
         setSelectedVpn(selectedDataValue[0].msgVpnName);
+        dispatch(
+          setSelectedRow({ msgVpnName: selectedDataValue[0].msgVpnName })
+        );
       }
       console.log(selectedDataValue[0].msgVpnName);
     }
@@ -184,7 +187,6 @@ const Grid: React.FC<GridProps> = ({ data, columns }) => {
   const rowContext = (e: any, row: any) => {
     e.preventDefault();
     const tableInfo = tableRef.current;
-    console.log(tableInfo);
     const rowClickData = row.getData().msgVpnName;
     setSelectedVpn(rowClickData);
     if (tableInfo) {
@@ -279,7 +281,7 @@ const Grid: React.FC<GridProps> = ({ data, columns }) => {
               key={actionItem.id}
               onClick={(event) => {
                 if (
-                  selectedRows.length > 1 &&
+                  selectedRows.length !== 1 &&
                   [1, 2, 3, 4, 5].includes(actionItem.id)
                 ) {
                   event.preventDefault();
@@ -290,13 +292,15 @@ const Grid: React.FC<GridProps> = ({ data, columns }) => {
               }}
               style={{
                 cursor:
-                  selectedRows.length > 1 &&
-                  [1, 2, 3, 4, 5].includes(actionItem.id)
+                  (selectedRows.length !== 1 &&
+                    [1, 2, 3, 4, 5].includes(actionItem.id)) ||
+                  (selectedRows.length === 0 && [6].includes(actionItem.id))
                     ? "not-allowed"
                     : "pointer",
                 opacity:
-                  selectedRows.length > 1 &&
-                  [1, 2, 3, 4, 5].includes(actionItem.id)
+                  (selectedRows.length !== 1 &&
+                    [1, 2, 3, 4, 5].includes(actionItem.id)) ||
+                  (selectedRows.length === 0 && [6].includes(actionItem.id))
                     ? 0.5
                     : 1,
               }}
@@ -304,18 +308,6 @@ const Grid: React.FC<GridProps> = ({ data, columns }) => {
               {actionItem.title}
             </div>
           ))}
-
-          {/* {ActionData.map((actionItem) => (
-            <div
-              key={actionItem.id}
-              onClick={(event) => {
-                event.stopPropagation();
-                handleActionTitleClick(actionItem);
-              }}
-            >
-              {actionItem.title}
-            </div>
-          ))} */}
         </div>
       ) : null}
       {rightClick && (
@@ -413,14 +405,6 @@ const Grid: React.FC<GridProps> = ({ data, columns }) => {
           >
             next
           </button>
-          {/* <div
-            onContextMenu={(e) => {
-              e.preventDefault();
-              console.log("우클릭!");
-            }}
-          >
-            우클릭!
-          </div> */}
         </div>
       </div>
     </div>

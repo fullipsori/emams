@@ -2,6 +2,7 @@ import "./style.css";
 import type { ReactNode } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "./tabs";
 import HeaderGrid from "@/app/components/GridComponent/headerGrid";
+import VpnState from "@/app/components/vpnState/vpnState";
 
 export default function Layout(props: { tabs: ReactNode }) {
   return (
@@ -10,6 +11,11 @@ export default function Layout(props: { tabs: ReactNode }) {
         <HeaderGrid />
       </div>
       <h1 className="heading">Channel</h1>
+      <h5>
+        <div style={{ display: "flex", flexDirection: "row", fontWeight: 700 }}>
+          VpnName:: <VpnState />
+        </div>
+      </h5>
       <Tabs>
         <TabList>
           <Tab href="/mlsnm">summary</Tab>

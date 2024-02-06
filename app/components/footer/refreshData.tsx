@@ -13,21 +13,13 @@ const RefreshData: React.FC<RefreshProps> = ({
 }) => {
   return (
     <>
-      <div>Last Update : {refreshTime}</div>
-      <div
+      <div className="col-form-label sol_mr_6">Last Update {refreshTime}</div>
+      <button
+        className="btn hstack btn-outline-secondary"
         onClick={onRefreshClick}
-        style={{
-          color: "#e9e9e9",
-          fontSize: 14,
-          cursor: "pointer",
-          backgroundColor: "#000",
-          borderRadius: 10,
-          paddingRight: 3,
-          paddingLeft: 3,
-        }}
       >
         Refresh Data
-      </div>
+      </button>
     </>
   );
 };

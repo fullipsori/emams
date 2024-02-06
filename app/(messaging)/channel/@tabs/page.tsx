@@ -1,4 +1,5 @@
 import CylinderChart from "@/app/components/cylinderChart/cylinderChart";
+import StatusLineChart from "@/app/components/lineChart/statusLineChart";
 
 export default function QueueSummaryPage() {
 
@@ -46,6 +47,9 @@ export default function QueueSummaryPage() {
           <div style={{ fontSize: 14, fontWeight: 700 }}>Messages Queued (msgs) : {msgQueueMsgs}</div>
           <div style={{ fontSize: 14, fontWeight: 700 }}>Messages Queued (MB) : {msgQueueMb}</div>
           <div style={{ fontSize: 14, fontWeight: 700 }}>Messages Quota (MB) : {msgQueueQuota}</div>
+        </div>
+        <div style={{ fontWeight: 700, fontSize: 16 }}>PendingMessage
+          <StatusLineChart widthVal={500} heightVal={150} />
         </div>
       </div>
     </>

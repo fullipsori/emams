@@ -42,12 +42,12 @@ const Detail = (props: any) => {
                     <h4 className="mb-0 fw-bold fs-6" onClick={handleBack}><i className="psi-arrow-back"></i></h4>
                     <h4 className="mb-0 fw-bold fs-6">{title}</h4>
                     <Select id="choices-monitor-type" className='mb-0 w-50'
-                        value={monitorOptions.find((item) => item.value === props.params.srcId) ?? monitorOptions[0]}
-                        onChange={(selected: any) => { handleMonitoryType(selected); }}
-                        placeholder="Select monitor type"
-                        options={monitorOptions} />
-                </Col>
-            </Row>
+                                value={monitorOptions.find((item) => item.value === props.params.srcId) ?? monitorOptions[0]}
+                                onChange={(selected: any) => { handleMonitoryType(selected); }}
+                                placeholder="Select monitor type"
+                                options={monitorOptions} />
+                        </Col>
+                    </Row>
             <Row className="m-1">
                 <Col md={12}>
                 <Card>

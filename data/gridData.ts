@@ -315,9 +315,9 @@ export const ProgressData = {
 export const ActionData = [
   { id: 1, title: "Summary 이동", url: "/mlsnm" },
   { id: 2, title: "Settings", url: "/mlsnm/settings" },
-  { id: 3, title: "Stats | Message Stats", url: "/mlsnm/stats" },
+  // { id: 3, title: "Stats | Message Stats", url: "/mlsnm/stats" },
   { id: 4, title: "Monitoring 이동", url: "/monitor" },
-  { id: 5, title: "Message Queud 이동", url: "/channelList" },
+  // { id: 5, title: "Message Queud 이동", url: "/channelList" },
   { id: 6, title: "Delete", url: "" },
 ];
 
