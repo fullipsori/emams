@@ -235,7 +235,7 @@ const MonitorHeader = () => {
                             onClick={() => fullscreen(document.getElementById("monitor-wrapper"))}>
                             <i className="pli-monitor-3 fs-5" ></i>
                         </button>
-                        <Select id="choices-time-ranges" className='w-50'
+                        <Select id="choices-time-ranges" className='w-25'
                             value={timeRange}
                             onChange={(selected: any) => { setTimeRange(selected); }}
                             placeholder="Select Time Ranges"
@@ -250,7 +250,7 @@ const MonitorHeader = () => {
                                 onClick={handleReload}>
                                 <i className="pli-reload fs-5"></i>
                             </button>
-                            <Select id="choices-refresh" className=''
+                            <Select id="choices-refresh" 
                                 value={refreshMode}
                                 onChange={(selected: any) => { setRefreshMode(selected); }}
                                 placeholder="Select period"
