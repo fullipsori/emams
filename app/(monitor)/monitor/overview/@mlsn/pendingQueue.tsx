@@ -15,11 +15,11 @@ interface ChartProps {
 const PendingQueue = (chartProps: ChartProps) => {
   return (
     <React.Fragment>
-      <Card className="mb-1">
-        <CardHeader>
+      <Card className="mb-1 monitor-content">
+        <CardHeader className="monitor-content-header">
           <ChartHeader title="Pending Messages " dataSourceType={dataSourceType.PENDING} />
         </CardHeader>
-        <CardBody className="p-0">
+        <CardBody className="p-0 monitor-content-body">
           <RTLineChart dataSourceType={dataSourceType.PENDING}  chartOptions={getLineChartOpts({count:getDataSourceCount(dataSourceType.PENDING), widthVal: chartProps.widthVal, heightVal: chartProps.heightVal})}/>
         </CardBody>
       </Card>

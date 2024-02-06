@@ -23,38 +23,38 @@ const Monitoring = () => {
             <div className="content__boxed">
                 <Row className="pb-1">
                     <Col>
-                        <Card >
-                            <CardHeader>
+                        <Card className="monitor-content">
+                            <CardHeader className="monitor-content-header">
                                 <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 me-2 "></i>Message Broker Resource Usage</h6>
                             </CardHeader>
-                            <CardBody>
+                            <CardBody className="monitor-content-body">
                                 <Row>
                                     <Col lg={8} md={12}>
-                                        <Card>
-                                            <CardHeader>
+                                        <Card className="monitor-content">
+                                            <CardHeader className="monitor-content-header">
                                                 <h6 className="fw-bold m-2 fs-6">NODE 정보</h6>
                                             </CardHeader>
-                                            <CardBody className="">
+                                            <CardBody className="monitor-content-body">
                                                 <Row>
                                                     <Col md={3} sm={6}>
-                                                        <Card>
-                                                            <CardBody>
+                                                        <Card className="monitor-content">
+                                                            <CardBody className="monitor-content-body">
                                                                 <h6 className="fw-bold text-muted m-1 text-center">CPU 사용률</h6>
                                                                 <RTGaugeChart dataSourceType={dataSourceType.CPU_USAGE} />
                                                             </CardBody>
                                                         </Card>
                                                     </Col>
                                                     <Col md={3} sm={6}>
-                                                        <Card>
-                                                            <CardBody>
+                                                        <Card className="monitor-content">
+                                                            <CardBody className="monitor-content-body">
                                                                 <h6 className="fw-bold text-muted m-1 text-center">MEM 사용률</h6>
                                                                 <RTGaugeChart dataSourceType={dataSourceType.MEMORY_USAGE} />
                                                             </CardBody>
                                                         </Card>
                                                     </Col>
                                                     <Col md={3} sm={6}>
-                                                        <Card>
-                                                            <CardBody>
+                                                        <Card className="monitor-content">
+                                                            <CardBody className="monitor-content-body">
                                                                 <h6 className="fw-bold text-muted m-1 text-center">DISK 사용률</h6>
                                                                 <RTGaugeChart dataSourceType={dataSourceType.DISK_STATUS} />
                                                             </CardBody>
@@ -77,8 +77,8 @@ const Monitoring = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <Card >
-                            <CardHeader className="d-flex justify-content-between">
+                        <Card className="monitor-content">
+                            <CardHeader className="d-flex justify-content-between monitor-content-header">
                                 <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 me-2 "></i>Message Broker Resource Usage (CPU/Memory/Disk IO/Network IO)</h6>
                                 <Dropdown className="card-header-dropdown" isOpen={isUserDropdown} toggle={toggleDropdown} direction="start">
                                     <DropdownToggle tag="a" className="text-reset dropdown-btn" role="button">
@@ -91,7 +91,7 @@ const Monitoring = () => {
                                     </DropdownMenu>
                                 </Dropdown>
                             </CardHeader>
-                            <CardBody>
+                            <CardBody className="monitor-content-body">
                                 <Row>
                                     <Col xl={6} lg={12}>
                                         <CpuUsage />

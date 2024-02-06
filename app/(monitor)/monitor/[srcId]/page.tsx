@@ -13,7 +13,7 @@ import getBarChartOpts from "../common/chart/bar/BarChartOpts";
 const Detail = (props: any) => {
     const router = useRouter();
 
-    const monitorOptions= [
+    const monitorOptions = [
         { value: dataSourceType.PENDING, label: 'Pending Queues' },
         { value: dataSourceType.THROUGHPUT, label: 'Throughput' },
         { value: dataSourceType.CONNECTION, label: 'Connection' },
@@ -35,34 +35,34 @@ const Detail = (props: any) => {
     }
 
     const title = "  모니터링 지표 ";
-    return(
+    return (
         <React.Fragment>
             <Row className="m-1">
                 <Col lg={4} className='d-flex align-items-center gap-2'>
                     <h4 className="mb-0 fw-bold fs-6" onClick={handleBack}><i className="psi-arrow-back"></i></h4>
                     <h4 className="mb-0 fw-bold fs-6">{title}</h4>
                     <Select id="choices-monitor-type" className='mb-0 w-50'
-                                value={monitorOptions.find((item) => item.value === props.params.srcId) ?? monitorOptions[0]}
-                                onChange={(selected: any) => { handleMonitoryType(selected); }}
-                                placeholder="Select monitor type"
-                                options={monitorOptions} />
-                        </Col>
-                    </Row>
-            <Row className="m-1">
+                        value={monitorOptions.find((item) => item.value === props.params.srcId) ?? monitorOptions[0]}
+                        onChange={(selected: any) => { handleMonitoryType(selected); }}
+                        placeholder="Select monitor type"
+                        options={monitorOptions} />
+                </Col>
+            </Row>
+            <Row className="m-1 py-2">
                 <Col md={12}>
-                <Card>
-                    <CardBody>
-                        <div className="align-items-center text-center bg-white-100" style={{width: "90%"}} >
-                            {
-                                (props.params.srcId === dataSourceType.CONNECTION)? 
-                                    <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(props.params.srcId), isStack:true, names:["producer","consumer"], legendPos: "right"})}/>
-                                    :
-                                    <RTLineChart dataSourceType={props.params.srcId} chartOptions={getLineChartOpts({count:getDataSourceCount(props.params.srcId), legendPos: "right"}) }/>
-                            }
-                        </div>
+                    <Card className="monitor-content">
+                        <CardBody className="monitor-content-body">
+                            <div className="align-items-center text-center bg-white-100" style={{ width: "90%" }} >
+                                {
+                                    (props.params.srcId === dataSourceType.CONNECTION) ?
+                                        <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({ count: getDataSourceCount(props.params.srcId), isStack: true, names: ["producer", "consumer"], legendPos: "right" })} />
+                                        :
+                                        <RTLineChart dataSourceType={props.params.srcId} chartOptions={getLineChartOpts({ count: getDataSourceCount(props.params.srcId), legendPos: "right" })} />
+                                }
+                            </div>
 
-                    </CardBody>
-                </Card>
+                        </CardBody>
+                    </Card>
                 </Col>
             </Row>
             <div className="d-flex justify-content-end m-1 ">

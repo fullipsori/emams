@@ -15,8 +15,8 @@ const DiskUsage = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-      <Card>
-        <CardBody className="p-0">
+      <Card className="moniitor-content">
+        <CardBody className="p-0 monitor-content-body">
             <RTLineChart dataSourceType={dataSourceType.DISK_USAGE} chartOptions={getLineChartOpts({ count: getDataSourceCount(dataSourceType.DISK_USAGE), chartTitle:"DISK read/write", widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
         </CardBody>
       </Card>

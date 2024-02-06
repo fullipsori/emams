@@ -16,8 +16,8 @@ const CpuUsage = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-        <Card>
-          <CardBody className="p-0">
+        <Card className="monitor-content">
+          <CardBody className="p-0 monitor-content-body">
             <RTLineChart dataSourceType={dataSourceType.CPU_USAGE} chartOptions={getLineChartOpts({ count: getDataSourceCount(dataSourceType.CPU_USAGE), chartTitle:"CPU usage", widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
           </CardBody>
         </Card>

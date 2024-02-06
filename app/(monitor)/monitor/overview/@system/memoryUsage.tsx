@@ -15,8 +15,8 @@ const MemoryUsage = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-      <Card>
-        <CardBody className="p-0">
+      <Card className="monitor-content">
+        <CardBody className="p-0 monitor-content-body">
             <RTLineChart dataSourceType={dataSourceType.MEMORY_USAGE} chartOptions={getLineChartOpts({ count: getDataSourceCount(dataSourceType.MEMORY_USAGE), chartTitle:"Memory usage", widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
         </CardBody>
       </Card>

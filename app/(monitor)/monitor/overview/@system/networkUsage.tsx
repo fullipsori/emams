@@ -16,8 +16,8 @@ const NetworkUsage = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-      <Card>
-        <CardBody className="p-0">
+      <Card className="monitor-content">
+        <CardBody className="p-0 monitor-content-body">
             <RTLineChart dataSourceType={dataSourceType.NETWORK_USAGE} chartOptions={getLineChartOpts({ count: getDataSourceCount(dataSourceType.NETWORK_USAGE),chartTitle:"Network IO", widthVal:chartProps.widthVal, heightVal:chartProps.heightVal })} />
         </CardBody>
       </Card>        

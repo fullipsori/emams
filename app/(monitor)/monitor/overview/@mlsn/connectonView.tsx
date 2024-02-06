@@ -16,11 +16,11 @@ const ConnectionView = (chartProps: ChartProps) => {
 
   return (
     <React.Fragment>
-      <Card>
-        <CardHeader className="mb-1">
+      <Card className="monitor-content">
+        <CardHeader className="mb-1 monitor-content-header">
           <ChartHeader title="Consumers 개수 " dataSourceType={dataSourceType.CONNECTION} />
         </CardHeader>
-        <CardBody className="p-0">
+        <CardBody className="p-0 monitor-content-body">
           <RTBarChart dataSourceType={dataSourceType.CONNECTION} chartOptions={getBarChartOpts({count:getDataSourceCount(dataSourceType.CONNECTION), isStack:true, widthVal:chartProps.widthVal, heightVal:chartProps.heightVal})}/>
         </CardBody>
       </Card>

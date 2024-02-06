@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import React from 'react'
+import "../../../public/assets/css/solaceMS.css";
 import './styles/monitoring.css'
 import MonitorFooter from './layouts/monitorFooter'
 import { MonitorHeader } from './layouts/monitorHeader'

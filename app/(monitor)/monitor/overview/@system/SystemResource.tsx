@@ -26,8 +26,8 @@ const SystemResource = () => {
     return(
         <React.Fragment>
             <Row>
-                <Card className="card-animate">
-                    <CardBody className="text-center">
+                <Card className="card-animate monitor-content">
+                    <CardBody className="text-center monitor-content-body">
                         <h6 className="fw-bold text-muted mb-1">CPU 크기</h6>
                         <h4 className="mt-0 ff-secondary fw-semibold fs-4">
                             <span className="text-success">{coreCount}</span>
@@ -37,8 +37,8 @@ const SystemResource = () => {
                 </Card>
             </Row>
             <Row>
-                <Card className="card-animate">
-                    <CardBody className="text-center">
+                <Card className="card-animate monitor-content">
+                    <CardBody className="text-center monitor-content-body">
                         <p className="fw-bold text-muted mb-1">MEMORY</p>
                         <h4 className="mt-0 ff-secondary fw-bold fs-4">
                             <span className="text-success">{memorySize}</span>

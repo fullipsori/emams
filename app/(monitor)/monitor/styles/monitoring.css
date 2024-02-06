@@ -1,3 +1,14 @@
+.monitor-content {
+	background: #202124;
+}
+.monitor-content-header {
+	background: #1c1d20;
+}
+.monitor-content-body {
+	background: #202124;
+}
+
+
 .monitor-btn {
     display: inline-block;
     font-weight: 400;
@@ -38,7 +49,7 @@
    position: static; 
    top: 0px;
    width: 100%;
-   background: rgb(71, 73, 73); 
+	background: #202124;
    /* background: rgb(119, 121, 121);  */
    padding: 10px 10px; 
    border-bottom: 1px solid rgb(46, 53, 61); 
@@ -55,7 +66,8 @@
    bottom: 0px; 
    height: 50px;
    width: 100%; 
-   background: rgb(71, 73, 73); 
+	background: #202124;
+   /* background: rgb(71, 73, 73);  */
    padding: 10px 20px; 
    border-top: 1px solid rgb(46, 53, 61); 
    box-sizing: border-box;
