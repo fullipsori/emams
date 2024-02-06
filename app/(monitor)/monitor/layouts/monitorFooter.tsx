@@ -1,7 +1,4 @@
 import React from 'react';
-import { Col, Container, Row } from 'reactstrap';
-import "../assets/monitoring.css"
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const footer_start= '핵심 모니터링 지표 |'
 const footer_end ="Developed by epozen"

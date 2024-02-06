@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { Col, Row } from 'reactstrap';
-import "../assets/monitoring.css"
 
 interface BreadCrumbProps {
     title: string;

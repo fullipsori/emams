@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Row, Col, Container, Card, CardHeader, CardBody } from "reactstrap";
-import "../../assets/monitoring.css";
 import PendingQueue from "./pendingQueue";
 import ThroughputQueue from "./throughputQueue";
 import ConnectionView from "./connectonView";

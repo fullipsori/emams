@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, CardTitle, Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
-import "../../assets/monitoring.css";
 import RTGaugeChart from "../../common/chart/gauge/RTGaugeChart";
 import SystemResource from "./SystemResource";
 import CpuUsage from "./cpuUsage";

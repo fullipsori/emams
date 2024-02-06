@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import MonitorFooter from './layouts/monitorFooter'
 import React from 'react'
-import { Col, Container, Row } from 'reactstrap'
+import './styles/monitoring.css'
+import MonitorFooter from './layouts/monitorFooter'
 import { MonitorHeader } from './layouts/monitorHeader'
 
 export const metadata: Metadata = {
