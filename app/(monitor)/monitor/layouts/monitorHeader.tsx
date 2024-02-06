@@ -98,7 +98,6 @@ const MonitorHeader = () => {
 
     const [chartTime, setChartTime] = useState<number|null>(0);
 
-
     /* initial loading */
     useEffect(() => {
         dispatch(getMonitoringAllNodes({

@@ -7,6 +7,7 @@ import { dataSourceType } from "../../common/data/DataSource";
 import { useAppDispatch, useAppSelector } from "@/hook/hook";
 import { MonitorQueueState, updateValueMode } from "@/redux/slices/monitoring-queue/reducer";
 import { createSelector } from "@reduxjs/toolkit";
+import { MonitorState } from "@/redux/slices/monitoring/reducer";
 
 interface ChartProps {
     title: string;
@@ -19,6 +20,11 @@ const ChartHeader = (chartProps: ChartProps) => {
 
     const [isUserDropdown, setUserDropdown] = useState<boolean>(false);
     const toggleDropdown = () => setUserDropdown(!isUserDropdown);
+    const selectMonitorState = createSelector(
+        (state: any) => state.MonitoringReducer,
+        (monitoringData: MonitorState) => ({ nodeState: monitoringData.curNode })
+    )
+    const monitorNodeState = useAppSelector(selectMonitorState);
 
     const selectPendingMonitoringData = createSelector(
         (state: any) => state.MonitoringQueueReducer,
@@ -34,7 +40,6 @@ const ChartHeader = (chartProps: ChartProps) => {
     const [yAxisMode, setYAxisMode] = useState<string|null>((chartProps.dataSourceType === dataSourceType.PENDING? pendingValueMode.valueMode : (chartProps.dataSourceType === dataSourceType.THROUGHPUT)? tpsValueMode.valueMode : null));
     const handleYAxisMode= (mode: string) => {
         if (yAxisMode!== mode) {
-            console.log(chartProps.dataSourceType + ":" + yAxisMode);
             dispatch(updateValueMode({dataSourceType: chartProps.dataSourceType, valueMode: mode}));
             setYAxisMode(mode);
         }
@@ -55,10 +60,12 @@ const ChartHeader = (chartProps: ChartProps) => {
             <div className="d-flex justify-content-between">
                 <h6 className="mb-0 fw-bolder"><i className="psi-retro align-middle fs-5 me-2 "></i>{chartProps.title}
                     {
-                        (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT) && <span style={{textDecoration: (yAxisMode === "count")? "underline" : ""}} onClick={() => handleYAxisMode("count")}>{'[건수'}</span>
+                        (monitorNodeState.nodeState &&  (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT)) 
+                            && <span style={{textDecoration: (yAxisMode === "count")? "underline" : ""}} onClick={() => handleYAxisMode("count")}>{'[건수'}</span>
                     }
                     {
-                        (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT) && <span style={{textDecoration: (yAxisMode === "bytes")? "underline" : ""}} onClick={() => handleYAxisMode("bytes")}>{ '|Bytes]'}</span>
+                        (monitorNodeState.nodeState && (chartProps.dataSourceType === dataSourceType.PENDING || chartProps.dataSourceType === dataSourceType.THROUGHPUT)) 
+                            && <span style={{textDecoration: (yAxisMode === "bytes")? "underline" : ""}} onClick={() => handleYAxisMode("bytes")}>{ '|Bytes]'}</span>
                     }
                 </h6>
 

@@ -79,7 +79,10 @@ const getBarChartOpts = (chartOption: ChartOption) => {
                           },
                         },
                       },
-                    legend: chartOption.legendPos ? { position: chartOption.legendPos } : undefined ,
+                    legend: {
+                        position: chartOption.legendPos ?? "top",
+                        display: false,
+                    },
                     zoom: chartOption.zoomDrag ? { zoom: { drag: { enabled: true, }, mode: "x", }, } : undefined,
                 },
                 /* custom

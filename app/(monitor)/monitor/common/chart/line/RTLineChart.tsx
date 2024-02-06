@@ -29,9 +29,9 @@ const RTLineChart = (chartProps: ChartProps) => {
     const lineChartCanvas = lineChartCanvasRef.current;
     let lineChartInstance: Chart | null = null;
     if (lineChartCanvas) {
-      lineChartCanvas.style.position = "static";
-      lineChartCanvas.style.width = chartProps.chartOptions.widthVal ?? "40vw";
-      lineChartCanvas.style.height = chartProps.chartOptions.heightVal ?? "20vh";
+      // lineChartCanvas.style.position = "static";
+      lineChartCanvas.style.width = chartProps.chartOptions.widthVal ?? undefined;
+      lineChartCanvas.style.height = chartProps.chartOptions.heightVal ?? undefined;
 
       if (Chart.getChart(lineChartCanvas)) {
         Chart.getChart(lineChartCanvas)?.destroy();
@@ -74,8 +74,13 @@ const RTLineChart = (chartProps: ChartProps) => {
           chartInstance.data.datasets[step].data = monitoringData.datas[step];
         }
 
-        if(chartInstance.options.plugins && chartInstance.options.plugins.title && chartInstance.options.plugins.title.display) {
-          chartInstance.options.plugins.title.text = updateTitle(chartProps.chartOptions.chartTitle);
+        if(chartInstance.options.plugins){
+          if(chartInstance.options.plugins.title && chartInstance.options.plugins.title.display) {
+            chartInstance.options.plugins.title.text = updateTitle(chartProps.chartOptions.chartTitle);
+          }
+          if(chartInstance.options.plugins.legend) {
+            chartInstance.options.plugins.legend.display = true;
+          }
         }
         chartInstance.update();
       }
@@ -107,14 +112,14 @@ const RTLineChart = (chartProps: ChartProps) => {
             }}
           >
             <button style={{ width: 20, marginRight: 10, visibility: chartProps.chartOptions.zoomMode? 'visible':"hidden" }} onClick={handleZoom} >
-              {isZoomed ? (
+              {/* {isZoomed ? (
                 <img src="/zoom_out.png" alt="ZoomOut" />
               ) : (
                 <img src="/zoom.png" alt="Zoom" />
-              )}
+              )} */}
             </button>
           </div>
-          <canvas id="lineChart" ref={lineChartCanvasRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
+          <canvas id="lineChart" ref={lineChartCanvasRef} width={(chartProps.chartOptions.widthVal ?? undefined)} height={(chartProps.chartOptions.heightVal ?? undefined)}></canvas>
         </div>
       </div>
     </React.Fragment>

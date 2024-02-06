@@ -55,6 +55,12 @@ const RTBarChart = (chartProps: ChartProps) => {
       chartInstance.data.datasets[step].data = monitoringData.datas[step];
     }
 
+    if(chartInstance.options.plugins) {
+      if (chartInstance.options.plugins.legend) {
+        chartInstance.options.plugins.legend.display = true;
+      }
+    }
+        
     chartInstance.update();
   };
 
@@ -86,7 +92,7 @@ const RTBarChart = (chartProps: ChartProps) => {
             }}
           >
           </div>
-          <canvas ref={chartRef} width={(chartProps.chartOptions.widthVal || '40vw')} height={(chartProps.chartOptions.heightVal || '20vh')}></canvas>
+          <canvas ref={chartRef} width={(chartProps.chartOptions.widthVal ?? undefined)} height={(chartProps.chartOptions.heightVal ?? undefined)}></canvas>
       </div>
     </React.Fragment>
   );

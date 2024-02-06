@@ -1,3 +1,4 @@
+import { ChartConfiguration } from "chart.js";
 
 interface ChartOption {
     count: number,
@@ -47,18 +48,12 @@ const getLineChartOpts = (chartOption: ChartOption) => {
                         type: chartOption.enableDateAdapter == false ?  undefined : 'time',
                         time: chartOption.enableDateAdapter == false ?  undefined : { displayFormats: { second: 'HH:mm:ss' } },
                         ticks: {
-                            font: {
-                                family: 'Poppins',
-                            },
                             autoSkip: true,
                             maxTicksLimit: chartOption.maxTickSize ?? 20,
                         },
                     },
                     y: {
                         ticks: {
-                            font: {
-                                family: 'Poppins',
-                            },
                         },
                         min: 0,
                     },
@@ -69,11 +64,14 @@ const getLineChartOpts = (chartOption: ChartOption) => {
                     axis: "x",
                 },
                 plugins: {
-                    legend: chartOption.legendPos ? { position: chartOption.legendPos } :{ position: "bottom" },
+                    legend: {
+                        display: false,
+                        position: chartOption.legendPos ?? "bottom",
+                    },
                     zoom: chartOption.zoomDrag ? { zoom: { drag: { enabled: true, }, mode: "x", }, } : undefined,
                     title: {
                         display: (chartOption.chartTitle)? true : false,
-                        title: `  ${chartOption.chartTitle}`,
+                        text: (chartOption.chartTitle)? `  ${chartOption.chartTitle}` : undefined,
                         font: {
                             weight: 'bold',
                             size: 16,
@@ -81,12 +79,12 @@ const getLineChartOpts = (chartOption: ChartOption) => {
                         align: 'start', 
                         padding: {
                             top: 0,
-                            bottom: 10,
+                            bottom: 15,
                         }
                     }
                 },
             },
-        }
+        } as ChartConfiguration
 
     };
 };
